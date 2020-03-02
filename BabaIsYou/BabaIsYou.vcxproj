@@ -171,6 +171,12 @@
     <ClCompile Include="Texture.cpp" />
     <ClCompile Include="TileMap.cpp" />
   </ItemGroup>
+  <ItemGroup>
+    <Text Include="levels\mapa.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="images\text.png" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

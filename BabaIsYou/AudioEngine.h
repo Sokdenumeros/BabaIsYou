@@ -1,4 +1,4 @@
-#ifndef _AUDIO_ENGINE_H_
+/*#ifndef _AUDIO_ENGINE_H_
 #define _AUDIO_ENGINE_H_
 
 #include "fmod_studio.hpp"
@@ -40,7 +40,7 @@ public:
 	//static bool IsEventPlaying(const string& strEventName);
 	static float dbToVolume(float db);
 	static float VolumeTodb(float volume);*/
-
+/*
 private:
 
 	static FMOD::Studio::System* mpStudioSystem;
@@ -52,4 +52,4 @@ private:
 	static map<int, FMOD::Channel*> ChannelMap;
 	static map<string, FMOD::Studio::EventInstance*> EventMap;
 	static map<string, FMOD::Studio::Bank*> BankMap;
-};
+};*
