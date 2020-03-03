@@ -30,7 +30,6 @@ int AudioEngine::ErrorCheck(FMOD_RESULT result) {
 	return 0;
 }
 
-/*
 void AudioEngine::LoadSound(const std::string& strSoundName, bool b3d, bool bLooping, bool bStream)
 {
 	auto tFoundIt = SoundMap.find(strSoundName);
@@ -59,7 +58,7 @@ void AudioEngine::UnLoadSound(const std::string& strSoundName)
 	SoundMap.erase(tFoundIt);
 }
 
-int AudioEngine::PlaySound(const string& strSoundName, const FMOD_VECTOR& position, float fVolumedB)
+int AudioEngine::PlayS(const string& strSoundName, const FMOD_VECTOR& position, float fVolumedB)
 {
 	int nChannelId = mnNextChannelId++;
 	auto tFoundIt = SoundMap.find(strSoundName);
@@ -142,5 +141,3 @@ float AudioEngine::VolumeTodb(float volume)
 {
 	return 20.0f * log10f(volume);
 }
-
-*/
