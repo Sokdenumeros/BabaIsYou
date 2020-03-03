@@ -1,4 +1,4 @@
-/*#include "AudioEngine.h"
+#include "AudioEngine.h"
 
 void AudioEngine::Init() {
 	mpStudioSystem = NULL;
