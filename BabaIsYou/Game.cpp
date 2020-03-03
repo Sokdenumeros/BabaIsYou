@@ -1,7 +1,6 @@
 #include <GL/glew.h>
 #include <GL/glut.h>
 #include "Game.h"
-#include "AudioEngine.h"
 
 
 
@@ -12,7 +11,7 @@ void Game::init()
 	scene.init();
 	AudioEngine a;
 	a.Init();
-	a.PlayS("WXP.mp3");
+	//AudioEngine::PlaySound("WXP.mp3");
 }
 
 bool Game::update(int deltaTime)
