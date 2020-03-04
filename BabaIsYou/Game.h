@@ -3,6 +3,7 @@
 
 
 #include "Scene.h"
+#include "AudioEngine.h"
 
 
 #define SCREEN_WIDTH 640
