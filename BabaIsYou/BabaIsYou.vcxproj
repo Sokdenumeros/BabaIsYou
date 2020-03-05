@@ -158,6 +158,7 @@
     <ClInclude Include="Sprite.h" />
     <ClInclude Include="Texture.h" />
     <ClInclude Include="TileMap.h" />
+    <ClInclude Include="Tmap.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AudioEngine.cpp" />
@@ -170,6 +171,7 @@
     <ClCompile Include="Sprite.cpp" />
     <ClCompile Include="Texture.cpp" />
     <ClCompile Include="TileMap.cpp" />
+    <ClCompile Include="Tmap.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="levels\mapa.txt" />

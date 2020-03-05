@@ -15,7 +15,6 @@ TileMap *TileMap::createTileMap(const string &levelFile, const glm::vec2 &minCoo
 	return map;
 }
 
-
 TileMap::TileMap(const string &levelFile, const glm::vec2 &minCoords, ShaderProgram &program)
 {
 	loadLevel(levelFile);
@@ -27,7 +26,6 @@ TileMap::~TileMap()
 	if(map != NULL)
 		delete map;
 }
-
 
 void TileMap::render() const
 {
