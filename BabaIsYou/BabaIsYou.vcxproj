@@ -151,6 +151,8 @@
     <ClInclude Include="AnimKeyframes.h" />
     <ClInclude Include="AudioEngine.h" />
     <ClInclude Include="Game.h" />
+    <ClInclude Include="Object.h" />
+    <ClInclude Include="ObjectMatrix.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="Shader.h" />
@@ -158,12 +160,13 @@
     <ClInclude Include="Sprite.h" />
     <ClInclude Include="Texture.h" />
     <ClInclude Include="TileMap.h" />
-    <ClInclude Include="Tmap.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AudioEngine.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Object.cpp" />
+    <ClCompile Include="ObjectMatrix.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="Shader.cpp" />
@@ -171,7 +174,6 @@
     <ClCompile Include="Sprite.cpp" />
     <ClCompile Include="Texture.cpp" />
     <ClCompile Include="TileMap.cpp" />
-    <ClCompile Include="Tmap.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="levels\mapa.txt" />
