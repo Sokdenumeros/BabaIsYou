@@ -7,8 +7,12 @@ using namespace std;
 class ObjectMatrix {
 public:
 	ObjectMatrix();
-	bool setPosition(int x, int y, Object *o);
+	//bool setPosition(int x, int y, Object *o);
+	vector<Object> getvec();
+	int gettamany();
 private:
 	int sizex, sizey;
-	Object* map [];
+	//Object* map [];
+	vector<Object> vec_obj;
+	int tamany;
 };

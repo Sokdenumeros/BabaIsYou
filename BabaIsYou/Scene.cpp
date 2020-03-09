@@ -8,8 +8,8 @@
 #define SCREEN_X 32
 #define SCREEN_Y 16
 
-#define INIT_PLAYER_X_TILES 4
-#define INIT_PLAYER_Y_TILES 10
+#define INIT_PLAYER_X_TILES 6
+#define INIT_PLAYER_Y_TILES 12
 
 
 Scene::Scene()
@@ -27,18 +27,33 @@ void Scene::init()
 {
 	initShaders();
 	map = TileMap::createTileMap("levels/mapa.txt", glm::vec2(SCREEN_X, SCREEN_Y), texProgram);
-	player = new Player();
-	player->init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
-	player->setPosition(glm::vec2(INIT_PLAYER_X_TILES * map->getTileSize(), INIT_PLAYER_Y_TILES * map->getTileSize()));
-	player->setTileMap(map);
-	projection = glm::ortho(0.f, float(SCREEN_WIDTH - 1), float(SCREEN_HEIGHT - 1), 0.f);
-	currentTime = 0.0f;
+	ObjectMatrix om;
+	int tam = om.gettamany();
+	vector<Object> vo = om.getvec();
+	//for(int i = 0; i < tam; ++i) { //un bucle per recorrer la matriu que haurem llegit, si es troba un numero anira al vector i pasara aquella posicio del vector a player init
+		player = new Player();
+		player->init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram, vo[0]);
+		player->setPosition(glm::vec2(INIT_PLAYER_X_TILES * map->getTileSize(), INIT_PLAYER_Y_TILES * map->getTileSize()));
+		player->setTileMap(map);
+		projection = glm::ortho(0.f, float(SCREEN_WIDTH - 1), float(SCREEN_HEIGHT - 1), 0.f);
+		currentTime = 0.0f;
+
+		player1 = new Player();
+		player1->init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram, vo[1]);
+		player1->setPosition(glm::vec2(3 * map->getTileSize(), 4 * map->getTileSize()));
+		player1->setTileMap(map);
+		projection = glm::ortho(0.f, float(SCREEN_WIDTH - 1), float(SCREEN_HEIGHT - 1), 0.f);
+		currentTime = 0.0f;
+	//}
+	
 }
 
 void Scene::update(int deltaTime)
 {
 	currentTime += deltaTime;
 	player->update(deltaTime);
+	player1->update(deltaTime);
+	
 }
 
 void Scene::render()
@@ -53,6 +68,7 @@ void Scene::render()
 	texProgram.setUniform2f("texCoordDispl", 0.f, 0.f);
 	map->render();
 	player->render();
+	player1->render();
 }
 
 void Scene::initShaders()

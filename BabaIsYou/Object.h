@@ -4,9 +4,12 @@
 
 class Object {
 public:
-	Object(string nam, bool isnam, int sx, int sy);
+	Object(string nam, bool isnam, float sx, float sy);
+	float getposx();
+	float getposy();
+
 private:
-	int sprx, spry;
+	float sprx, spry;
 	Sprite* spr;
 	string name;
 	bool stop, push, win, defeat, skin;

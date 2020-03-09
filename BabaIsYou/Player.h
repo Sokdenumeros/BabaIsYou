@@ -4,6 +4,7 @@
 
 #include "Sprite.h"
 #include "TileMap.h"
+#include "Object.h"
 
 
 // Player is basically a Sprite that represents the player. As such it has
@@ -14,7 +15,7 @@ class Player
 {
 
 public:
-	void init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram);
+	void init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram, Object o);
 	void update(int deltaTime);
 	void render();
 	
