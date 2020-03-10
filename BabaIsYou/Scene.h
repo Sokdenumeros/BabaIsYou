@@ -30,7 +30,8 @@ private:
 
 private:
 	TileMap *map;
-	Player *player;
+	Player *player[10];
+	vector<Player> v_play;
 	Player *player1;
 	ShaderProgram texProgram;
 	float currentTime;

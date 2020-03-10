@@ -30,30 +30,36 @@ void Scene::init()
 	ObjectMatrix om;
 	int tam = om.gettamany();
 	vector<Object> vo = om.getvec();
-	//for(int i = 0; i < tam; ++i) { //un bucle per recorrer la matriu que haurem llegit, si es troba un numero anira al vector i pasara aquella posicio del vector a player init
-		player = new Player();
-		player->init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram, vo[0]);
-		player->setPosition(glm::vec2(INIT_PLAYER_X_TILES * map->getTileSize(), INIT_PLAYER_Y_TILES * map->getTileSize()));
-		player->setTileMap(map);
+	for (int i = 0; i < tam; ++i) { //un bucle per recorrer la matriu que haurem llegit, si es troba un numero anira al vector i pasara aquella posicio del vector a player init
+		player[i] = new Player();
+		player[i]->init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram, vo[i]);
+		player[i]->setPosition(glm::vec2((vo[i].getmapx()) * map->getTileSize(), (vo[i].getmapy()) *  map->getTileSize()));
+		player[i]->setTileMap(map);
 		projection = glm::ortho(0.f, float(SCREEN_WIDTH - 1), float(SCREEN_HEIGHT - 1), 0.f);
 		currentTime = 0.0f;
+	}
 
-		player1 = new Player();
+		/*player1 = new Player();
 		player1->init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram, vo[1]);
-		player1->setPosition(glm::vec2(3 * map->getTileSize(), 4 * map->getTileSize()));
+		player1->setPosition(glm::vec2(10 * map->getTileSize(), 10 * map->getTileSize()));
 		player1->setTileMap(map);
 		projection = glm::ortho(0.f, float(SCREEN_WIDTH - 1), float(SCREEN_HEIGHT - 1), 0.f);
 		currentTime = 0.0f;
-	//}
+	//}*/
 	
 }
 
 void Scene::update(int deltaTime)
 {
 	currentTime += deltaTime;
-	player->update(deltaTime);
-	player1->update(deltaTime);
-	
+	ObjectMatrix om;
+	vector<Object> vo = om.getvec();
+	for (int i = 0; i < 10; ++i) {
+		player[i]->update(deltaTime, vo[i]);
+	}
+	/*v_play[0].update(deltaTime, vo[0]);
+	player1->update(deltaTime, vo[1]);
+	*/
 }
 
 void Scene::render()
@@ -67,8 +73,11 @@ void Scene::render()
 	texProgram.setUniformMatrix4f("modelview", modelview);
 	texProgram.setUniform2f("texCoordDispl", 0.f, 0.f);
 	map->render();
-	player->render();
-	player1->render();
+	for (int i = 0; i < 10; ++i) {
+		player[i]->render();
+	}
+	//v_play[0].render();
+	//player1->render();
 }
 
 void Scene::initShaders()

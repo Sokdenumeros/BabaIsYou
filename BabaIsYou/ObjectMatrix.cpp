@@ -5,15 +5,15 @@
 ObjectMatrix::ObjectMatrix() {
 	string name;
 	bool isname;
-	int posx, posy;
+	float posx, posy;
+	int mapx, mapy;
 	ifstream inFile;
 	inFile.open("levels/mapa_sprite.txt");
 	inFile >> tamany;
 	for (int i = 0; i < tamany; ++i) {
 
-		inFile >> name >> isname >> posx >> posy;
-		cout << name << isname << posx << posy;
-		Object obj(name, isname, posx, posy);
+		inFile >> name >> isname >> posx >> posy >> mapx >> mapy;
+		Object obj(name, isname, posx, posy, mapx, mapy);
 
 		vec_obj.push_back(obj);
 
