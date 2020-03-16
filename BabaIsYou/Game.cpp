@@ -11,7 +11,7 @@ void Game::init()
 	scene.init();
 	AudioEngine a;
 	a.Init();
-	a.PlayS("WXP.mp3");
+	a.PlayS("sao.mp3");
 }
 
 bool Game::update(int deltaTime)

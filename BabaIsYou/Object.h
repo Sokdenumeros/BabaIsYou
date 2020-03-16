@@ -1,4 +1,4 @@
-#pragma once
+/*#pragma once
 #include "Sprite.h"
 #include <string>
 
@@ -19,4 +19,4 @@ private:
 	bool stop, push, win, defeat, skin;
 	bool isname;
 	int posmapax, posmapay;
-};
+};*/

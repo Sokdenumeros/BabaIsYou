@@ -1,4 +1,4 @@
-#include "Object.h"
+/*#include "Object.h"
 
 Object::Object(string nam, bool isnam, float sx, float sy, int mapx, int mapy)
 {
@@ -39,3 +39,4 @@ int Object::getmapy()
 {
 	return posmapay;
 }
+*/

@@ -1,3 +1,4 @@
+
 #ifndef _SCENE_INCLUDE
 #define _SCENE_INCLUDE
 
@@ -5,10 +6,10 @@
 #include <glm/glm.hpp>
 #include "ShaderProgram.h"
 #include "TileMap.h"
-#include "Player.h"
 #include "ObjectMatrix.h"
-#include "Object.h"
-
+#include <fstream>
+#include "iostream"
+using namespace std;
 
 // Scene contains all the entities of our game.
 // It is responsible for updating and render them.
@@ -29,10 +30,11 @@ private:
 	void initShaders();
 
 private:
-	TileMap *map;
-	Player *player[10];
-	vector<Player> v_play;
-	Player *player1;
+
+	ObjectMatrix* om;
+	TileMap* map;
+	//ObjectMatrix* om2;
+	
 	ShaderProgram texProgram;
 	float currentTime;
 	glm::mat4 projection;

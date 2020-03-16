@@ -5,6 +5,7 @@
 #include "Game.h"
 
 
+
 #define SCREEN_X 32
 #define SCREEN_Y 16
 
@@ -26,18 +27,36 @@ Scene::~Scene()
 void Scene::init()
 {
 	initShaders();
-	map = TileMap::createTileMap("levels/mapa.txt", glm::vec2(SCREEN_X, SCREEN_Y), texProgram);
-	ObjectMatrix om;
-	int tam = om.gettamany();
-	vector<Object> vo = om.getvec();
-	for (int i = 0; i < tam; ++i) { //un bucle per recorrer la matriu que haurem llegit, si es troba un numero anira al vector i pasara aquella posicio del vector a player init
-		player[i] = new Player();
-		player[i]->init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram, vo[i]);
-		player[i]->setPosition(glm::vec2((vo[i].getmapx()) * map->getTileSize(), (vo[i].getmapy()) *  map->getTileSize()));
-		player[i]->setTileMap(map);
+	int tamany;
+	map = TileMap::createTileMap("levels/mapa.txt", glm::vec2(SCREEN_X, SCREEN_Y), texProgram);	
+	om = new ObjectMatrix();
+	string name;
+	bool isname;
+	float posx, posy;
+	int mapx, mapy;
+	ifstream inFile;
+	inFile.open("levels/mapa_sprite.txt");
+	inFile >> tamany;
+	for (int i = 0; i < tamany; ++i) {
+
+		inFile >> name >> isname >> posx >> posy >> mapx >> mapy;
+		
+		om->setPos(name, isname, posx, posy, mapx, mapy);
+		om->ini(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram, mapx, mapy);
+		om->setPositio(glm::vec2(mapx * map->getTileSize(), mapy *  map->getTileSize()), mapx, mapy);
+		om->setTileMa(map, mapx,mapy);
 		projection = glm::ortho(0.f, float(SCREEN_WIDTH - 1), float(SCREEN_HEIGHT - 1), 0.f);
 		currentTime = 0.0f;
 	}
+
+	
+		//un bucle per recorrer la matriu que haurem llegit, si es troba un numero anira al vector i pasara aquella posicio del vector a player init
+
+			
+		
+
+
+
 
 		/*player1 = new Player();
 		player1->init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram, vo[1]);
@@ -46,17 +65,17 @@ void Scene::init()
 		projection = glm::ortho(0.f, float(SCREEN_WIDTH - 1), float(SCREEN_HEIGHT - 1), 0.f);
 		currentTime = 0.0f;
 	//}*/
+
 	
 }
 
 void Scene::update(int deltaTime)
 {
 	currentTime += deltaTime;
-	ObjectMatrix om;
-	vector<Object> vo = om.getvec();
-	for (int i = 0; i < 10; ++i) {
-		player[i]->update(deltaTime, vo[i]);
-	}
+	om->updat(deltaTime); //object matrix update
+		
+	
+	
 	/*v_play[0].update(deltaTime, vo[0]);
 	player1->update(deltaTime, vo[1]);
 	*/
@@ -73,9 +92,11 @@ void Scene::render()
 	texProgram.setUniformMatrix4f("modelview", modelview);
 	texProgram.setUniform2f("texCoordDispl", 0.f, 0.f);
 	map->render();
-	for (int i = 0; i < 10; ++i) {
-		player[i]->render();
-	}
+
+	om->rende();
+		
+	
+	
 	//v_play[0].render();
 	//player1->render();
 }
