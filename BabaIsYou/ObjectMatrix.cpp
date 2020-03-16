@@ -20,6 +20,56 @@ ObjectMatrix::ObjectMatrix()
 	
 }
 
+bool ObjectMatrix::recurs_players(int i, int j, movement m) {
+	int current = nc*i + j;
+	switch (m) {
+	case UP:
+		j -= 1; break;
+	case DOWN:
+		j += 1; break;
+	case LEFT:
+		i -= 1; break;
+	case RIGHT:
+		i += 1; break;
+	}
+	if (j < 0 || j >= nf || i < 0 || i >= nc) return false;
+	int next = nc*i +j;
+	if (matriu[next] == nullptr) {
+		matriu[next] = matriu[current];
+		matriu[current] = nullptr;
+		return true;
+	}
+	int z = 9;
+	if (matriu[next]->getsink()) {
+		delete matriu[next];
+		delete matriu[current];
+		matriu[current] = nullptr;
+		matriu[next] = nullptr;
+		return true;
+	}
+	if (matriu[next]->getpush()) {
+		if (recurs_players(i, j, m)) {
+			matriu[next] = matriu[current];
+			matriu[current] = nullptr;
+			if (matriu[next]->getname() == "is1") {
+				is1x = i;
+				is1y = j;
+			}
+			if (matriu[next]->getname() == "is2") {
+				is2x = i;
+				is2y = j;
+			}
+			if (matriu[next]->getname() == "is3") {
+				is3x = i;
+				is3y = j;
+			}
+			return true;
+		}
+		else return false;
+	}
+	else return false;
+}
+/*
 bool ObjectMatrix::recurs_players_esquerra(int deltaTime, int i, int j) {
 
 	if (matriu[nc*i + j] == nullptr) return true;
@@ -150,7 +200,7 @@ bool ObjectMatrix::recurs_players_abaix(int deltaTime, int i, int j)
 	}
 	else return false;
 }
-
+*/
 void ObjectMatrix::search_is_dreta_esquerra(int varx, int vary)
 {
 	if (matriu[nc*(varx + 1) + vary] != nullptr && matriu[nc*(varx + 1) + vary]->itsname() == true) {
@@ -176,7 +226,6 @@ void ObjectMatrix::search_is_dreta_esquerra(int varx, int vary)
 
 	}
 }
-
 
 void ObjectMatrix::search_is_esquerra_dreta(int varx, int vary)
 {
@@ -275,7 +324,7 @@ void ObjectMatrix::updat(int deltaTime)
 			if (matriu[nc*i + j] != nullptr) {
 				matriu[nc*i + j]->setsink(false);
 				matriu[nc*i + j]->setpush(false);
-				matriu[nc*i + j]->up(deltaTime);
+				matriu[nc*i + j]->update(deltaTime,i,j);
 			}
 		}
 	}
@@ -294,14 +343,33 @@ void ObjectMatrix::updat(int deltaTime)
 	search_is_dreta_esquerra(is3x, is3y);
 	search_is_abaix_adalt(is3x, is3y);
 	search_is_adalt_abaix(is3x, is3y);
-
+	/*
+	movement m = NONE;
 	if (Game::instance().getSpecialKey(GLUT_KEY_LEFT))
 	{
 		Game::instance().specialKeyReleased(GLUT_KEY_LEFT);
+		m = LEFT;
+	}
+	if (Game::instance().getSpecialKey(GLUT_KEY_RIGHT))
+	{
+		Game::instance().specialKeyReleased(GLUT_KEY_RIGHT);
+		m = RIGHT;
+	}
+	if (Game::instance().getSpecialKey(GLUT_KEY_UP))
+	{
+		Game::instance().specialKeyReleased(GLUT_KEY_UP);
+		m = UP;
+	}
+	if (Game::instance().getSpecialKey(GLUT_KEY_DOWN))
+	{
+		Game::instance().specialKeyReleased(GLUT_KEY_DOWN);
+		m = DOWN;
+	}
+	if (m != NONE) {
 		for (int i = 0; i < 24; ++i) {
 			for (int j = 0; j < 24; ++j) {
-				if (matriu[nc*i + j] != nullptr && matriu[nc*i + j]->getmove() == true) {
-					
+				if (matriu[nc*i + j] != nullptr && matriu[nc*i + j]->getmove()) {
+
 					if (i > 0) {
 						if (recurs_players_esquerra(deltaTime, i - 1, j) == true) {
 							matriu[nc*(i - 1) + j] = matriu[nc*i + j];
@@ -314,22 +382,23 @@ void ObjectMatrix::updat(int deltaTime)
 			}
 		}
 	}
+	*/
+	if (Game::instance().getSpecialKey(GLUT_KEY_LEFT))
+	{
+		Game::instance().specialKeyReleased(GLUT_KEY_LEFT);
+		for (int i = 0; i < 24; ++i) {
+			for (int j = 0; j < 24; ++j) {
+				if (matriu[nc*i + j] != nullptr && matriu[nc*i + j]->getmove()) recurs_players(i, j, LEFT);
+			}
+		}
+	}
 
 	if (Game::instance().getSpecialKey(GLUT_KEY_RIGHT))
 	{
 		Game::instance().specialKeyReleased(GLUT_KEY_RIGHT);
 		for (int i = 23; i >= 0; --i) {
 			for (int j = 0; j < 24; ++j) {
-				if (matriu[nc*i + j] != nullptr && matriu[nc*i + j]->getmove() == true) {
-					if (i < 23) {
-						if (recurs_players_dreta(deltaTime, i + 1, j) == true) {
-							matriu[nc*(i + 1) + j] = matriu[nc*i + j];
-							matriu[nc*(i + 1) + j]->setmove(false);
-							matriu[nc*i + j] = nullptr;
-							matriu[nc*(i + 1) + j]->update(deltaTime, i + 1, j, true, true, false);
-						}
-					}
-				}
+				if (matriu[nc*i + j] != nullptr && matriu[nc*i + j]->getmove()) recurs_players(i, j, RIGHT);
 			}
 		}
 	}
@@ -339,18 +408,7 @@ void ObjectMatrix::updat(int deltaTime)
 		Game::instance().specialKeyReleased(GLUT_KEY_UP);
 		for (int i = 0; i < 24; ++i) {
 			for (int j = 0; j < 24; ++j) {
-				if (matriu[nc*i + j] != nullptr && matriu[nc*i + j]->getmove() == true) {
-
-					if (j > 0) {
-
-						if (recurs_players_adalt(deltaTime, i, j - 1) == true) {
-							matriu[nc*(i)+(j - 1)] = matriu[nc*i + j];
-							matriu[nc*(i)+(j - 1)]->setmove(false);
-							matriu[nc*i + j] = nullptr;
-							matriu[nc*(i)+(j - 1)]->update(deltaTime, i, j - 1, false, false, false);
-						}
-					}
-				}
+				if (matriu[nc*i + j] != nullptr && matriu[nc*i + j]->getmove()) recurs_players(i, j, UP);
 			}
 		}
 	}
@@ -360,17 +418,7 @@ void ObjectMatrix::updat(int deltaTime)
 		Game::instance().specialKeyReleased(GLUT_KEY_DOWN);
 		for (int i = 0; i < 24; ++i) {
 			for (int j = 23; j >= 0; --j) {
-				if (matriu[nc*i + j] != nullptr && matriu[nc*i + j]->getmove() == true) {
-
-					if (j < 23) {
-						if (recurs_players_abaix(deltaTime, i, j + 1) == true) {
-							matriu[nc*(i)+(j + 1)] = matriu[nc*i + j];
-							matriu[nc*(i)+(j + 1)]->setmove(false);
-							matriu[nc*i + j] = nullptr;
-							matriu[nc*(i)+(j + 1)]->update(deltaTime, i, j + 1, false, true, false);
-						}
-					}
-				}
+				if (matriu[nc*i + j] != nullptr && matriu[nc*i + j]->getmove()) recurs_players(i, j, DOWN);
 			}
 		}
 	}

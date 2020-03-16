@@ -11,6 +11,15 @@ using namespace std;
 
 class ObjectMatrix 
 {
+private:
+	Player **matriu;
+	int nf, nc;
+	int is1x, is1y, is2x, is2y, is3x, is3y;
+	enum movement { NONE, UP, DOWN, RIGHT, LEFT };
+	//Object* map [];
+	//vector<Object> vec_obj;
+	//int tamany;
+	bool recurs_players(int i, int j, movement m);
 
 public:
 	ObjectMatrix();
@@ -20,10 +29,10 @@ public:
 	void setPos(string nom, bool isname, float a, float b, int i, int j);
 	void setTileMa(TileMap *tileMap, int i, int j);
 	void rende();
-	bool recurs_players_esquerra(int deltaTime, int i, int j);
-	bool recurs_players_dreta(int deltaTime, int i, int j);
-	bool recurs_players_adalt(int deltaTime, int i, int j);
-	bool recurs_players_abaix(int deltaTime, int i, int j);
+	//bool recurs_players_esquerra(int deltaTime, int i, int j);
+	//bool recurs_players_dreta(int deltaTime, int i, int j);
+	//bool recurs_players_adalt(int deltaTime, int i, int j);
+	//bool recurs_players_abaix(int deltaTime, int i, int j);
 	void search_is_dreta_esquerra(int varx, int vary);
 	void search_is_esquerra_dreta(int varx, int vary);
 	void search_is_adalt_abaix(int varx, int vary);
@@ -36,12 +45,5 @@ public:
 	void setPos(Player p);
 	int gettamany();
 	*/
-private:
-	
-	Player **matriu;
-	int nf, nc;
-	int is1x, is1y, is2x, is2y, is3x, is3y;
-	//Object* map [];
-	//vector<Object> vec_obj;
-	//int tamany;
+
 };

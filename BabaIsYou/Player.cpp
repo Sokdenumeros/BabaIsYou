@@ -207,9 +207,8 @@ void Player::init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram)
 	
 }
 
-void Player::update(int deltaTime, int i, int j, bool horitzontal, bool downright, bool pushed)
+void Player::update(int deltaTime, int i, int j)
 {
-	sprite->update(deltaTime);
 	//Player playnull("ningu", false, 0, 0, 0, 0);
 
 	//Player *play = m[i][j];
@@ -232,11 +231,25 @@ void Player::update(int deltaTime, int i, int j, bool horitzontal, bool downrigh
 
 						//if(i*loquesigui-posPlayer.x == 0) 
 						//else //negativa posPlayer.x -= velocitat*deltaTime;
-	if (i == 1000) {
-		sprite->setPosition(glm::vec2(float(tileMapDispl.x +i), float(tileMapDispl.y + i)));
-	}//else //positiva posPlayer.x += velocitat*deltaTime;
-	else {
-		if (name == "baba" && isname == false && pushed == false) {
+	if (posPlayer.x > i * 20) {
+		posPlayer.x -= 2;
+		if (name == "baba" && isname == false && posPlayer.x % 20 == 18) sprite->changeAnimation(MOVE_LEFT1 + (++count % 5));
+	}
+	if (posPlayer.x < i * 20) {
+		posPlayer.x += 2;
+		if (name == "baba" && isname == false && posPlayer.x % 20 == 2) sprite->changeAnimation(MOVE_RIGHT1 + (++count % 5));
+	}
+	if (posPlayer.y > j * 20) {
+		posPlayer.y -= 2;
+		if (name == "baba" && isname == false && posPlayer.y % 20 == 18) sprite->changeAnimation(MOVE_UP1 + (++count % 5));
+	}
+	if (posPlayer.y < j * 20) {
+		posPlayer.y += 2;
+		if (name == "baba" && isname == false && posPlayer.y%20 == 2) sprite->changeAnimation(MOVE_DOWN1 + (++count%5));
+	}
+	sprite->setPosition(glm::vec2(float(tileMapDispl.x + posPlayer.x), float(tileMapDispl.y + posPlayer.y)));
+	sprite->update(deltaTime);
+		/*if (name == "baba" && isname == false && pushed == false) {
 			if (horitzontal == true && downright == true) {
 
 				//if (i * 20 - posPlayer.x > 0) posPlayer.x += velocitat*deltaTime;
@@ -345,7 +358,6 @@ void Player::update(int deltaTime, int i, int j, bool horitzontal, bool downrigh
 
 
 		sprite->setPosition(glm::vec2(float(tileMapDispl.x + posPlayer.x), float(tileMapDispl.y + posPlayer.y)));
-	}
 	/*while(i * 20 - posPlayer.x != 0) {
 
 		if(i * 20 - posPlayer.x < 0) posPlayer.x -= velocitat*deltaTime;
@@ -407,10 +419,10 @@ void Player::update(int deltaTime, int i, int j, bool horitzontal, bool downrigh
 
 	}
 
-	void Player::up(int deltaTime)
-	{
-		sprite->update(deltaTime);
-	}
+void Player::up(int deltaTime)
+{
+	sprite->update(deltaTime);
+}
 
 
 void Player::render()
@@ -482,7 +494,7 @@ int Player::getmapy()
 
 bool Player::getpush()
 {
-	return push;
+	return push||isname;
 }
 
 bool Player::getsink()

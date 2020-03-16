@@ -16,7 +16,7 @@ class Player
 public:
 	Player(string nam, bool isnam, float sx, float sy, int mapx, int mapy);
 	void init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram);
-	void update(int deltaTime, int i, int j, bool horitzontal, bool downright, bool pushed);
+	void update(int deltaTime, int i, int j);
 	void up(int deltaTime);
 	void render();
 	bool getmove();
