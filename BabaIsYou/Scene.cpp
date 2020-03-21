@@ -29,7 +29,7 @@ void Scene::init()
 	initShaders();
 	int tamany;
 	map = TileMap::createTileMap("levels/mapa.txt", glm::vec2(SCREEN_X, SCREEN_Y), texProgram);	
-	om = new ObjectMatrix();
+	om = new ObjectMatrix(24,24);
 	string name;
 	bool isname;
 	float posx, posy;

@@ -19,37 +19,37 @@ using namespace std;
 /* https://codyclaborn.me/tutorials/making-a-basic-fmod-audio-engine-in-c/ */
 class AudioEngine {
 public:
-	void Init();
-	void Update();
-	int ErrorCheck(FMOD_RESULT result);
+	static void Init();
+	static void Update();
+	static int ErrorCheck(FMOD_RESULT result);
 	
-	void LoadBank(const string& strBankName, FMOD_STUDIO_LOAD_BANK_FLAGS flags);
-	void LoadEvent(const string& strEventName);
-	void LoadSound(const string& strSoundName, bool b3d = true, bool bLooping = false, bool bStream = false);
-	void UnLoadSound(const string& strSoundName);
+	static void LoadBank(const string& strBankName, FMOD_STUDIO_LOAD_BANK_FLAGS flags);
+	static void LoadEvent(const string& strEventName);
+	static void LoadSound(const string& strSoundName, bool b3d = true, bool bLooping = false, bool bStream = false);
+	static void UnLoadSound(const string& strSoundName);
 	//static void Set3dListenerAndOrientation(const FMOD_VECTOR& vPos = FMOD_VECTOR{ 0, 0, 0 }, float fVolumedB = 0.0f);
-	int PlayS(const string& strSoundName, const FMOD_VECTOR& position = FMOD_VECTOR{ 0, 0, 0 }, float fVolumedB = 0.0f);
+	static int PlayS(const string& strSoundName, const FMOD_VECTOR& position = FMOD_VECTOR{ 0, 0, 0 }, float fVolumedB = 0.0f);
 	//static void PlayEvent(const string& strEventName);
-	void StopChannel(int nChannelId);
+	static void StopChannel(int nChannelId);
 	//static void StopEvent(const string& strEventName, bool bImmediate = false);
 	//static void GeteventParameter(const string& strEventName, const string& strEventParameter, float* parameter);
 	//static void SetEventParameter(const string& strEventName, const string& strParameterName, float fValue);
-	//static void StopAllChannels();
-	void SetChannel3dPosition(int nChannelId, const FMOD_VECTOR& vPosition);
-	void SetChannelvolume(int nChannelId, float fVolumedB);
-	bool IsPlaying(int nChannelId);
+	static void StopAllChannels();
+	static void SetChannel3dPosition(int nChannelId, const FMOD_VECTOR& vPosition);
+	static void SetChannelvolume(int nChannelId, float fVolumedB);
+	static bool IsPlaying(int nChannelId);
 	//static bool IsEventPlaying(const string& strEventName);
-	float dbToVolume(float db);
-	float VolumeTodb(float volume);
+	static float dbToVolume(float db);
+	static float VolumeTodb(float volume);
 
 private:
-	FMOD::Studio::System * mpStudioSystem;
-	FMOD::System * mpSystem;
+	static FMOD::Studio::System * mpStudioSystem;
+	static FMOD::System * mpSystem;
 
-	int mnNextChannelId;
+	static int mnNextChannelId;
 
-	map<string, FMOD::Sound*> SoundMap;
-	map<int, FMOD::Channel*> ChannelMap;
-	map<string, FMOD::Studio::EventInstance*> EventMap;
-	map<string, FMOD::Studio::Bank*> BankMap;
+	static map<string, FMOD::Sound*> SoundMap;
+	static map<int, FMOD::Channel*> ChannelMap;
+	static map<string, FMOD::Studio::EventInstance*> EventMap;
+	static map<string, FMOD::Studio::Bank*> BankMap;
 };

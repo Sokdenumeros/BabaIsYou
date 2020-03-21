@@ -17,9 +17,10 @@ private:
 	int is1x, is1y, is2x, is2y, is3x, is3y;
 	enum movement { UP, DOWN, RIGHT, LEFT };
 	bool recurs_players(int i, int j, movement m);
+	int time, delay;
 
 public:
-	ObjectMatrix();
+	ObjectMatrix(int f, int c);
 	void updat(int deltaTime);
 	void ini(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram, int i, int j);
 	void setPositio(const glm::vec2 &pos, int i, int j);

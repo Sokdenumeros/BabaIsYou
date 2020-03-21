@@ -8,12 +8,13 @@
 
 
 
-ObjectMatrix::ObjectMatrix()
+ObjectMatrix::ObjectMatrix(int c, int f)
 {
-	nf = 24;
-	nc = 24;
+	nf = f;
+	nc = c;
 	matriu = new Player*[nf * nc];
-
+	time = 0;
+	delay = 200;
 	for (int i = 0; i < nf*nc; ++i) {
 		matriu[i] = nullptr;
 	}
@@ -182,7 +183,7 @@ void ObjectMatrix::search_is_abaix_adalt(int varx, int vary)
 
 void ObjectMatrix::updat(int deltaTime)
 {
-
+	if (time > 0) time -= deltaTime;
 	for (int i = 0; i < nf; ++i) {
 		for (int j = 0; j < nc; ++j) {
 			if (matriu[nc*i + j] != nullptr) {
@@ -207,9 +208,9 @@ void ObjectMatrix::updat(int deltaTime)
 	search_is_abaix_adalt(is3x, is3y);
 	search_is_adalt_abaix(is3x, is3y);
 
-	if (Game::instance().getSpecialKey(GLUT_KEY_LEFT))
+	if (Game::instance().getSpecialKey(GLUT_KEY_LEFT) && time < 1)
 	{
-		Game::instance().specialKeyReleased(GLUT_KEY_LEFT);
+		time = delay;
 		for (int i = 0; i < nf; ++i) {
 			for (int j = 0; j < nc; ++j) {
 				if (matriu[nc*i + j] != nullptr && matriu[nc*i + j]->getmove()) recurs_players(i, j, LEFT);
@@ -217,9 +218,9 @@ void ObjectMatrix::updat(int deltaTime)
 		}
 	}
 
-	if (Game::instance().getSpecialKey(GLUT_KEY_RIGHT))
+	if (Game::instance().getSpecialKey(GLUT_KEY_RIGHT) && time < 1)
 	{
-		Game::instance().specialKeyReleased(GLUT_KEY_RIGHT);
+		time = delay;
 		for (int i = nf-1; i >= 0; --i) {
 			for (int j = 0; j < nc; ++j) {
 				if (matriu[nc*i + j] != nullptr && matriu[nc*i + j]->getmove()) recurs_players(i, j, RIGHT);
@@ -227,9 +228,9 @@ void ObjectMatrix::updat(int deltaTime)
 		}
 	}
 
-	if (Game::instance().getSpecialKey(GLUT_KEY_UP))
+	if (Game::instance().getSpecialKey(GLUT_KEY_UP) && time < 1)
 	{
-		Game::instance().specialKeyReleased(GLUT_KEY_UP);
+		time = delay;
 		for (int i = 0; i < nf; ++i) {
 			for (int j = 0; j < nc; ++j) {
 				if (matriu[nc*i + j] != nullptr && matriu[nc*i + j]->getmove()) recurs_players(i, j, UP);
@@ -237,9 +238,9 @@ void ObjectMatrix::updat(int deltaTime)
 		}
 	}
 
-	if (Game::instance().getSpecialKey(GLUT_KEY_DOWN))
+	if (Game::instance().getSpecialKey(GLUT_KEY_DOWN) && time < 1)
 	{
-		Game::instance().specialKeyReleased(GLUT_KEY_DOWN);
+		time = delay;
 		for (int i = 0; i < nf; ++i) {
 			for (int j = nc-1; j >= 0; --j) {
 				if (matriu[nc*i + j] != nullptr && matriu[nc*i + j]->getmove()) recurs_players(i, j, DOWN);

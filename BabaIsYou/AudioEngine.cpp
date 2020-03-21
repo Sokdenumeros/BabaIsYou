@@ -1,10 +1,21 @@
 #include "AudioEngine.h"
 
+
+FMOD::Studio::System * AudioEngine::mpStudioSystem = NULL;
+FMOD::System * AudioEngine::mpSystem = NULL;
+
+int AudioEngine::mnNextChannelId;
+
+map<string, FMOD::Sound*> AudioEngine::SoundMap;
+map<int, FMOD::Channel*> AudioEngine::ChannelMap;
+map<string, FMOD::Studio::EventInstance*> AudioEngine::EventMap;
+map<string, FMOD::Studio::Bank*> AudioEngine::BankMap;
+
+
 void AudioEngine::Init() {
 	mpStudioSystem = NULL;
 	ErrorCheck(FMOD::Studio::System::create(&mpStudioSystem));
 	ErrorCheck(mpStudioSystem->initialize(32, FMOD_STUDIO_INIT_LIVEUPDATE, FMOD_INIT_PROFILE_ENABLE, NULL));
-
 	//Possible cagada
 	mpSystem = NULL;
 	ErrorCheck(mpStudioSystem->getCoreSystem(&mpSystem));
@@ -104,6 +115,10 @@ bool AudioEngine::IsPlaying(int nChannelId)
 	bool b = false;
 	ChannelMap[nChannelId]->isPlaying(&b);
 	return b;
+}
+
+void AudioEngine::StopAllChannels() {
+	for (auto it = ChannelMap.begin(), end = ChannelMap.end(); it != end; ++it) it->second->stop();
 }
 
 void AudioEngine::StopChannel(int nChannelId) {

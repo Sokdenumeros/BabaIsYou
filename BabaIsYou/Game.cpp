@@ -9,9 +9,8 @@ void Game::init()
 	bPlay = true;
 	glClearColor(0.3f, 0.3f, 0.3f, 1.0f);
 	scene.init();
-	AudioEngine a;
-	a.Init();
-	a.PlayS("sao.mp3");
+	AudioEngine::Init();
+	AudioEngine::PlayS("sao.mp3");
 }
 
 bool Game::update(int deltaTime)
