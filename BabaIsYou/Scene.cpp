@@ -15,39 +15,40 @@
 
 Scene::Scene()
 {
-	map = NULL;
+	om = NULL;
 }
 
 Scene::~Scene()
 {
-	if(map != NULL) delete map;
+	if(om != NULL) delete om;
 }
 
 
-void Scene::init()
+void Scene::init(string level)
 {
+	currentTime = 0.0f;
+	win = false;
 	initShaders();
-	int tamany;
-	map = TileMap::createTileMap("levels/mapa.txt", glm::vec2(SCREEN_X, SCREEN_Y), texProgram);	
-	om = new ObjectMatrix(24,24);
+
+	ifstream inFile;
+	inFile.open(level);
 	string name;
 	bool isname;
 	float posx, posy;
-	int mapx, mapy;
-	ifstream inFile;
-	inFile.open("levels/mapa_sprite.txt");
+	int mapx, mapy, sizex, sizey, tamany,tilesize;
+	inFile >> sizex >> sizey >> tilesize;
+	om = new ObjectMatrix(sizex, sizey);
 	inFile >> tamany;
+	Texture* T = new Texture();
+	T->loadFromFile("images/text.png", TEXTURE_PIXEL_FORMAT_RGBA);
 	for (int i = 0; i < tamany; ++i) {
-
 		inFile >> name >> isname >> posx >> posy >> mapx >> mapy;
-		
-		om->setPos(name, isname, posx, posy, mapx, mapy);
-		om->ini(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram, mapx, mapy);
-		om->setPositio(glm::vec2(mapx * map->getTileSize(), mapy *  map->getTileSize()), mapx, mapy);
-		om->setTileMa(map, mapx,mapy);
-		projection = glm::ortho(0.f, float(SCREEN_WIDTH - 1), float(SCREEN_HEIGHT - 1), 0.f);
-		currentTime = 0.0f;
+		Player* P = new Player(name, isname, posx, posy, mapx, mapy);
+		P->init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram,T);
+		P->setPosition(glm::vec2(mapx * tilesize, mapy *  tilesize));
+		om->setPos(mapx,mapy,P);	
 	}
+	projection = glm::ortho(0.f, float(SCREEN_WIDTH - 1), float(SCREEN_HEIGHT - 1), 0.f);
 
 	
 		//un bucle per recorrer la matriu que haurem llegit, si es troba un numero anira al vector i pasara aquella posicio del vector a player init
@@ -72,7 +73,9 @@ void Scene::init()
 void Scene::update(int deltaTime)
 {
 	currentTime += deltaTime;
-	om->updat(deltaTime); //object matrix update
+	om->update(deltaTime); //object matrix update
+	
+	win = om->getwin();
 		
 	
 	
@@ -91,9 +94,7 @@ void Scene::render()
 	modelview = glm::mat4(1.0f);
 	texProgram.setUniformMatrix4f("modelview", modelview);
 	texProgram.setUniform2f("texCoordDispl", 0.f, 0.f);
-	map->render();
-
-	om->rende();
+	om->render();
 		
 	
 	
@@ -131,5 +132,7 @@ void Scene::initShaders()
 	fShader.free();
 }
 
-
+bool Scene::getwin() {
+	return win;
+}
 

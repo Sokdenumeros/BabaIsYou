@@ -20,21 +20,20 @@ enum PlayerAnims
 
 Player::Player(string nam, bool isnam, float sx, float sy, int mapx, int mapy)
 {
-name = nam;
-isname = isnam;
-sprx = sx;
-spry = sy;
-posmapax = mapx;
-posmapay = mapy;
+	name = nam;
+	isname = isnam;
+	sprx = sx;
+	spry = sy;
+	posmapax = mapx;
+	posmapay = mapy;
+	sink = false; win = false; push = false; you = false; defeat = false;
 }
 
-
-void Player::init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram)
+void Player::init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram, Texture* ss)
 {
-
+	spritesheet = ss;
 	bJumping = false;
-	spritesheet.loadFromFile("images/text.png", TEXTURE_PIXEL_FORMAT_RGBA);
-	sprite = Sprite::createSprite(glm::ivec2(24, 24), glm::vec2(1.f / 32, 1.f / 66), &spritesheet, &shaderProgram);
+	sprite = Sprite::createSprite(glm::ivec2(24, 24), glm::vec2(1.f / 32, 1.f / 66), spritesheet, &shaderProgram);
 
 	if (name == "baba" && isname == false) {
 		//float a = o.getposx();
@@ -204,7 +203,8 @@ void Player::init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram)
 		sprite->setPosition(glm::vec2(float(tileMapDispl.x + posPlayer.x), float(tileMapDispl.y + posPlayer.y)));
 
 	}
-	
+	int i = 0;
+	++i;
 }
 
 void Player::update(int deltaTime, int i, int j)
@@ -235,10 +235,8 @@ void Player::up(int deltaTime)
 	sprite->update(deltaTime);
 }
 
-
 void Player::render()
 {
-
 	sprite->render();
 }
 
@@ -257,14 +255,19 @@ void Player::setpush(bool b)
 	push = b;
 }
 
+void Player::setdefeat(bool b)
+{
+	defeat = b;
+}
+
+void Player::setwin(bool b)
+{
+	win = b;
+}
+
 void Player::setsink(bool b)
 {
 	sink = b;
-}
-
-void Player::setTileMap(TileMap *tileMap)
-{
-	map = tileMap;
 }
 
 void Player::setPosition(const glm::vec2 &pos)
@@ -306,6 +309,14 @@ int Player::getmapy()
 bool Player::getpush()
 {
 	return push||isname;
+}
+
+bool Player::getdefeat() {
+	return defeat;
+}
+
+bool Player::getwin() {
+	return win;
 }
 
 bool Player::getsink()

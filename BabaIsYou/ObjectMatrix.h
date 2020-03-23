@@ -12,6 +12,7 @@ using namespace std;
 class ObjectMatrix 
 {
 private:
+	bool win;
 	Player **matriu;
 	int nf, nc;
 	int is1x, is1y, is2x, is2y, is3x, is3y;
@@ -21,12 +22,10 @@ private:
 
 public:
 	ObjectMatrix(int f, int c);
-	void updat(int deltaTime);
-	void ini(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram, int i, int j);
-	void setPositio(const glm::vec2 &pos, int i, int j);
-	void setPos(string nom, bool isname, float a, float b, int i, int j);
-	void setTileMa(TileMap *tileMap, int i, int j);
-	void rende();
+	bool getwin();
+	void update(int deltaTime);
+	void setPos(int i, int j ,Player* p);
+	void render();
 	void search_is_dreta_esquerra(int varx, int vary);
 	void search_is_esquerra_dreta(int varx, int vary);
 	void search_is_adalt_abaix(int varx, int vary);

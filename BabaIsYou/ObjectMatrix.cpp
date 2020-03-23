@@ -18,6 +18,7 @@ ObjectMatrix::ObjectMatrix(int c, int f)
 	for (int i = 0; i < nf*nc; ++i) {
 		matriu[i] = nullptr;
 	}
+	win = false;
 	
 }
 
@@ -66,6 +67,19 @@ bool ObjectMatrix::recurs_players(int i, int j, movement m) {
 			return true;
 		}
 		else return false;
+	}
+	if (matriu[next]->getwin()) {
+		time = 600;
+		win = true;
+		delete matriu[next];
+		matriu[next] = matriu[current];
+		matriu[current] = nullptr;
+		return true;
+	}
+	if (matriu[next]->getdefeat()) {
+		delete matriu[current];
+		matriu[current] = nullptr;
+		return true;
 	}
 	else return false;
 }
@@ -181,7 +195,7 @@ void ObjectMatrix::search_is_abaix_adalt(int varx, int vary)
 	}
 }
 
-void ObjectMatrix::updat(int deltaTime)
+void ObjectMatrix::update(int deltaTime)
 {
 	if (time > 0) time -= deltaTime;
 	for (int i = 0; i < nf; ++i) {
@@ -189,6 +203,9 @@ void ObjectMatrix::updat(int deltaTime)
 			if (matriu[nc*i + j] != nullptr) {
 				matriu[nc*i + j]->setsink(false);
 				matriu[nc*i + j]->setpush(false);
+				matriu[nc*i + j]->setdefeat(false);
+				matriu[nc*i + j]->setwin(false);
+				matriu[nc*i + j]->setmove(false);
 			}
 		}
 	}
@@ -254,41 +271,29 @@ void ObjectMatrix::updat(int deltaTime)
 	}
 }
 
-void ObjectMatrix::ini(const glm::ivec2 & tileMapPos, ShaderProgram & shaderProgram, int i, int j)
+void ObjectMatrix::setPos(int i, int j, Player* p)
 {
-	matriu[nc*i + j]->init(tileMapPos, shaderProgram);
-}
+	if (i < nf && j < nc) {
+		string nom = p->getname();
+		matriu[nc*i + j] = p;
+		if (nom == "is1") {
+			is1x = i;
+			is1y = j;
+		}
 
-void ObjectMatrix::setPositio(const glm::vec2 & pos, int i, int j)
-{
-	matriu[nc*i + j]->setPosition(pos);
-}
+		if (nom == "is2") {
+			is2x = i;
+			is2y = j;
+		}
 
-void ObjectMatrix::setPos(string nom, bool isname, float a, float b, int i, int j)
-{
-	matriu[nc*i + j] = new Player(nom, isname, a, b, i, j);
-	if (nom == "is1") {
-		is1x = i;
-		is1y = j;
-	}
-
-	if (nom == "is2") {
-		is2x = i;
-		is2y = j;
-	}
-
-	if (nom == "is3") {
-		is3x = i;
-		is3y = j;
+		if (nom == "is3") {
+			is3x = i;
+			is3y = j;
+		}
 	}
 }
 
-void ObjectMatrix::setTileMa(TileMap *tileMap, int i, int j)
-{
-	matriu[nc*i + j]->setTileMap(tileMap);
-}
-
-void ObjectMatrix::rende()
+void ObjectMatrix::render()
 {
 	for (int i = 0; i < 24; ++i) {
 		for (int j = 0; j < 24; ++j) {
@@ -297,6 +302,10 @@ void ObjectMatrix::rende()
 			}
 		}
 	}
+}
+
+bool ObjectMatrix::getwin() {
+	return win && (time < 1);
 }
 
 //els is que tenen a dreta i esquerra

@@ -44,6 +44,8 @@ public:
 	bool getSpecialKey(int key) const;
 
 private:
+	enum STATE {LEVEL, WIN, MAIN_MENU, CREDITS};
+	STATE estat;
 	bool bPlay;                       // Continue to play game?
 	Scene scene;                      // Scene to render
 	bool keys[256], specialKeys[256]; // Store key states so that 
