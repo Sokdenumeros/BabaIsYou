@@ -1,43 +1,41 @@
-
-#ifndef _SCENE_INCLUDE
-#define _SCENE_INCLUDE
-
-
+#pragma once
 #include <glm/glm.hpp>
 #include "ShaderProgram.h"
 #include "ObjectMatrix.h"
 #include <fstream>
 #include "iostream"
+#include "TexturedQuad.h"
+#include <list>
+#include "Text.h"
+
 using namespace std;
 
 // Scene contains all the entities of our game.
 // It is responsible for updating and render them.
 
 
-class Scene
+class MainMenu
 {
-
 public:
-	Scene();
-	~Scene();
+	MainMenu();
+	~MainMenu();
 
-	void init(string level);
+	void init(string file);
 	void update(int deltaTime);
 	void render();
-	bool getwin();
 
 private:
+	list<string>::iterator Lit;
+	struct Button { int topX, topY, botX, botY; string name; };
+	vector<TexturedQuad*> quads;
+	vector<Texture> texs;
+	vector<Button> buttons;
+	list<string> levels;
 	void initShaders();
-	ObjectMatrix* om;
-	//TileMap* map;
-	//ObjectMatrix* om2;
-	bool win;
 	ShaderProgram texProgram;
 	float currentTime;
 	glm::mat4 projection;
+	Text text;
+	int time, delay;
 
 };
-
-
-#endif // _SCENE_INCLUDE
-

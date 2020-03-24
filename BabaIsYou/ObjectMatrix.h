@@ -15,10 +15,10 @@ private:
 	bool win;
 	Player **matriu;
 	int nf, nc;
-	int is1x, is1y, is2x, is2y, is3x, is3y;
 	enum movement { UP, DOWN, RIGHT, LEFT };
 	bool recurs_players(int i, int j, movement m);
 	int time, delay;
+	vector<pair<int, int>> is;
 
 public:
 	ObjectMatrix(int f, int c);

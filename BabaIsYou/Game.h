@@ -4,7 +4,7 @@
 
 #include "Scene.h"
 #include "AudioEngine.h"
-
+#include "MainMenu.h"
 
 #define SCREEN_WIDTH 640
 #define SCREEN_HEIGHT 480
@@ -39,11 +39,19 @@ public:
 	void mouseMove(int x, int y);
 	void mousePress(int button);
 	void mouseRelease(int button);
-	
+	void loadLevel(string level);
+	void quit();
+
+	bool getMouse();
+	int getMouseX();
+	int getMouseY();
 	bool getKey(int key) const;
 	bool getSpecialKey(int key) const;
 
 private:
+	MainMenu menu;
+	int mousex, mousey;
+	bool mouse;
 	enum STATE {LEVEL, WIN, MAIN_MENU, CREDITS};
 	STATE estat;
 	bool bPlay;                       // Continue to play game?

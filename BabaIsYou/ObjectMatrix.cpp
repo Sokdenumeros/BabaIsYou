@@ -39,9 +39,21 @@ bool ObjectMatrix::recurs_players(int i, int j, movement m) {
 	if (matriu[next] == nullptr) {
 		matriu[next] = matriu[current];
 		matriu[current] = nullptr;
+		if (matriu[next]->getname() == "is") {
+			for (auto it = is.begin(); it != is.end(); ++it) {
+				if (it->first == current / nc && it->second == current%nc) {
+					it->first = i; it->second = j;
+				}
+			}
+		}
 		return true;
 	}
 	if (matriu[next]->getsink()) {
+		if (matriu[current]->getname() == "is") {
+			for (auto it = is.begin(); it != is.end(); ++it) {
+				if (it->first == current / nc && it->second == current%nc) is.erase(it);
+			}
+		}
 		delete matriu[next];
 		delete matriu[current];
 		matriu[current] = nullptr;
@@ -52,23 +64,18 @@ bool ObjectMatrix::recurs_players(int i, int j, movement m) {
 		if (recurs_players(i, j, m)) {
 			matriu[next] = matriu[current];
 			matriu[current] = nullptr;
-			if (matriu[next]->getname() == "is1") {
-				is1x = i;
-				is1y = j;
-			}
-			if (matriu[next]->getname() == "is2") {
-				is2x = i;
-				is2y = j;
-			}
-			if (matriu[next]->getname() == "is3") {
-				is3x = i;
-				is3y = j;
+			if (matriu[next]->getname() == "is") {
+				for (auto it = is.begin(); it != is.end(); ++it) {
+					if (it->first == current / nc && it->second == current%nc) {
+						it->first = i; it->second = j;
+					}
+				}
 			}
 			return true;
 		}
 		else return false;
 	}
-	if (matriu[next]->getwin()) {
+	if (matriu[next]->getwin() && matriu[current]->getmove()) {
 		time = 600;
 		win = true;
 		delete matriu[next];
@@ -76,7 +83,7 @@ bool ObjectMatrix::recurs_players(int i, int j, movement m) {
 		matriu[current] = nullptr;
 		return true;
 	}
-	if (matriu[next]->getdefeat()) {
+	if (matriu[next]->getdefeat() && matriu[current]->getmove()) {
 		delete matriu[current];
 		matriu[current] = nullptr;
 		return true;
@@ -209,22 +216,12 @@ void ObjectMatrix::update(int deltaTime)
 			}
 		}
 	}
-
-	search_is_esquerra_dreta(is1x, is1y);
-	search_is_dreta_esquerra(is1x, is1y);
-	search_is_abaix_adalt(is1x, is1y);
-	search_is_adalt_abaix(is1x, is1y);
-
-	search_is_esquerra_dreta(is2x, is2y);
-	search_is_dreta_esquerra(is2x, is2y);
-	search_is_abaix_adalt(is2x, is2y);
-	search_is_adalt_abaix(is2x, is2y);
-
-	search_is_esquerra_dreta(is3x, is3y);
-	search_is_dreta_esquerra(is3x, is3y);
-	search_is_abaix_adalt(is3x, is3y);
-	search_is_adalt_abaix(is3x, is3y);
-
+	
+	for (auto it = is.begin(); it != is.end(); ++it) {
+		search_is_esquerra_dreta(it->first, it->second);
+		search_is_adalt_abaix(it->first, it->second);
+	}
+	
 	if (Game::instance().getSpecialKey(GLUT_KEY_LEFT) && time < 1)
 	{
 		time = delay;
@@ -274,22 +271,8 @@ void ObjectMatrix::update(int deltaTime)
 void ObjectMatrix::setPos(int i, int j, Player* p)
 {
 	if (i < nf && j < nc) {
-		string nom = p->getname();
 		matriu[nc*i + j] = p;
-		if (nom == "is1") {
-			is1x = i;
-			is1y = j;
-		}
-
-		if (nom == "is2") {
-			is2x = i;
-			is2y = j;
-		}
-
-		if (nom == "is3") {
-			is3x = i;
-			is3y = j;
-		}
+		if (p->getname() == "is") is.push_back(pair<int, int>(i, j));
 	}
 }
 

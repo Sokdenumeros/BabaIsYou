@@ -7,26 +7,29 @@
 void Game::init()
 {
 	estat = MAIN_MENU;
+	menu.init("levels/MainMenu.txt");
 	bPlay = true;
 	glClearColor(0.3f, 0.3f, 0.3f, 1.0f);
-	scene.init("levels/mapa_sprite.txt");
 	AudioEngine::Init();
 	AudioEngine::PlayS("sao.mp3");
+	mouse = false;
 }
 
 bool Game::update(int deltaTime)
 {
 	switch (estat) {
 	case MAIN_MENU:
+		menu.update(deltaTime);
 		break;
 	case LEVEL:
+		scene.update(deltaTime);
 		break;
 	case WIN:
 		break;
 	case CREDITS:
 		break;
 	}
-	scene.update(deltaTime);
+	
 	
 	return bPlay;
 }
@@ -36,15 +39,16 @@ void Game::render()
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	switch (estat) {
 	case MAIN_MENU:
+		menu.render();
 		break;
 	case LEVEL:
+		scene.render();
 		break;
 	case WIN:
 		break;
 	case CREDITS:
 		break;
 	}
-	scene.render();
 }
 
 void Game::keyPressed(int key)
@@ -71,14 +75,18 @@ void Game::specialKeyReleased(int key)
 
 void Game::mouseMove(int x, int y)
 {
+	mousex = x;
+	mousey = y;
 }
 
 void Game::mousePress(int button)
 {
+	mouse = true;
 }
 
 void Game::mouseRelease(int button)
 {
+	mouse = false;
 }
 
 bool Game::getKey(int key) const
@@ -91,7 +99,24 @@ bool Game::getSpecialKey(int key) const
 	return specialKeys[key];
 }
 
+bool Game::getMouse() {
+	return mouse;
+}
 
+int Game::getMouseX() {
+	return mousex;
+}
 
+int Game::getMouseY() {
+	return mousey;
+}
 
+void Game::loadLevel(string level) {
+	estat = LEVEL;
+	scene.init(level);
+}
+
+void Game::quit() {
+	bPlay = false;
+}
 
