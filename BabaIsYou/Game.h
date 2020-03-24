@@ -41,6 +41,8 @@ public:
 	void mouseRelease(int button);
 	void loadLevel(string level);
 	void quit();
+	void loadCredits();
+	void loadMenu();
 
 	bool getMouse();
 	int getMouseX();
@@ -50,12 +52,13 @@ public:
 
 private:
 	MainMenu menu;
+	Scene scene;
+	Text credits;
 	int mousex, mousey;
 	bool mouse;
-	enum STATE {LEVEL, WIN, MAIN_MENU, CREDITS};
+	enum STATE {LEVEL, MAIN_MENU, CREDITS};
 	STATE estat;
 	bool bPlay;                       // Continue to play game?
-	Scene scene;                      // Scene to render
 	bool keys[256], specialKeys[256]; // Store key states so that 
 	                                  // we can have access at any time
 

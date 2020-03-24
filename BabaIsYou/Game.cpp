@@ -6,8 +6,7 @@
 
 void Game::init()
 {
-	estat = MAIN_MENU;
-	menu.init("levels/MainMenu.txt");
+	loadMenu();
 	bPlay = true;
 	glClearColor(0.3f, 0.3f, 0.3f, 1.0f);
 	AudioEngine::Init();
@@ -24,9 +23,8 @@ bool Game::update(int deltaTime)
 	case LEVEL:
 		scene.update(deltaTime);
 		break;
-	case WIN:
-		break;
 	case CREDITS:
+		if(mouse) loadMenu();
 		break;
 	}
 	
@@ -44,9 +42,8 @@ void Game::render()
 	case LEVEL:
 		scene.render();
 		break;
-	case WIN:
-		break;
 	case CREDITS:
+		credits.render("Joan Manel Finestres Baldric \n Sergi Curto Panisello", glm::vec2(100, 100), 32, glm::vec4(1, 1, 1, 1));
 		break;
 	}
 }
@@ -116,7 +113,16 @@ void Game::loadLevel(string level) {
 	scene.init(level);
 }
 
+void Game::loadCredits() {
+	estat = CREDITS;
+}
+
 void Game::quit() {
 	bPlay = false;
+}
+
+void Game::loadMenu() {
+	estat = MAIN_MENU;
+	menu.init("levels/MainMenu.txt");
 }
 

@@ -96,7 +96,10 @@ void MainMenu::update(int deltaTime) {
 					Game::instance().loadLevel("levels/"+*Lit+".txt");
 				}
 				else if (buttons[i].name == "Credits") {
-
+					Game::instance().loadCredits();
+				}
+				else if (buttons[i].name == "Quit") {
+					Game::instance().quit();
 				}
 			}
 		}

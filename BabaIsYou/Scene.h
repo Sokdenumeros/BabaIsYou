@@ -8,6 +8,7 @@
 #include "ObjectMatrix.h"
 #include <fstream>
 #include "iostream"
+#include "Text.h"
 using namespace std;
 
 // Scene contains all the entities of our game.
@@ -35,6 +36,8 @@ private:
 	ShaderProgram texProgram;
 	float currentTime;
 	glm::mat4 projection;
+	Text victory;
+	int time;
 
 };
 
