@@ -29,7 +29,6 @@ Player::Player(string nam, bool isnam, float sx, float sy, int mapx, int mapy)
 void Player::init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram, Texture* ss)
 {
 	spritesheet = ss;
-	bJumping = false;
 	sprite = Sprite::createSprite(glm::ivec2(24, 24), glm::vec2(1.f / 32, 1.f / 66), spritesheet, &shaderProgram);
 
 	if (name == "baba" && isname == false) {
@@ -308,6 +307,11 @@ bool Player::getpush()
 	return push||isname;
 }
 
+string Player::getsomeone()
+{
+	return someone;
+}
+
 bool Player::getdefeat() {
 	return defeat;
 }
@@ -324,6 +328,16 @@ bool Player::getsink()
 void Player::setmapy(int j)
 {
 	posmapay = j;
+}
+
+void Player::setmapax(int i)
+{
+	posmapax = i;
+}
+
+void Player::setsomeone(string s)
+{
+	someone = s;
 }
 
 

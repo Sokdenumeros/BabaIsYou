@@ -51,6 +51,8 @@ void Scene::init(string level)
 	
 }
 
+
+
 void Scene::update(int deltaTime)
 {
 	currentTime += deltaTime;

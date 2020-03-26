@@ -28,6 +28,7 @@ public:
 	bool getmove();
 	void setmove(bool b);
 	bool getpush();
+	string getsomeone();
 	void setpush(bool b);
 	bool getsink();
 	void setsink(bool b);
@@ -36,6 +37,8 @@ public:
 	bool getdefeat();
 	void setdefeat(bool b);
 	void setmapy(int j);
+	void setmapax(int i);
+	void setsomeone(string s);
 	
 private:
 	bool bJumping;
@@ -45,13 +48,12 @@ private:
 	Texture *spritesheet;
 	Sprite *sprite;
 	int sizex, sizey;
-	vector<vector<int>> matriu;
 	
 	int tamany;
 	float sprx, spry;
-	Sprite* spr;
 	string name;
 	bool win, defeat, you, sink, push;
+	string someone = "ningu";
 	bool isname;
 	int posmapax, posmapay;
 	bool move = false;

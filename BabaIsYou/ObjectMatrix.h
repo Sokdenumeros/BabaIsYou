@@ -19,6 +19,7 @@ private:
 	bool recurs_players(int i, int j, movement m);
 	int time, delay;
 	vector<pair<int, int>> is;
+	
 
 public:
 	ObjectMatrix(int f, int c);
@@ -26,10 +27,8 @@ public:
 	void update(int deltaTime);
 	void setPos(int i, int j ,Player* p);
 	void render();
-	void search_is_dreta_esquerra(int varx, int vary);
 	void search_is_esquerra_dreta(int varx, int vary);
 	void search_is_adalt_abaix(int varx, int vary);
-	void search_is_abaix_adalt(int varx, int vary);
 
 
 };

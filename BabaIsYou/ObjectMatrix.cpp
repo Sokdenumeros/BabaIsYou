@@ -36,6 +36,13 @@ bool ObjectMatrix::recurs_players(int i, int j, movement m) {
 	}
 	if (j < 0 || j >= nf || i < 0 || i >= nc) return false;
 	int next = nc*i +j;
+	if (matriu[current]->getsink()) {
+		delete matriu[next];
+		delete matriu[current];
+		matriu[current] = nullptr;
+		matriu[next] = nullptr;
+		return true;
+	}
 	if (matriu[next] == nullptr) {
 		matriu[next] = matriu[current];
 		matriu[current] = nullptr;
@@ -91,32 +98,6 @@ bool ObjectMatrix::recurs_players(int i, int j, movement m) {
 	else return false;
 }
 
-void ObjectMatrix::search_is_dreta_esquerra(int varx, int vary)
-{
-	if (matriu[nc*(varx + 1) + vary] != nullptr && matriu[nc*(varx + 1) + vary]->itsname() == true) {
-		if (matriu[nc*(varx - 1) + vary] != nullptr && matriu[nc*(varx - 1) + vary]->getname() == "you") {
-			for (int i = 0; i < 24; ++i) {
-				for (int j = 0; j < 24; ++j) {
-					if (matriu[nc*i + j] != nullptr && matriu[nc*i + j]->getname() == matriu[nc*(varx + 1) + vary]->getname() && matriu[nc*i + j]->itsname() == false) {
-						matriu[nc*i + j]->setmove(true);
-					}
-				}
-			}
-		}
-		if (matriu[nc*(varx - 1) + vary] != nullptr && matriu[nc*(varx - 1) + vary]->getname() == "push") {
-			for (int i = 0; i < 24; ++i) {
-				for (int j = 0; j < 24; ++j) {
-					if (matriu[nc*i + j] != nullptr && matriu[nc*i + j]->getname() == matriu[nc*(varx + 1) + vary]->getname() && matriu[nc*i + j]->itsname() == false) {
-						matriu[nc*i + j]->setpush(true);
-					}
-				}
-			}
-		}
-		
-
-	}
-}
-
 void ObjectMatrix::search_is_esquerra_dreta(int varx, int vary)
 {
 	if (matriu[nc*(varx - 1) + vary] != nullptr && matriu[nc*(varx - 1) + vary]->itsname() == true) {
@@ -149,6 +130,37 @@ void ObjectMatrix::search_is_esquerra_dreta(int varx, int vary)
 			}
 		}
 
+		if (matriu[nc*(varx + 1) + vary] != nullptr && matriu[nc*(varx + 1) + vary]->getname() == "defeat") {
+			for (int i = 0; i < 24; ++i) {
+				for (int j = 0; j < 24; ++j) {
+					if (matriu[nc*i + j] != nullptr && matriu[nc*i + j]->getname() == matriu[nc*(varx - 1) + vary]->getname() && matriu[nc*i + j]->itsname() == false) {
+						matriu[nc*i + j]->setdefeat(true);
+					}
+				}
+			}
+		}
+
+
+		if (matriu[nc*(varx + 1) + vary] != nullptr && matriu[nc*(varx + 1) + vary]->getname() == "win") {
+			for (int i = 0; i < 24; ++i) {
+				for (int j = 0; j < 24; ++j) {
+					if (matriu[nc*i + j] != nullptr && matriu[nc*i + j]->getname() == matriu[nc*(varx - 1) + vary]->getname() && matriu[nc*i + j]->itsname() == false) {
+						matriu[nc*i + j]->setwin(true);
+					}
+				}
+			}
+		}
+
+		if (matriu[nc*(varx + 1) + vary] != nullptr && matriu[nc*(varx + 1) + vary]->itsname() == true && (matriu[nc*(varx + 1) + vary]->getname() == "baba" || matriu[nc*(varx + 1) + vary]->getname() == "rock" || matriu[nc*(varx + 1) + vary]->getname() == "flag")) {
+			for (int i = 0; i < 24; ++i) {
+				for (int j = 0; j < 24; ++j) {
+					if (matriu[nc*i + j] != nullptr && matriu[nc*i + j]->getname() == matriu[nc*(varx - 1) + vary]->getname() && matriu[nc*i + j]->itsname() == false) {
+						matriu[nc*i + j]->setsomeone(matriu[nc*(varx + 1) + vary]->getname());
+					}
+				}
+			}
+		}
+
 		
 	}
 }
@@ -174,45 +186,73 @@ void ObjectMatrix::search_is_adalt_abaix(int varx, int vary)
 				}
 			}
 		}
-		
-	}
-}
+		if (matriu[nc*(varx) + (vary + 1)] != nullptr && matriu[nc*(varx) + (vary + 1)]->getname() == "sink") {
+			for (int i = 0; i < 24; ++i) {
+				for (int j = 0; j < 24; ++j) {
+					if (matriu[nc*i + j] != nullptr && matriu[nc*i + j]->getname() == matriu[nc*(varx) + (vary-1)]->getname() && matriu[nc*i + j]->itsname() == false) {
+						matriu[nc*i + j]->setsink(true);
+					}
+				}
+			}
+		}
 
-void ObjectMatrix::search_is_abaix_adalt(int varx, int vary)
-{
-	if (matriu[nc*(varx)+(vary + 1)] != nullptr && matriu[nc*(varx)+(vary + 1)]->itsname() == true) {
-		if (matriu[nc*(varx)+(vary - 1)] != nullptr && matriu[nc*(varx)+(vary - 1)]->getname() == "you") {
+		if (matriu[nc*(varx)+(vary + 1)] != nullptr && matriu[nc*(varx)+(vary + 1)]->getname() == "defeat") {
 			for (int i = 0; i < 24; ++i) {
 				for (int j = 0; j < 24; ++j) {
-					if (matriu[nc*i + j] != nullptr && matriu[nc*i + j]->getname() == matriu[nc*(varx)+(vary + 1)]->getname() && matriu[nc*i + j]->itsname() == false) {
-						matriu[nc*i + j]->setmove(true);
+					if (matriu[nc*i + j] != nullptr && matriu[nc*i + j]->getname() == matriu[nc*(varx)+(vary - 1)]->getname() && matriu[nc*i + j]->itsname() == false) {
+						matriu[nc*i + j]->setdefeat(true);
 					}
 				}
 			}
 		}
-		if (matriu[nc*(varx)+(vary - 1)] != nullptr && matriu[nc*(varx)+(vary - 1)]->getname() == "push") {
+
+		if (matriu[nc*(varx)+(vary + 1)] != nullptr && matriu[nc*(varx)+(vary + 1)]->getname() == "win") {
 			for (int i = 0; i < 24; ++i) {
 				for (int j = 0; j < 24; ++j) {
-					if (matriu[nc*i + j] != nullptr && matriu[nc*i + j]->getname() == matriu[nc*(varx)+(vary + 1)]->getname() && matriu[nc*i + j]->itsname() == false) {
-						matriu[nc*i + j]->setpush(true);
+					if (matriu[nc*i + j] != nullptr && matriu[nc*i + j]->getname() == matriu[nc*(varx)+(vary - 1)]->getname() && matriu[nc*i + j]->itsname() == false) {
+						matriu[nc*i + j]->setwin(true);
 					}
 				}
 			}
 		}
+		
 	}
 }
 
 void ObjectMatrix::update(int deltaTime)
 {
+	
+	string name;
 	if (time > 0) time -= deltaTime;
 	for (int i = 0; i < nf; ++i) {
 		for (int j = 0; j < nc; ++j) {
 			if (matriu[nc*i + j] != nullptr) {
-				matriu[nc*i + j]->setsink(false);
-				matriu[nc*i + j]->setpush(false);
-				matriu[nc*i + j]->setdefeat(false);
-				matriu[nc*i + j]->setwin(false);
-				matriu[nc*i + j]->setmove(false);
+				if (matriu[nc*i + j]->getsomeone() != "ningu") {
+					//delete matriu[nc*i + j];
+					for (int x = 0; x < nf; ++x) {
+						for (int z = 0; z < nc; ++z) {
+							if (matriu[nc*x + z] != nullptr && matriu[nc*x + z]->getname() == matriu[nc*i + j]->getsomeone()) {
+
+								name = matriu[nc*i + j]->getsomeone();
+								delete matriu[nc*i + j];
+								matriu[nc*i + j] = nullptr;
+								matriu[nc*i + j] = new Player(name, false, matriu[nc*x + z]->getposx(), matriu[nc*x + z]->getposy(), i, j); //copia un player
+								z = nc;
+								x = nf;
+							}
+							
+						}
+					}
+				}
+
+				if (matriu[nc*i + j] != nullptr) {
+					matriu[nc*i + j]->setsink(false);
+					matriu[nc*i + j]->setpush(false);
+					matriu[nc*i + j]->setdefeat(false);
+					matriu[nc*i + j]->setwin(false);
+					matriu[nc*i + j]->setmove(false);
+					matriu[nc*i + j]->setsomeone("ningu");
+				}
 			}
 		}
 	}
