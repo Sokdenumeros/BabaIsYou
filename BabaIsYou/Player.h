@@ -12,6 +12,7 @@ class Player
 {
 
 public:
+	Player(Player* P, int x, int y);
 	Player(string nam, bool isnam, float sx, float sy, int mapx, int mapy);
 	void init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram, Texture* ss);
 	void update(int deltaTime, int i, int j);
@@ -23,8 +24,6 @@ public:
 	float getposy();
 	string getname();
 	bool itsname();
-	int getmapx();
-	int getmapy();
 	bool getmove();
 	void setmove(bool b);
 	bool getpush();
@@ -36,27 +35,19 @@ public:
 	void setwin(bool b);
 	bool getdefeat();
 	void setdefeat(bool b);
-	void setmapy(int j);
-	void setmapax(int i);
 	void setsomeone(string s);
 	
 private:
-	bool bJumping;
-	bool movent = false;
 	glm::ivec2 tileMapDispl, posPlayer;
-	int jumpAngle, startY;
 	Texture *spritesheet;
 	Sprite *sprite;
-	int sizex, sizey;
 	
-	int tamany;
 	float sprx, spry;
 	string name;
 	bool win, defeat, you, sink, push;
 	string someone = "ningu";
 	bool isname;
-	int posmapax, posmapay;
-	bool move = false;
+	bool move;
 
 };
 

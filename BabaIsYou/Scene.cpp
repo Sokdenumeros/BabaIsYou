@@ -26,6 +26,8 @@ Scene::~Scene()
 
 void Scene::init(string level)
 {
+	lv = level;
+	victory.init("fonts/OpenSans-Regular.ttf");
 	currentTime = 0.0f;
 	win = false;
 	initShaders();
@@ -62,6 +64,7 @@ void Scene::update(int deltaTime)
 		if (win) time = currentTime;
 	}
 	if (win && currentTime - time > 2000) Game::instance().loadMenu();
+	if (Game::instance().getKey(114)) Game::instance().loadLevel(lv);
 
 }
 

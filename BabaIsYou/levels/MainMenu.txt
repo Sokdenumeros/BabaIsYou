@@ -1,4 +1,4 @@
 3
-RightArrow 	images/RA.jpg 0 400 100 500
-LeftArrow 	images/RA.jpg 0 0 100 100
-Play 		images/RA.jpg 350 300 450 400 
+LeftArrow 	images/RA.jpg 0 0
+RightArrow 	images/RA.jpg 50 50
+Play 		images/RA.jpg 350 300

@@ -17,13 +17,23 @@ enum PlayerAnims
 
 Player::Player(string nam, bool isnam, float sx, float sy, int mapx, int mapy)
 {
+	move = false;
 	name = nam;
 	isname = isnam;
 	sprx = sx;
 	spry = sy;
-	posmapax = mapx;
-	posmapay = mapy;
 	sink = false; win = false; push = false; you = false; defeat = false;
+}
+
+Player::Player(Player* P, int x, int y) {
+	name = P->name;
+	isname = P->isname;
+	sprx = P->sprx;
+	spry = P->spry;
+	sink = P->sink; win = P->win; push = P->push; you = P->you; defeat = P->defeat; move = P->move;
+	tileMapDispl = P->tileMapDispl; posPlayer.x = x; posPlayer.y = y; spritesheet = P->spritesheet;
+	init(tileMapDispl, *P->sprite->getShaderProgram(),P->spritesheet);
+	setPosition(posPlayer);
 }
 
 void Player::init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram, Texture* ss)
@@ -32,9 +42,6 @@ void Player::init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram, Te
 	sprite = Sprite::createSprite(glm::ivec2(24, 24), glm::vec2(1.f / 32, 1.f / 66), spritesheet, &shaderProgram);
 
 	if (name == "baba" && isname == false) {
-		//float a = o.getposx();
-
-		
 
 		sprite->setNumberAnimations(40);
 
@@ -205,19 +212,19 @@ void Player::init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram, Te
 
 void Player::update(int deltaTime, int i, int j)
 {
-	if (posPlayer.x > i * 20) {
+	if (posPlayer.x > i * 24) {
 		posPlayer.x -= 2;
 		if (name == "baba" && isname == false && posPlayer.x % 20 == 18) sprite->changeAnimation(MOVE_LEFT1 + (++count % 5));
 	}
-	if (posPlayer.x < i * 20) {
+	if (posPlayer.x < i * 24) {
 		posPlayer.x += 2;
 		if (name == "baba" && isname == false && posPlayer.x % 20 == 2) sprite->changeAnimation(MOVE_RIGHT1 + (++count % 5));
 	}
-	if (posPlayer.y > j * 20) {
+	if (posPlayer.y > j * 24) {
 		posPlayer.y -= 2;
 		if (name == "baba" && isname == false && posPlayer.y % 20 == 18) sprite->changeAnimation(MOVE_UP1 + (++count % 5));
 	}
-	if (posPlayer.y < j * 20) {
+	if (posPlayer.y < j * 24) {
 		posPlayer.y += 2;
 		if (name == "baba" && isname == false && posPlayer.y%20 == 2) sprite->changeAnimation(MOVE_DOWN1 + (++count%5));
 	}
@@ -292,16 +299,6 @@ bool Player::itsname()
 	return isname;
 }
 
-int Player::getmapx()
-{
-	return posmapax;
-}
-
-int Player::getmapy()
-{
-	return posmapay;
-}
-
 bool Player::getpush()
 {
 	return push||isname;
@@ -323,16 +320,6 @@ bool Player::getwin() {
 bool Player::getsink()
 {
 	return sink;
-}
-
-void Player::setmapy(int j)
-{
-	posmapay = j;
-}
-
-void Player::setmapax(int i)
-{
-	posmapax = i;
 }
 
 void Player::setsomeone(string s)

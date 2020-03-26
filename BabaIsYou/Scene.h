@@ -28,6 +28,7 @@ public:
 	bool getwin();
 
 private:
+	string lv;
 	void initShaders();
 	ObjectMatrix* om;
 	//TileMap* map;

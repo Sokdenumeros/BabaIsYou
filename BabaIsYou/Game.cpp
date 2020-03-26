@@ -6,6 +6,7 @@
 
 void Game::init()
 {
+	credits.init("fonts/OpenSans-Regular.ttf");
 	loadMenu();
 	bPlay = true;
 	glClearColor(0.3f, 0.3f, 0.3f, 1.0f);
@@ -27,8 +28,6 @@ bool Game::update(int deltaTime)
 		if(mouse) loadMenu();
 		break;
 	}
-	
-	
 	return bPlay;
 }
 

@@ -27,8 +27,6 @@ public:
 	void update(int deltaTime);
 	void setPos(int i, int j ,Player* p);
 	void render();
-	void search_is_esquerra_dreta(int varx, int vary);
-	void search_is_adalt_abaix(int varx, int vary);
-
+	void search_is(int varx, int vary, bool vertical);
 
 };

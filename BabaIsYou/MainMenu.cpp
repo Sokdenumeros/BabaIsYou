@@ -33,15 +33,16 @@ void MainMenu::init(string file) {
 	glm::vec2 texCoords[2] = { glm::vec2(0.f, 0.f), glm::vec2(1.f, 1.f) };
 	geom[0] = glm::vec2(0.f, 0.f);
 	for (int i = 0; i < nbuttons; ++i) {
-		in >> name >> texturefile >> topY >> topX >> botY >> botX;
-		geom[1] = glm::vec2(botX-topX, botY - topY);
+		in >> name >> texturefile >> topY >> topX;
+		texs[i].loadFromFile(texturefile, TEXTURE_PIXEL_FORMAT_RGBA);
+		geom[1] = glm::vec2(texs[i].width(), texs[i].height());
 		buttons[i].name = name;
-		buttons[i].botX = botX;
+		buttons[i].botX = topX + texs[i].width();
 		buttons[i].topX = topX;
 		buttons[i].topY = topY;
-		buttons[i].botY = botY;
+		buttons[i].botY = topY + texs[i].height();
 		quads[i] = TexturedQuad::createTexturedQuad(geom, texCoords, texProgram);
-		texs[i].loadFromFile(texturefile, TEXTURE_PIXEL_FORMAT_RGBA);
+		
 	}
 }
 
