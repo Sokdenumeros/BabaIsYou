@@ -44,10 +44,9 @@ private:
 	
 	float sprx, spry;
 	string name;
-	bool win, defeat, you, sink, push;
+	bool win, defeat, move, sink, push;
 	string someone = "ningu";
 	bool isname;
-	bool move;
 
 };
 

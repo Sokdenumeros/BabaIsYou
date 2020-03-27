@@ -22,7 +22,7 @@ Player::Player(string nam, bool isnam, float sx, float sy, int mapx, int mapy)
 	isname = isnam;
 	sprx = sx;
 	spry = sy;
-	sink = false; win = false; push = false; you = false; defeat = false;
+	sink = false; win = false; push = false; defeat = false;
 }
 
 Player::Player(Player* P, int x, int y) {
@@ -30,7 +30,7 @@ Player::Player(Player* P, int x, int y) {
 	isname = P->isname;
 	sprx = P->sprx;
 	spry = P->spry;
-	sink = P->sink; win = P->win; push = P->push; you = P->you; defeat = P->defeat; move = P->move;
+	sink = P->sink; win = P->win; push = P->push; defeat = P->defeat; move = P->move;
 	tileMapDispl = P->tileMapDispl; posPlayer.x = x; posPlayer.y = y; spritesheet = P->spritesheet;
 	init(tileMapDispl, *P->sprite->getShaderProgram(),P->spritesheet);
 	setPosition(posPlayer);
