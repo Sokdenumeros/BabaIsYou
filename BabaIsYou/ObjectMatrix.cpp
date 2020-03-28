@@ -24,6 +24,7 @@ ObjectMatrix::ObjectMatrix(int c, int f)
 
 bool ObjectMatrix::recurs_players(int i, int j, movement m) {
 	int current = nc*i + j;
+	string sc, sn;
 	switch (m) {
 	case UP:
 		j -= 1; break;
@@ -61,10 +62,25 @@ bool ObjectMatrix::recurs_players(int i, int j, movement m) {
 				if (it->first == current / nc && it->second == current%nc) is.erase(it);
 			}
 		}
+		Player* pc = nullptr;
+		Player* pn = nullptr;
+		sc = matriu[current]->gethasname();
+		sn = matriu[next]->gethasname();
 		delete matriu[next];
 		delete matriu[current];
-		matriu[current] = nullptr;
-		matriu[next] = nullptr;
+		if(sc != "ningu") {
+			for (int i = 0; i < nc*nf && pc == nullptr; ++i) if (matriu[i] != nullptr && !matriu[i]->itsname() && matriu[i]->getname() == sc) pc = matriu[i];
+			
+			matriu[current] = new Player(pc, (current / nc) * 24, (current%nc) * 24);
+		}
+		else matriu[current] = nullptr;
+
+		if (sn != "ningu") {
+			for (int i = 0; i < nc*nf && pn == nullptr; ++i) if (matriu[i] != nullptr && !matriu[i]->itsname() && matriu[i]->getname() == sn) pn = matriu[i];
+			matriu[next] = new Player(pn, (next / nc) * 24, (next%nc) * 24);
+		}
+		else matriu[next] = nullptr;
+
 		return true;
 	}
 	if (matriu[next]->getpush()) {
@@ -91,8 +107,16 @@ bool ObjectMatrix::recurs_players(int i, int j, movement m) {
 		return true;
 	}
 	if (matriu[next]->getdefeat() && matriu[current]->getmove()) {
+		Player* pd = nullptr;
+		sc = matriu[current]->gethasname();
 		delete matriu[current];
-		matriu[current] = nullptr;
+		if (sc != "ningu") {
+			for (int i = 0; i < nc*nf && pd == nullptr; ++i) if (matriu[i] != nullptr && !matriu[i]->itsname() && matriu[i]->getname() == sc) pd = matriu[i];
+
+			matriu[current] = new Player(pd, (current / nc) * 24, (current%nc) * 24);
+		}
+		else matriu[current] = nullptr;
+		
 		return true;
 	}
 	else return false;
@@ -161,6 +185,44 @@ void ObjectMatrix::search_is(int varx, int vary, bool vertical)
 	}
 }
 
+void ObjectMatrix::search_has()
+{
+	int right, left, up, down;
+	for (int i = 0; i < 24; ++i) {
+		for (int j = 0; j < 24; ++j) {
+			if (matriu[nc*i + j] != nullptr && matriu[nc*i + j]->getname() == "has") {
+				right = nc*(i + 1) + j;
+				left = nc*(i - 1) + j;
+				up = nc*i + (j - 1);
+				down = nc*i + (j + 1);
+				if (matriu[right] != nullptr && matriu[left] != nullptr) {
+					if (matriu[left]->itsname() == true && matriu[right]->itsname() == true) {
+						for (int i = 0; i < 24; ++i) {
+							for (int j = 0; j < 24; ++j) {
+								if (matriu[nc*i + j] != nullptr && matriu[nc*i + j]->getname() == matriu[left]->getname() && matriu[nc*i + j]->itsname() == false) {
+									matriu[nc*i + j]->sethasname(matriu[right]->getname());
+								}
+							}
+						}
+					}
+				}
+
+				if (matriu[up] != nullptr && matriu[down] != nullptr) {
+					if (matriu[down]->itsname() == true && matriu[up]->itsname() == true) {
+						for (int i = 0; i < 24; ++i) {
+							for (int j = 0; j < 24; ++j) {
+								if (matriu[nc*i + j] != nullptr && matriu[nc*i + j]->getname() == matriu[up]->getname() && matriu[nc*i + j]->itsname() == false) {
+									matriu[nc*i + j]->sethasname(matriu[down]->getname());
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+} 
+
 
 void ObjectMatrix::update(int deltaTime)
 {
@@ -175,6 +237,7 @@ void ObjectMatrix::update(int deltaTime)
 				matriu[nc*i + j]->setdefeat(false);
 				matriu[nc*i + j]->setwin(false);
 				matriu[nc*i + j]->setmove(false);
+				matriu[nc*i + j]->sethasname("ningu");
 			}
 		}
 	}
@@ -183,6 +246,8 @@ void ObjectMatrix::update(int deltaTime)
 		search_is(it->first, it->second,true);
 		search_is(it->first, it->second,false);
 	}
+
+	search_has();
 	
 	if (Game::instance().getSpecialKey(GLUT_KEY_LEFT) && time < 1)
 	{

@@ -27,15 +27,15 @@ public:
 	bool getmove();
 	void setmove(bool b);
 	bool getpush();
-	string getsomeone();
 	void setpush(bool b);
+	void sethasname(string s);
+	string gethasname();
 	bool getsink();
 	void setsink(bool b);
 	bool getwin();
 	void setwin(bool b);
 	bool getdefeat();
 	void setdefeat(bool b);
-	void setsomeone(string s);
 	
 private:
 	glm::ivec2 tileMapDispl, posPlayer;
@@ -45,7 +45,7 @@ private:
 	float sprx, spry;
 	string name;
 	bool win, defeat, move, sink, push;
-	string someone = "ningu";
+	string hasname = "ningu";
 	bool isname;
 
 };

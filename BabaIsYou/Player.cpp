@@ -258,6 +258,16 @@ void Player::setpush(bool b)
 	push = b;
 }
 
+void Player::sethasname(string s)
+{
+	hasname = s;
+}
+
+string Player::gethasname()
+{
+	return hasname;
+}
+
 void Player::setdefeat(bool b)
 {
 	defeat = b;
@@ -304,11 +314,6 @@ bool Player::getpush()
 	return push||isname;
 }
 
-string Player::getsomeone()
-{
-	return someone;
-}
-
 bool Player::getdefeat() {
 	return defeat;
 }
@@ -321,12 +326,6 @@ bool Player::getsink()
 {
 	return sink;
 }
-
-void Player::setsomeone(string s)
-{
-	someone = s;
-}
-
 
 
 
