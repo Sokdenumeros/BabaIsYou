@@ -43,8 +43,10 @@ public:
 	void quit();
 	void loadCredits();
 	void loadMenu();
+	void setutilitzat(bool b);
 
 	bool getMouse();
+	bool getutilitzat();
 	int getMouseX();
 	int getMouseY();
 	bool getKey(int key) const;
@@ -58,7 +60,8 @@ private:
 	bool mouse;
 	enum STATE {LEVEL, MAIN_MENU, CREDITS};
 	STATE estat;
-	bool bPlay;                       // Continue to play game?
+	bool bPlay;
+	bool utilitzat = false;// Continue to play game?
 	bool keys[256], specialKeys[256]; // Store key states so that 
 	                                  // we can have access at any time
 

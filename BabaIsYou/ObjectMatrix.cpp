@@ -221,7 +221,24 @@ void ObjectMatrix::search_has()
 			}
 		}
 	}
-} 
+}
+
+void ObjectMatrix::explota(int pos)
+{
+	Player* pd = nullptr;
+	string s;
+
+	if (matriu[pos] != nullptr) {
+		s = matriu[pos]->gethasname();
+		delete matriu[pos];
+		if (s != "ningu") {
+			for (int i = 0; i < nc*nf && pd == nullptr; ++i) if (matriu[i] != nullptr && !matriu[i]->itsname() && matriu[i]->getname() == s) pd = matriu[i];
+
+			matriu[pos] = new Player(pd, (pos / nc) * 24, (pos%nc) * 24);
+		}
+		else matriu[pos] = nullptr;
+	}
+}
 
 
 void ObjectMatrix::update(int deltaTime)
@@ -288,6 +305,30 @@ void ObjectMatrix::update(int deltaTime)
 			}
 		}
 	}
+
+	if (Game::instance().getKey(32) == true && Game::instance().getutilitzat() == false)
+	{
+		Game::instance().setutilitzat(true);
+		int right, left, up, down;
+		
+		for (int i = 0; i < nf; ++i) {
+			for (int j = nc - 1; j >= 0; --j) {
+				if (matriu[nc*i + j] != nullptr && matriu[nc*i + j]->getmove()) {
+					right = nc*(i + 1) + j;
+					left = nc*(i - 1) + j;
+					up = nc*i + (j - 1);
+					down = nc*i + (j + 1);
+
+					explota(right);
+					explota(left);
+					explota(up);
+					explota(down);
+				}
+			}
+		}
+	}
+
+
 	for (int i = 0; i < nf; ++i) {
 		for (int j = 0; j < nc; ++j) {
 			if (matriu[nc*i + j] != nullptr) matriu[nc*i + j]->update(deltaTime, i, j);

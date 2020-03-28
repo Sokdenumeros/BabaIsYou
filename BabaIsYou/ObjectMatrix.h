@@ -29,5 +29,6 @@ public:
 	void render();
 	void search_is(int varx, int vary, bool vertical);
 	void search_has();
+	void explota(int pos);
 
 };

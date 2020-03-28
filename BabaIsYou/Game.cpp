@@ -99,6 +99,11 @@ bool Game::getMouse() {
 	return mouse;
 }
 
+bool Game::getutilitzat()
+{
+	return utilitzat;
+}
+
 int Game::getMouseX() {
 	return mousex;
 }
@@ -123,5 +128,10 @@ void Game::quit() {
 void Game::loadMenu() {
 	estat = MAIN_MENU;
 	menu.init("levels/MainMenu.txt");
+}
+
+void Game::setutilitzat(bool b)
+{
+	utilitzat = true;
 }
 
