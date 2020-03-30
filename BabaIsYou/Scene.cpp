@@ -66,6 +66,7 @@ void Scene::update(int deltaTime)
 	if (win && currentTime - time > 2000) Game::instance().loadMenu();
 	if (Game::instance().getKey(114)) {
 		
+		
 		Game::instance().loadLevel(lv);
 		
 	}

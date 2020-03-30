@@ -8,6 +8,7 @@
 
 
 
+
 ObjectMatrix::ObjectMatrix(int c, int f)
 {
 	nf = f;
@@ -99,6 +100,7 @@ bool ObjectMatrix::recurs_players(int i, int j, movement m) {
 		else return false;
 	}
 	if (matriu[next]->getwin() && matriu[current]->getmove()) {
+		AudioEngine::PlayS("victory.mp3");
 		time = 600;
 		win = true;
 		delete matriu[next];
@@ -231,6 +233,11 @@ void ObjectMatrix::explota(int pos)
 	if (matriu[pos] != nullptr) {
 		s = matriu[pos]->gethasname();
 		delete matriu[pos];
+
+		for (int i = 0; i < nc*nf && pd == nullptr; ++i) if (matriu[i] != nullptr && !matriu[i]->itsname() && matriu[i]->getname() == "foc") pd = matriu[i];
+
+		matriu[pos] = new Player(pd, (pos / nc) * 24, (pos%nc) * 24);
+
 		if (s != "ningu") {
 			for (int i = 0; i < nc*nf && pd == nullptr; ++i) if (matriu[i] != nullptr && !matriu[i]->itsname() && matriu[i]->getname() == s) pd = matriu[i];
 
@@ -243,6 +250,8 @@ void ObjectMatrix::explota(int pos)
 
 void ObjectMatrix::update(int deltaTime)
 {
+
+	
 	
 	string name;
 	if (time > 0) time -= deltaTime;
@@ -268,6 +277,7 @@ void ObjectMatrix::update(int deltaTime)
 	
 	if (Game::instance().getSpecialKey(GLUT_KEY_LEFT) && time < 1)
 	{
+		AudioEngine::PlayS("moviment.mp3");
 		time = delay;
 		for (int i = 0; i < nf; ++i) {
 			for (int j = 0; j < nc; ++j) {
@@ -278,6 +288,7 @@ void ObjectMatrix::update(int deltaTime)
 
 	if (Game::instance().getSpecialKey(GLUT_KEY_RIGHT) && time < 1)
 	{
+		AudioEngine::PlayS("moviment.mp3");
 		time = delay;
 		for (int i = nf-1; i >= 0; --i) {
 			for (int j = 0; j < nc; ++j) {
@@ -288,6 +299,7 @@ void ObjectMatrix::update(int deltaTime)
 
 	if (Game::instance().getSpecialKey(GLUT_KEY_UP) && time < 1)
 	{
+		AudioEngine::PlayS("moviment.mp3");
 		time = delay;
 		for (int i = 0; i < nf; ++i) {
 			for (int j = 0; j < nc; ++j) {
@@ -298,6 +310,7 @@ void ObjectMatrix::update(int deltaTime)
 
 	if (Game::instance().getSpecialKey(GLUT_KEY_DOWN) && time < 1)
 	{
+		AudioEngine::PlayS("moviment.mp3");
 		time = delay;
 		for (int i = 0; i < nf; ++i) {
 			for (int j = nc-1; j >= 0; --j) {
@@ -308,6 +321,7 @@ void ObjectMatrix::update(int deltaTime)
 
 	if (Game::instance().getKey(32) == true && Game::instance().getutilitzat() == false)
 	{
+		AudioEngine::PlayS("explota.mp3");
 		Game::instance().setutilitzat(true);
 		int right, left, up, down;
 		
