@@ -9,8 +9,9 @@
 
 
 
-ObjectMatrix::ObjectMatrix(int c, int f)
+ObjectMatrix::ObjectMatrix(int c, int f, vector<Player*>& v)
 {
+	players = &v;
 	nf = f;
 	nc = c;
 	matriu = new Player*[nf * nc];
@@ -178,7 +179,7 @@ void ObjectMatrix::search_is(int varx, int vary, bool vertical)
 		}
 		else if (matriu[left]->getname() != "you" && matriu[left]->getname() != "push" &&matriu[left]->getname() != "sink" &&matriu[left]->getname() != "defeat" &&matriu[left]->getname() != "win" &&matriu[left]->getname() != "is"&&matriu[left]->getname() != "has"){
 			Player* p = nullptr;
-			for (int i = 0; i < nc*nf && p == nullptr; ++i) if (matriu[i] != nullptr && !matriu[i]->itsname() && matriu[i]->getname() == matriu[right]->getname()) p = matriu[i];
+			for (int i = 0; i < players->size() && p == nullptr; ++i) if (!((*players)[i]->itsname()) && (*players)[i]->getname() == matriu[right]->getname()) p = (*players)[i];
 			for (int i = 0; i < nc*nf; ++i) if (matriu[i] != nullptr && !matriu[i]->itsname() && matriu[i]->getname() == matriu[left]->getname()) {
 				delete matriu[i];
 				matriu[i] = new Player(p,(i/nc)*24,(i%nc)*24);

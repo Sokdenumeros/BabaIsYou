@@ -38,7 +38,6 @@ void Scene::init(string level)
 	float posx, posy;
 	int mapx, mapy, sizex, sizey, tamany,tilesize;
 	inFile >> sizex >> sizey >> tilesize;
-	om = new ObjectMatrix(sizex, sizey);
 	inFile >> tamany;
 	Texture* T = new Texture();
 	players.resize(tamany);
@@ -51,6 +50,7 @@ void Scene::init(string level)
 		P->setPosition(glm::vec2(0,0));
 		players.push_back(P);
 	}
+	om = new ObjectMatrix(sizex, sizey, players);
 	while (inFile >> tamany >> mapx >> mapy) om->setPos(mapx,mapy, new Player(players[tamany],mapx*24,mapy*24));
 	projection = glm::ortho(0.f, float(SCREEN_WIDTH - 1), float(SCREEN_HEIGHT - 1), 0.f);
 	
