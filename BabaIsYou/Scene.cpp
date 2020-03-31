@@ -42,7 +42,7 @@ void Scene::init(string level)
 	Texture* T = new Texture();
 	players.resize(tamany);
 	players.clear();
-	T->loadFromFile("images/text.png", TEXTURE_PIXEL_FORMAT_RGBA);
+	T->loadFromFile("images/text32.png", TEXTURE_PIXEL_FORMAT_RGBA);
 	for (int i = 0; i < tamany; ++i) {
 		inFile >> name >> isname >> posx >> posy;
 		Player *P = new Player(name, isname, posx, posy, 0, 0);
