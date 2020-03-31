@@ -176,7 +176,7 @@ void ObjectMatrix::search_is(int varx, int vary, bool vertical)
 				}
 			}
 		}
-		else if (matriu[left]->getname() != "you" && matriu[left]->getname() != "push" &&matriu[left]->getname() != "sink" &&matriu[left]->getname() != "defeat" &&matriu[left]->getname() != "win" &&matriu[left]->getname() != "is"){
+		else if (matriu[left]->getname() != "you" && matriu[left]->getname() != "push" &&matriu[left]->getname() != "sink" &&matriu[left]->getname() != "defeat" &&matriu[left]->getname() != "win" &&matriu[left]->getname() != "is"&&matriu[left]->getname() != "has"){
 			Player* p = nullptr;
 			for (int i = 0; i < nc*nf && p == nullptr; ++i) if (matriu[i] != nullptr && !matriu[i]->itsname() && matriu[i]->getname() == matriu[right]->getname()) p = matriu[i];
 			for (int i = 0; i < nc*nf; ++i) if (matriu[i] != nullptr && !matriu[i]->itsname() && matriu[i]->getname() == matriu[left]->getname()) {
@@ -187,36 +187,18 @@ void ObjectMatrix::search_is(int varx, int vary, bool vertical)
 	}
 }
 
-void ObjectMatrix::search_has()
+void ObjectMatrix::search_has(bool vertical)
 {
-	int right, left, up, down;
+	
 	for (int i = 0; i < 24; ++i) {
 		for (int j = 0; j < 24; ++j) {
 			if (matriu[nc*i + j] != nullptr && matriu[nc*i + j]->getname() == "has") {
-				right = nc*(i + 1) + j;
-				left = nc*(i - 1) + j;
-				up = nc*i + (j - 1);
-				down = nc*i + (j + 1);
-				if (matriu[right] != nullptr && matriu[left] != nullptr) {
-					if (matriu[left]->itsname() == true && matriu[right]->itsname() == true) {
-						for (int i = 0; i < 24; ++i) {
-							for (int j = 0; j < 24; ++j) {
-								if (matriu[nc*i + j] != nullptr && matriu[nc*i + j]->getname() == matriu[left]->getname() && matriu[nc*i + j]->itsname() == false) {
-									matriu[nc*i + j]->sethasname(matriu[right]->getname());
-								}
-							}
-						}
-					}
-				}
-
-				if (matriu[up] != nullptr && matriu[down] != nullptr) {
-					if (matriu[down]->itsname() == true && matriu[up]->itsname() == true) {
-						for (int i = 0; i < 24; ++i) {
-							for (int j = 0; j < 24; ++j) {
-								if (matriu[nc*i + j] != nullptr && matriu[nc*i + j]->getname() == matriu[up]->getname() && matriu[nc*i + j]->itsname() == false) {
-									matriu[nc*i + j]->sethasname(matriu[down]->getname());
-								}
-							}
+				int right = (vertical) ? nc*(i + 1) + j : nc*i + (j + 1);
+				int left = (vertical) ? nc*(i - 1) + j : nc*i + (j - 1);
+				if (matriu[right] != nullptr && matriu[left] != nullptr && matriu[left]->itsname() == true && matriu[right]->itsname() == true) {
+					for (int i = 1; i < 23; ++i) {
+						for (int j = 1; j < 23; ++j) {
+							if (matriu[nc*i + j] != nullptr && matriu[nc*i + j]->getname() == matriu[left]->getname() && matriu[nc*i + j]->itsname() == false) matriu[nc*i + j]->sethasname(matriu[right]->getname());
 						}
 					}
 				}
@@ -273,7 +255,8 @@ void ObjectMatrix::update(int deltaTime)
 		search_is(it->first, it->second,false);
 	}
 
-	search_has();
+	search_has(false);
+	search_has(true);
 	
 	if (Game::instance().getSpecialKey(GLUT_KEY_LEFT) && time < 1)
 	{

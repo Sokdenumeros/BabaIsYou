@@ -41,14 +41,17 @@ void Scene::init(string level)
 	om = new ObjectMatrix(sizex, sizey);
 	inFile >> tamany;
 	Texture* T = new Texture();
+	players.resize(tamany);
+	players.clear();
 	T->loadFromFile("images/text.png", TEXTURE_PIXEL_FORMAT_RGBA);
 	for (int i = 0; i < tamany; ++i) {
-		inFile >> name >> isname >> posx >> posy >> mapx >> mapy;
-		Player* P = new Player(name, isname, posx, posy, mapx, mapy);
-		P->init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram,T);
-		P->setPosition(glm::vec2(mapx * tilesize, mapy *  tilesize));
-		om->setPos(mapx,mapy,P);	
+		inFile >> name >> isname >> posx >> posy;
+		Player *P = new Player(name, isname, posx, posy, 0, 0);
+		P->init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram, T);
+		P->setPosition(glm::vec2(0,0));
+		players.push_back(P);
 	}
+	while (inFile >> tamany >> mapx >> mapy) om->setPos(mapx,mapy, new Player(players[tamany],mapx*24,mapy*24));
 	projection = glm::ortho(0.f, float(SCREEN_WIDTH - 1), float(SCREEN_HEIGHT - 1), 0.f);
 	
 }

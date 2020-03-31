@@ -39,6 +39,9 @@ private:
 	glm::mat4 projection;
 	Text victory;
 	int time;
+	vector<Player*> players;
+	vector<Player*> temp;
+	vector<int>		times;
 
 };
 

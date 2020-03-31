@@ -28,7 +28,7 @@ public:
 	void setPos(int i, int j ,Player* p);
 	void render();
 	void search_is(int varx, int vary, bool vertical);
-	void search_has();
+	void search_has(bool vertical);
 	void explota(int pos);
 
 };
