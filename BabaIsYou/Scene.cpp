@@ -23,7 +23,6 @@ Scene::~Scene()
 	if(om != NULL) delete om;
 }
 
-
 void Scene::init(string level)
 {
 	lv = level;
@@ -55,8 +54,6 @@ void Scene::init(string level)
 	projection = glm::ortho(0.f, float(SCREEN_WIDTH - 1), float(SCREEN_HEIGHT - 1), 0.f);
 	
 }
-
-
 
 void Scene::update(int deltaTime)
 {
