@@ -54,6 +54,7 @@ void Scene::init(string level)
 	om = new ObjectMatrix(sizex, sizey, players);
 	while (inFile >> tamany >> mapx >> mapy) om->setPos(mapx,mapy, new Player(players[tamany],mapx*24,mapy*24));
 	projection = glm::ortho(0.f, float(SCREEN_WIDTH - 1), float(SCREEN_HEIGHT - 1), 0.f);
+	aux = players[0];
 	
 }
 
@@ -61,14 +62,67 @@ void Scene::update(int deltaTime)
 {
 	currentTime += deltaTime;
 	if (!win) {
+		auto Tit = times.begin();
+		auto Pit = temp.begin();
+		searchaux("foc", false);
+		while (Pit != temp.end()) {
+			(*Tit) -= deltaTime;
+			(*Pit)->update(deltaTime);
+			if ((*Tit) < 1) {
+				if ((*Pit)->getname() == "foc") {
+					int x = (*Pit)->getPosPlayerx()/24;
+					int y = (*Pit)->getPosPlayery()/24;
+					if (om->getPos(x + 1, y) != nullptr && om->getPos(x + 1, y)->getname() == "grass" && !om->getPos(x + 1, y)->itsname()) fire(x + 1, y);
+					if (om->getPos(x - 1, y) != nullptr && om->getPos(x - 1, y)->getname() == "grass" && !om->getPos(x - 1, y)->itsname()) fire(x - 1, y);
+					if (om->getPos(x, y + 1) != nullptr && om->getPos(x, y + 1)->getname() == "grass" && !om->getPos(x, y + 1)->itsname()) fire(x, y + 1);
+					if (om->getPos(x, y - 1) != nullptr && om->getPos(x, y - 1)->getname() == "grass" && !om->getPos(x, y - 1)->itsname()) fire(x, y - 1);
+				}
+				temp.erase(Pit++);
+				times.erase(Tit++);
+			}
+			else {
+				++Pit;
+				++Tit;
+			}
+		}
 		om->update(deltaTime); //object matrix update
 		win = om->getwin();
 		if (win) time = currentTime;
 	}
 	if (win && currentTime - time > 2000) Game::instance().loadMenu();
 	if (Game::instance().getKey(114)) Game::instance().loadLevel(lv);
-	if (Game::instance().getKey('m')) Game::instance().loadMenu();
+	else if (Game::instance().getKey('m')) Game::instance().loadMenu();
+	else if (Game::instance().getKey(' ') && !Game::instance().getutilitzat()) {
+		AudioEngine::PlayS("explota.mp3");
+		Game::instance().setutilitzat(true);
+		Player* P;
+		searchaux("foc", false);
+		for (int i = 0; i < om->getNfil(); ++i) {
+			for (int j = 0; j < om->getNcol(); ++j) {
+				P = om->getPos(i, j);
+				if (P != nullptr && P->getmove()) {
+					fire(i + 1, j); fire(i - 1, j); fire(i, j + 1); fire(i, j - 1);
+				}
+			}
+		}
+	}
+}
 
+void Scene::searchaux(string name, bool isname) {
+	if (aux->getname() == name) return;
+	for (int i = 0; i < players.size(); ++i) 
+		if (players[i]->getname() == name && players[i]->itsname() == isname) {
+			aux = players[i];
+			return;
+	}
+}
+
+void Scene::fire(int i, int j) {
+	if (i > -1 && i < om->getNfil() && j > -1 && j < om->getNcol()) {
+		bool b = om->getPos(i, j) != nullptr && om->getPos(i, j)->getname() == "grass" && !om->getPos(i, j)->itsname();
+		delete om->getPos(i, j); om->setPos(i, j, nullptr);
+		if(b) temp.push_back(new Player(aux, i * 24, j * 24)); times.push_back(1000); 
+	}
 }
 
 void Scene::render()
@@ -86,6 +140,7 @@ void Scene::render()
 		texProgram.setUniformMatrix4f("modelview", modelview);
 		texProgram.setUniform2f("texCoordDispl", 0.f, 0.f);
 		om->render();
+		for (auto it = temp.begin(); it != temp.end(); ++it) (*it)->render();
 	}
 }
 

@@ -6,8 +6,14 @@
 #include <glm/gtc/matrix_transform.hpp>
 
 
+int ObjectMatrix::getNfil() { return nf; }
 
+int ObjectMatrix::getNcol() { return nc; }
 
+Player* ObjectMatrix::getPos(int i, int j) {
+	if (i >= nf || j >= nc || i < 0 || j < 0) return nullptr;
+	return matriu[i*nc + j];
+}
 
 ObjectMatrix::ObjectMatrix(int c, int f, vector<Player*>& v)
 {
@@ -228,7 +234,6 @@ void ObjectMatrix::explota(int pos)
 	}
 }
 
-
 void ObjectMatrix::update(int deltaTime)
 {
 
@@ -300,7 +305,7 @@ void ObjectMatrix::update(int deltaTime)
 			}
 		}
 	}
-
+	/*
 	if (Game::instance().getKey(32) == true && Game::instance().getutilitzat() == false)
 	{
 		AudioEngine::PlayS("explota.mp3");
@@ -323,20 +328,16 @@ void ObjectMatrix::update(int deltaTime)
 			}
 		}
 	}
+	*/
 
-
-	for (int i = 0; i < nf; ++i) {
-		for (int j = 0; j < nc; ++j) {
-			if (matriu[nc*i + j] != nullptr) matriu[nc*i + j]->update(deltaTime, i, j);
-		}
-	}
+	for (int i = 0; i < nf*nc; ++i) if (matriu[i] != nullptr) matriu[i]->update(deltaTime, i/nc, i%nc);
 }
 
 void ObjectMatrix::setPos(int i, int j, Player* p)
 {
 	if (i < nf && j < nc) {
 		matriu[nc*i + j] = p;
-		if (p->getname() == "is") is.push_back(pair<int, int>(i, j));
+		if (p!= nullptr && p->getname() == "is") is.push_back(pair<int, int>(i, j));
 	}
 }
 

@@ -16,9 +16,9 @@ public:
 	Player(string nam, bool isnam, float sx, float sy, int mapx, int mapy);
 	void init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram, Texture* ss);
 	void update(int deltaTime, int i, int j);
+	void update(int deltaTime);
 	void up(int deltaTime);
 	void render();
-	int count = 0;
 	void setPosition(const glm::vec2 &pos);
 	float getposx();
 	float getposy();
@@ -36,12 +36,14 @@ public:
 	void setwin(bool b);
 	bool getdefeat();
 	void setdefeat(bool b);
+	int getPosPlayerx();
+	int getPosPlayery();
 	
 private:
 	glm::ivec2 tileMapDispl, posPlayer;
 	Texture *spritesheet;
 	Sprite *sprite;
-	
+	int count;
 	float sprx, spry;
 	string name;
 	bool win, defeat, move, sink, push;

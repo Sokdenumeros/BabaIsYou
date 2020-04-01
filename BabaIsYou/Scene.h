@@ -9,6 +9,7 @@
 #include <fstream>
 #include "iostream"
 #include "Text.h"
+#include <list>
 using namespace std;
 
 // Scene contains all the entities of our game.
@@ -28,11 +29,10 @@ public:
 	bool getwin();
 
 private:
+	void fire(int i, int j);
 	string lv;
 	void initShaders();
 	ObjectMatrix* om;
-	//TileMap* map;
-	//ObjectMatrix* om2;
 	bool win;
 	ShaderProgram texProgram;
 	float currentTime;
@@ -40,9 +40,10 @@ private:
 	Text victory;
 	int time;
 	vector<Player*> players;
-	vector<Player*> temp;
-	vector<int>		times;
-
+	list<Player*> temp;
+	list<int> times;
+	Player* aux;
+	void searchaux(string name, bool isname);
 };
 
 

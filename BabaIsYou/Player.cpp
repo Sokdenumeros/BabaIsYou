@@ -13,10 +13,9 @@ enum PlayerAnims
 	ANIMSTOP,STAND_LEFT, STAND_RIGHT,MOVE_UP1, MOVE_UP2, MOVE_UP3, MOVE_UP4, MOVE_UP5, MOVE_DOWN1, MOVE_DOWN2, MOVE_DOWN3, MOVE_DOWN4, MOVE_DOWN5, MOVE_LEFT1, MOVE_LEFT2, MOVE_LEFT3, MOVE_LEFT4, MOVE_LEFT5, MOVE_RIGHT1, MOVE_RIGHT2, MOVE_RIGHT3, MOVE_RIGHT4, MOVE_RIGHT5, STAND_UP, STAND_DOWN, MOVE_UP, MOVE_DOWN, ANIMATION
 };
 
-
-
 Player::Player(string nam, bool isnam, float sx, float sy, int mapx, int mapy)
 {
+	count = 0;
 	move = false;
 	name = nam;
 	isname = isnam;
@@ -26,6 +25,7 @@ Player::Player(string nam, bool isnam, float sx, float sy, int mapx, int mapy)
 }
 
 Player::Player(Player* P, int x, int y) {
+	count = 0;
 	name = P->name;
 	isname = P->isname;
 	sprx = P->sprx;
@@ -210,6 +210,10 @@ void Player::init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram, Te
 	++i;
 }
 
+void Player::update(int deltaTime) {
+	sprite->update(deltaTime);
+}
+
 void Player::update(int deltaTime, int i, int j)
 {
 	if (posPlayer.x > i * 24) {
@@ -327,5 +331,10 @@ bool Player::getsink()
 	return sink;
 }
 
+int Player::getPosPlayerx() {
+	return posPlayer.x;
+}
 
-
+int Player::getPosPlayery() {
+	return posPlayer.y;
+}

@@ -23,6 +23,9 @@ private:
 	
 
 public:
+	int getNcol();
+	int getNfil();
+	Player* getPos(int i, int j);
 	ObjectMatrix(int f, int c, vector<Player*>& v);
 	bool getwin();
 	void update(int deltaTime);
