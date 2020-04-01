@@ -113,6 +113,7 @@ int Game::getMouseY() {
 }
 
 void Game::loadLevel(string level) {
+	utilitzat = false;
 	estat = LEVEL;
 	scene.init(level);
 }

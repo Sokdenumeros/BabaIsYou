@@ -37,11 +37,13 @@ void Scene::init(string level)
 	float posx, posy;
 	int mapx, mapy, sizex, sizey, tamany,tilesize;
 	inFile >> sizex >> sizey >> tilesize;
+	string TS;
+	inFile >> TS;
 	inFile >> tamany;
 	Texture* T = new Texture();
 	players.resize(tamany);
 	players.clear();
-	T->loadFromFile("images/text32.png", TEXTURE_PIXEL_FORMAT_RGBA);
+	T->loadFromFile(TS, TEXTURE_PIXEL_FORMAT_RGBA);
 	for (int i = 0; i < tamany; ++i) {
 		inFile >> name >> isname >> posx >> posy;
 		Player *P = new Player(name, isname, posx, posy, 0, 0);
@@ -64,12 +66,8 @@ void Scene::update(int deltaTime)
 		if (win) time = currentTime;
 	}
 	if (win && currentTime - time > 2000) Game::instance().loadMenu();
-	if (Game::instance().getKey(114)) {
-		
-		
-		Game::instance().loadLevel(lv);
-		
-	}
+	if (Game::instance().getKey(114)) Game::instance().loadLevel(lv);
+	if (Game::instance().getKey('m')) Game::instance().loadMenu();
 
 }
 

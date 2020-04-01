@@ -17,9 +17,7 @@ ObjectMatrix::ObjectMatrix(int c, int f, vector<Player*>& v)
 	matriu = new Player*[nf * nc];
 	time = 0;
 	delay = 200;
-	for (int i = 0; i < nf*nc; ++i) {
-		matriu[i] = nullptr;
-	}
+	for (int i = 0; i < nf*nc; ++i) matriu[i] = nullptr;
 	win = false;
 	
 }

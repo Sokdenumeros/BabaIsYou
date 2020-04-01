@@ -1,4 +1,5 @@
 24 24 24
+images/text32.png
 15
 baba 1 6 27
 you 1 20 42
@@ -7,7 +8,7 @@ grass 1 9 30
 sink 1 9 42
 push 1 2 42
 baba 0 1 1
-rock 0 13 21
+rock 0 15 21
 rock 1 11 33
 flag 0 6 21
 flag 1 1 30
