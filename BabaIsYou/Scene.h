@@ -30,20 +30,22 @@ public:
 
 private:
 	void fire(int i, int j);
-	string lv;
 	void initShaders();
-	ObjectMatrix* om;
-	bool win;
-	ShaderProgram texProgram;
+	void searchaux(string name, bool isname);
+
 	float currentTime;
-	glm::mat4 projection;
-	Text victory;
+	string lv;
+	bool win;
 	int time;
+
+	Text victory;
+	ObjectMatrix* om;
+	ShaderProgram texProgram;
+	glm::mat4 projection;
 	vector<Player*> players;
 	list<Player*> temp;
 	list<int> times;
 	Player* aux;
-	void searchaux(string name, bool isname);
 };
 
 

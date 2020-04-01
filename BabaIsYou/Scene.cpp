@@ -26,23 +26,25 @@ Scene::~Scene()
 void Scene::init(string level)
 {
 	lv = level;
-	victory.init("fonts/OpenSans-Regular.ttf");
 	currentTime = 0.0f;
 	win = false;
+	victory.init("fonts/OpenSans-Regular.ttf");
 	initShaders();
+
+	
+	string name; bool isname; float posx, posy;
+	int mapx, mapy, sizex, sizey, tamany,tilesize;
+
 	ifstream inFile;
 	inFile.open(level);
-	string name;
-	bool isname;
-	float posx, posy;
-	int mapx, mapy, sizex, sizey, tamany,tilesize;
 	inFile >> sizex >> sizey >> tilesize;
 	string TS;
-	inFile >> TS;
-	inFile >> tamany;
+	inFile >> TS >> tamany;
 	Texture* T = new Texture();
 	players.resize(tamany);
 	players.clear();
+	temp.clear();
+	times.clear();
 	T->loadFromFile(TS, TEXTURE_PIXEL_FORMAT_RGBA);
 	for (int i = 0; i < tamany; ++i) {
 		inFile >> name >> isname >> posx >> posy;
