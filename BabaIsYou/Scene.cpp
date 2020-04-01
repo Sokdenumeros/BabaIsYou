@@ -121,7 +121,14 @@ void Scene::fire(int i, int j) {
 	if (i > -1 && i < om->getNfil() && j > -1 && j < om->getNcol()) {
 		bool b = om->getPos(i, j) != nullptr && om->getPos(i, j)->getname() == "grass" && !om->getPos(i, j)->itsname();
 		delete om->getPos(i, j); om->setPos(i, j, nullptr);
-		if(b) temp.push_back(new Player(aux, i * 24, j * 24)); times.push_back(1000); 
+		if (b) {
+			searchaux("foc", false);
+			temp.push_back(new Player(aux, i * 24, j * 24)); times.push_back(1000);
+		}
+		else {
+			searchaux("explosio", false);
+			temp.push_back(new Player(aux, i * 24, j * 24)); times.push_back(600);
+		}
 	}
 }
 
