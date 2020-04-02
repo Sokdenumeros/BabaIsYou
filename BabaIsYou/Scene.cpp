@@ -28,7 +28,7 @@ void Scene::init(string level)
 	lv = level;
 	currentTime = 0.0f;
 	win = false;
-	victory.init("fonts/OpenSans-Regular.ttf");
+	victory.init("fonts/segoepr.ttf");
 	initShaders();
 
 	
@@ -138,7 +138,7 @@ void Scene::render()
 {
 
 	if (win) {
-		victory.render("Victory", glm::vec2(200, 200), 32, glm::vec4(1, 1, 1, 1));
+		victory.render("VICTORY", glm::vec2(400, 400), 150, glm::vec4(1, 1, 1, 1));
 	}
 	else {
 		glm::mat4 modelview;
