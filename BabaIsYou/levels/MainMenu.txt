@@ -1,4 +1,7 @@
-3
-LeftArrow 	images/RA.jpg 0 0
-RightArrow 	images/RA.jpg 50 50
-Play 		images/RA.jpg 350 300
+6
+-		images/BG.png 0 0 1280 720
+LeftArrow 	images/LA.png 50 310 150 410
+RightArrow 	images/RA.png 1130 310 1230 410
+Play 		images/Play.png 590 550 690 650
+-		images/BabaIsYou.png 430 50 849 197
+Credits		images/Credits.png 1000 650 1250 700
