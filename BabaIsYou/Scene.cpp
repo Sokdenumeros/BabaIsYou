@@ -121,8 +121,14 @@ void Scene::searchaux(string name, bool isname) {
 
 void Scene::fire(int i, int j) {
 	if (i > -1 && i < om->getNfil() && j > -1 && j < om->getNcol()) {
+
+		Player *p = nullptr;
 		bool b = om->getPos(i, j) != nullptr && om->getPos(i, j)->getname() == "grass" && !om->getPos(i, j)->itsname();
-		delete om->getPos(i, j); om->setPos(i, j, nullptr);
+		if (om->getPos(i, j) != nullptr && om->getPos(i, j)->gethasname() != "ningu") {
+			searchaux(om->getPos(i, j)->gethasname(), false);
+			p = new Player(aux, i * 24, j * 24);
+		}
+		delete om->getPos(i, j); om->setPos(i, j, p);
 		if (b) {
 			searchaux("foc", false);
 			temp.push_back(new Player(aux, i * 24, j * 24)); times.push_back(1000);

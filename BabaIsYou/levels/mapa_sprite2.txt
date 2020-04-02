@@ -7,7 +7,7 @@ rock 1 11 33
 is 1 18 30
 push 1 2 42
 flag 1 1 30
-grass 0 0 51
+wall 0 15 45
 rock 0 15 21
 win 1 17 42
 baba 0 1 1
