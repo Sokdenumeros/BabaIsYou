@@ -6,7 +6,7 @@
 
 void Game::init()
 {
-	credits.init("fonts/OpenSans-Regular.ttf");
+	credits.init("fonts/segoepr.ttf");
 	loadMenu();
 	bPlay = true;
 	glClearColor(0.3f, 0.3f, 0.3f, 1.0f);
@@ -25,7 +25,7 @@ bool Game::update(int deltaTime)
 		scene.update(deltaTime);
 		break;
 	case CREDITS:
-		if(mouse) loadMenu();
+		if(Game::instance().getKey('m')) loadMenu();
 		break;
 	}
 	return bPlay;
@@ -42,7 +42,9 @@ void Game::render()
 		scene.render();
 		break;
 	case CREDITS:
-		credits.render("Joan Manel Finestres Baldric \n Sergi Curto Panisello", glm::vec2(100, 100), 32, glm::vec4(1, 1, 1, 1));
+		credits.render("JOAN MANEL FINESTRES BALDRICH", glm::vec2(220, 200), 70, glm::vec4(1, 1, 1, 1));
+		credits.render("SERGI CURTO PANISELLO", glm::vec2(330, 400), 70, glm::vec4(1, 1, 1, 1));
+		credits.render("[M] Menu", glm::vec2(600, 600), 40, glm::vec4(1, 1, 1, 1));
 		break;
 	}
 }

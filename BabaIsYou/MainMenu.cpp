@@ -12,7 +12,7 @@ MainMenu::~MainMenu() {}
 void MainMenu::init(string file) {
 	time = 0;
 	delay = 100;
-	text.init("fonts/OpenSans-Regular.ttf");
+	text.init("fonts/segoepr.ttf");
 	ifstream in;
 	in.open("levels/index.txt");
 	string level;
@@ -33,14 +33,14 @@ void MainMenu::init(string file) {
 	glm::vec2 texCoords[2] = { glm::vec2(0.f, 0.f), glm::vec2(1.f, 1.f) };
 	geom[0] = glm::vec2(0.f, 0.f);
 	for (int i = 0; i < nbuttons; ++i) {
-		in >> name >> texturefile >> topY >> topX;
+		in >> name >> texturefile >> topX >> topY >> botX >> botY;
 		texs[i].loadFromFile(texturefile, TEXTURE_PIXEL_FORMAT_RGBA);
-		geom[1] = glm::vec2(texs[i].width(), texs[i].height());
+		geom[1] = glm::vec2(botX - topX, botY - topY);
 		buttons[i].name = name;
-		buttons[i].botX = topX + texs[i].width();
+		buttons[i].botX = botX;
 		buttons[i].topX = topX;
 		buttons[i].topY = topY;
-		buttons[i].botY = topY + texs[i].height();
+		buttons[i].botY = botY;
 		quads[i] = TexturedQuad::createTexturedQuad(geom, texCoords, texProgram);
 		
 	}
@@ -115,10 +115,19 @@ void MainMenu::render()
 	texProgram.setUniformMatrix4f("projection", projection);
 	texProgram.setUniform4f("color", 1.0f, 1.0f, 1.0f, 1.0f);
 	texProgram.setUniform2f("texCoordDispl", 0.f, 0.f);
+	int mousex = Game::instance().getMouseX();
+	int mousey = Game::instance().getMouseY();
 	for (int i = 0; i < quads.size(); ++i) {
 		modelview = glm::translate(glm::mat4(1.0f), glm::vec3(buttons[i].topX, buttons[i].topY, 0.f));
+		if (buttons[i].topX < mousex && buttons[i].topY < mousey && buttons[i].botX > mousex && buttons[i].botY > mousey && buttons[i].name != "-") {
+			float width = buttons[i].botX - buttons[i].topX;
+			float height = buttons[i].botY - buttons[i].topY;
+			modelview = glm::translate(modelview, glm::vec3(width/2, height/2, 0.f));
+			modelview = glm::scale(modelview, glm::vec3(0.9f, 0.9f, 0.0f));
+			modelview = glm::translate(modelview, glm::vec3(-width/2, -height/2, 0.f));
+		}
 		texProgram.setUniformMatrix4f("modelview", modelview);
 		quads[i]->render(texs[i]);
 	}
-	text.render(*Lit, glm::vec2(200, 200), 32, glm::vec4(1, 1, 1, 1));
+	text.render(*Lit, glm::vec2(320, 400), 150, glm::vec4(1, 1, 1, 1));
 }
