@@ -11,7 +11,7 @@ MainMenu::~MainMenu() {}
 
 void MainMenu::init(string file) {
 	time = 0;
-	delay = 100;
+	delay = 1000;
 	text.init("fonts/segoepr.ttf");
 	ifstream in;
 	in.open("levels/index.txt");
@@ -81,6 +81,7 @@ void MainMenu::initShaders()
 void MainMenu::update(int deltaTime) {
 	currentTime += deltaTime;
 	if (time > 0) time -= deltaTime;
+	if (!Game::instance().getMouse()) time = 0;
 	if (Game::instance().getMouse() && time < 1) {
 		time = delay;
 		int mousex = Game::instance().getMouseX();

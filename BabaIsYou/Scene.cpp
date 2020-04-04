@@ -47,7 +47,7 @@ void Scene::init(string level)
 	times.clear();
 	T->loadFromFile(TS, TEXTURE_PIXEL_FORMAT_RGBA);
 	for (int i = 0; i < tamany; ++i) {
-		inFile >> name >> isname >> posx >> posy;
+		inFile >> name >> isname >> posx >> posy; 
 		Player *P = new Player(name, isname, posx, posy, 0, 0);
 		P->init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram, T);
 		P->setPosition(glm::vec2(0,0));
