@@ -203,8 +203,8 @@ void ObjectMatrix::search_has(bool vertical)
 				int right = (vertical) ? nc*(i + 1) + j : nc*i + (j + 1);
 				int left = (vertical) ? nc*(i - 1) + j : nc*i + (j - 1);
 				if (matriu[right] != nullptr && matriu[left] != nullptr && matriu[left]->itsname() == true && matriu[right]->itsname() == true) {
-					for (int i = 1; i < 24; ++i) {
-						for (int j = 1; j < 24; ++j) {
+					for (int i = 0; i < 24; ++i) {
+						for (int j = 0; j < 24; ++j) {
 							if (matriu[nc*i + j] != nullptr && matriu[nc*i + j]->getname() == matriu[left]->getname() && matriu[nc*i + j]->itsname() == false) matriu[nc*i + j]->sethasname(matriu[right]->getname());
 						}
 					}
