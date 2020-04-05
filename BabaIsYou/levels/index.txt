@@ -1,4 +1,5 @@
 mapa_sprite
-mapa_sprite2
-mapa_sprite3
-mapa_sprite4
+Rock_is_win
+Follow_the_wick
+Lock_and_Key
+Suicide_squad
