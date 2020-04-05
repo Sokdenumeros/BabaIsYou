@@ -130,16 +130,16 @@ void Scene::fire(int i, int j) {
 		bool b = om->getPos(i, j) != nullptr && om->getPos(i, j)->getname() == "grass" && !om->getPos(i, j)->itsname();
 		if (om->getPos(i, j) != nullptr && om->getPos(i, j)->gethasname() != "ningu") {
 			searchaux(om->getPos(i, j)->gethasname(), false);
-			p = new Player(aux, i * tilesize, j * tilesize);
+			p = new Player(aux, i, j);
 		}
 		delete om->getPos(i, j); om->setPos(i, j, p);
 		if (b) {
 			searchaux("foc", false);
-			temp.push_back(new Player(aux, i * tilesize, j * tilesize)); times.push_back(1000);
+			temp.push_back(new Player(aux, i, j)); times.push_back(1000);
 		}
 		else {
 			searchaux("explosio", false);
-			temp.push_back(new Player(aux, i * tilesize, j * tilesize)); times.push_back(600);
+			temp.push_back(new Player(aux, i, j)); times.push_back(600);
 		}
 	}
 }
