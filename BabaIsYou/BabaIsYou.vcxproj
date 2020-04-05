@@ -152,6 +152,7 @@
     <ClInclude Include="AudioEngine.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="MainMenu.h" />
+    <ClInclude Include="Menu.h" />
     <ClInclude Include="Object.h" />
     <ClInclude Include="ObjectMatrix.h" />
     <ClInclude Include="Player.h" />
@@ -169,6 +170,7 @@
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MainMenu.cpp" />
+    <ClCompile Include="Menu.cpp" />
     <ClCompile Include="Object.cpp" />
     <ClCompile Include="ObjectMatrix.cpp" />
     <ClCompile Include="Player.cpp" />

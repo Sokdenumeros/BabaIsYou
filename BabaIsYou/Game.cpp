@@ -6,7 +6,7 @@
 
 void Game::init()
 {
-	credits.init("fonts/segoepr.ttf");
+	credits.init("levels/credits.txt");
 	loadMenu();
 	bPlay = true;
 	glClearColor(0.3f, 0.3f, 0.3f, 1.0f);
@@ -16,16 +16,20 @@ void Game::init()
 
 bool Game::update(int deltaTime)
 {
+	if (keys['m']) loadMenu();
 	AudioEngine::Update();
 	switch (estat) {
 	case MAIN_MENU:
-		menu.update(deltaTime);
+		mainMenu.update(deltaTime);
 		break;
 	case LEVEL:
 		scene.update(deltaTime);
 		break;
 	case CREDITS:
-		if(Game::instance().getKey('m')) loadMenu();
+		credits.update(deltaTime);
+		break;
+	case INSTRUCTIONS:
+		instructions.update(deltaTime);
 		break;
 	}
 	return bPlay;
@@ -36,15 +40,16 @@ void Game::render()
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	switch (estat) {
 	case MAIN_MENU:
-		menu.render();
+		mainMenu.render();
 		break;
 	case LEVEL:
 		scene.render();
 		break;
 	case CREDITS:
-		credits.render("JOAN MANEL FINESTRES BALDRICH", glm::vec2(220, 200), 70, glm::vec4(1, 1, 1, 1));
-		credits.render("SERGI CURTO PANISELLO", glm::vec2(330, 400), 70, glm::vec4(1, 1, 1, 1));
-		credits.render("[M] Menu", glm::vec2(600, 600), 40, glm::vec4(1, 1, 1, 1));
+		credits.render();
+		break;
+	case INSTRUCTIONS:
+		instructions.render();
 		break;
 	}
 }
@@ -123,6 +128,7 @@ void Game::loadLevel(string level) {
 
 void Game::loadCredits() {
 	estat = CREDITS;
+	credits.init("levels/Credits.txt");
 }
 
 void Game::quit() {
@@ -132,7 +138,12 @@ void Game::quit() {
 void Game::loadMenu() {
 	estat = MAIN_MENU;
 	AudioEngine::StopAllChannels();
-	menu.init("levels/MainMenu.txt");
+	mainMenu.init("levels/MainMenu.txt");
+}
+
+void Game::loadInstructions() {
+	estat = INSTRUCTIONS;
+	instructions.init("levels/Instructions.txt");
 }
 
 void Game::setutilitzat(bool b)

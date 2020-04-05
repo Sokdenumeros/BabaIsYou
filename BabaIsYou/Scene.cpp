@@ -97,7 +97,6 @@ void Scene::update(int deltaTime)
 	}
 	if (win && currentTime - time > 2000) Game::instance().loadMenu();
 	if (Game::instance().getKey(114)) Game::instance().loadLevel(lv);
-	else if (Game::instance().getKey('m')) Game::instance().loadMenu();
 	else if (Game::instance().getKey(' ') && !Game::instance().getutilitzat()) {
 		AudioEngine::PlayS("audio/explota.mp3");
 		Game::instance().setutilitzat(true);

@@ -43,6 +43,7 @@ public:
 	void quit();
 	void loadCredits();
 	void loadMenu();
+	void loadInstructions();
 	void setutilitzat(bool b);
 
 	bool getMouse();
@@ -53,12 +54,12 @@ public:
 	bool getSpecialKey(int key) const;
 
 private:
-	MainMenu menu;
+	Menu instructions, credits;
+	MainMenu mainMenu;
 	Scene scene;
-	Text credits;
 	int mousex, mousey;
 	bool mouse;
-	enum STATE {LEVEL, MAIN_MENU, CREDITS};
+	enum STATE {LEVEL, MAIN_MENU, CREDITS, INSTRUCTIONS};
 	STATE estat;
 	bool bPlay;
 	bool utilitzat = false;// Continue to play game?
