@@ -11,12 +11,12 @@ void Game::init()
 	bPlay = true;
 	glClearColor(0.3f, 0.3f, 0.3f, 1.0f);
 	AudioEngine::Init();
-	AudioEngine::PlayS("audio/sao.mp3");
 	mouse = false;
 }
 
 bool Game::update(int deltaTime)
 {
+	AudioEngine::Update();
 	switch (estat) {
 	case MAIN_MENU:
 		menu.update(deltaTime);
@@ -117,6 +117,7 @@ int Game::getMouseY() {
 void Game::loadLevel(string level) {
 	utilitzat = false;
 	estat = LEVEL;
+	AudioEngine::StopAllChannels();
 	scene.init(level);
 }
 
@@ -130,6 +131,7 @@ void Game::quit() {
 
 void Game::loadMenu() {
 	estat = MAIN_MENU;
+	AudioEngine::StopAllChannels();
 	menu.init("levels/MainMenu.txt");
 }
 

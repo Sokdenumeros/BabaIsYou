@@ -38,6 +38,8 @@ private:
 	bool win;
 	int time;
 	int tilesize;
+	int channel;
+	string sound;
 
 	Text victory;
 	ObjectMatrix* om;

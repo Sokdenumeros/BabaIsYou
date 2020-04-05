@@ -30,13 +30,13 @@ void Scene::init(string level)
 	win = false;
 	victory.init("fonts/segoepr.ttf");
 	initShaders();
-
 	
 	string name; bool isname; float posx, posy;
 	int mapx, mapy, sizex, sizey, tamany;
 
 	ifstream inFile;
 	inFile.open(level);
+	inFile >> sound;
 	inFile >> sizex >> sizey >> tilesize;
 	int height = sizex*tilesize, width = sizey*tilesize;
 	Player::setoffx((SCREEN_WIDTH-width)/2);
@@ -60,11 +60,12 @@ void Scene::init(string level)
 	while (inFile >> tamany >> mapx >> mapy) om->setPos(mapx,mapy, new Player(players[tamany],mapx,mapy));
 	projection = glm::ortho(0.f, float(SCREEN_WIDTH - 1), float(SCREEN_HEIGHT - 1), 0.f);
 	aux = players[0];
-	
+	channel = AudioEngine::PlayS(sound);
 }
 
 void Scene::update(int deltaTime)
 {
+	if(!AudioEngine::IsPlaying(channel)) channel = AudioEngine::PlayS(sound);
 	currentTime += deltaTime;
 	if (!win) {
 		auto Tit = times.begin();

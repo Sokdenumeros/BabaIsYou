@@ -41,6 +41,7 @@ public:
 	//static bool IsEventPlaying(const string& strEventName);
 	static float dbToVolume(float db);
 	static float VolumeTodb(float volume);
+	static void loop(int& nChannelId, float volume);
 
 private:
 	static FMOD::Studio::System * mpStudioSystem;

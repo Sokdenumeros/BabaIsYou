@@ -23,13 +23,12 @@ void AudioEngine::Init() {
 
 void AudioEngine::Update() {
 	bool bIsPlaying;
-	for (auto it = ChannelMap.begin(), itEnd = ChannelMap.end(); it != itEnd; ++it)
+	for (auto it = ChannelMap.begin(), itEnd = ChannelMap.end(); it != itEnd;)
 	{
 		bIsPlaying = false;
 		it->second->isPlaying(&bIsPlaying);
-		auto temp = it;
-		++it;
-		if (!bIsPlaying) ChannelMap.erase(temp);
+		if (!bIsPlaying) ChannelMap.erase(it++);
+		else ++it;
 	}
 }
 
@@ -155,4 +154,20 @@ float AudioEngine::dbToVolume(float dB)
 float AudioEngine::VolumeTodb(float volume)
 {
 	return 20.0f * log10f(volume);
+}
+
+void AudioEngine::loop(int& nChannelId, float volume) {
+	bool b = false;
+	ChannelMap[nChannelId]->isPlaying(&b);
+	if (!b) {
+		int nChannelId2 = mnNextChannelId++;
+		FMOD::Sound** sound;
+		FMOD::Channel* pChannel = nullptr;
+		ChannelMap[nChannelId]->getCurrentSound(sound);
+		ErrorCheck(mpSystem->playSound(*sound, nullptr, true, &pChannel));
+		ErrorCheck(pChannel->setVolume(dbToVolume(volume)));
+		ErrorCheck(pChannel->setPaused(false));
+		ChannelMap[nChannelId2] = pChannel;
+		nChannelId = nChannelId2;
+	}
 }
