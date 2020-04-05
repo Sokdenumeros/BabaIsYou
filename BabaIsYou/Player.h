@@ -13,7 +13,7 @@ class Player
 
 public:
 	Player(Player* P, int x, int y);
-	Player(string nam, bool isnam, float sx, float sy, int mapx, int mapy);
+	Player(string nam, bool isnam, float sx, float sy, int mapx, int mapy, int ts);
 	void init(ShaderProgram &shaderProgram, Texture* ss);
 	void update(int deltaTime, int i, int j);
 	void update(int deltaTime);
@@ -52,6 +52,7 @@ private:
 	bool win, defeat, move, sink, push;
 	string hasname = "ningu";
 	bool isname;
+	int tilesize;
 
 };
 

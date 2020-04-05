@@ -81,13 +81,13 @@ bool ObjectMatrix::recurs_players(int i, int j, movement m) {
 		if(sc != "ningu") {
 			for (int i = 0; i < players->size() && pc == nullptr; ++i) if (!((*players)[i]->itsname()) && (*players)[i]->getname() == sc) pc = (*players)[i];
 			
-			matriu[current] = new Player(pc, (current / nc) * 24, (current%nc) * 24);
+			matriu[current] = new Player(pc, (current / nc), (current%nc));
 		}
 		else matriu[current] = nullptr;
 
 		if (sn != "ningu") {
 			for (int i = 0; i < players->size() && pn == nullptr; ++i) if (!((*players)[i]->itsname()) && (*players)[i]->getname() == sn) pn = (*players)[i];
-			matriu[next] = new Player(pn, (next / nc) * 24, (next%nc) * 24);
+			matriu[next] = new Player(pn, (next / nc), (next%nc));
 		}
 		else matriu[next] = nullptr;
 
@@ -125,7 +125,7 @@ bool ObjectMatrix::recurs_players(int i, int j, movement m) {
 
 			for (int i = 0; i < players->size() && pd == nullptr; ++i) if (!((*players)[i]->itsname()) && (*players)[i]->getname() == sc) pd = (*players)[i];
 			
-				matriu[current] = new Player(pd, (current / nc) * 24, (current%nc) * 24);
+				matriu[current] = new Player(pd, current / nc, current%nc);
 
 		}
 		else matriu[current] = nullptr;
@@ -172,7 +172,7 @@ void ObjectMatrix::search_is(int varx, int vary, bool vertical)
 			for (int i = 0; i < players->size() && p == nullptr; ++i) if (!((*players)[i]->itsname()) && (*players)[i]->getname() == matriu[right]->getname()) p = (*players)[i];
 			for (int i = 0; i < nc*nf; ++i) if (matriu[i] != nullptr && !matriu[i]->itsname() && matriu[i]->getname() == matriu[left]->getname()) {
 				delete matriu[i];
-				matriu[i] = new Player(p,(i/nc)*24,(i%nc)*24);
+				matriu[i] = new Player(p,i/nc,i%nc);
 			}
 		}
 	}
@@ -208,7 +208,7 @@ void ObjectMatrix::explota(int pos)
 		if (s != "ningu") {
 			for (int i = 0; i < players->size() && pd == nullptr; ++i) if (!((*players)[i]->itsname()) && (*players)[i]->getname() == s) pd = (*players)[i];
 
-			matriu[pos] = new Player(pd, (pos / nc) * 24, (pos%nc) * 24);
+			matriu[pos] = new Player(pd, (pos / nc), (pos%nc));
 		}
 		else matriu[pos] = nullptr;
 	}
