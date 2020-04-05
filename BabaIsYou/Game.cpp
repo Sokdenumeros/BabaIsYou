@@ -11,7 +11,7 @@ void Game::init()
 	bPlay = true;
 	glClearColor(0.3f, 0.3f, 0.3f, 1.0f);
 	AudioEngine::Init();
-	AudioEngine::PlayS("sao.mp3");
+	AudioEngine::PlayS("audio/sao.mp3");
 	mouse = false;
 }
 

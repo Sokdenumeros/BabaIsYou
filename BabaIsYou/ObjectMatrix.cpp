@@ -105,7 +105,7 @@ bool ObjectMatrix::recurs_players(int i, int j, movement m) {
 		else return false;
 	}
 	if (matriu[next]->getwin() && matriu[current]->getmove()) {
-		AudioEngine::PlayS("victory.mp3");
+		AudioEngine::PlayS("audio/victory.mp3");
 		time = 600;
 		win = true;
 		delete matriu[next];
@@ -241,7 +241,7 @@ void ObjectMatrix::update(int deltaTime)
 	
 	if (Game::instance().getSpecialKey(GLUT_KEY_LEFT) && time < 1)
 	{
-		AudioEngine::PlayS("moviment.mp3");
+		AudioEngine::PlayS("audio/moviment.mp3");
 		time = delay;
 		for (int i = 0; i < nf; ++i) {
 			for (int j = 0; j < nc; ++j) {
@@ -252,7 +252,7 @@ void ObjectMatrix::update(int deltaTime)
 
 	if (Game::instance().getSpecialKey(GLUT_KEY_RIGHT) && time < 1)
 	{
-		AudioEngine::PlayS("moviment.mp3");
+		AudioEngine::PlayS("audio/moviment.mp3");
 		time = delay;
 		for (int i = nf-1; i >= 0; --i) {
 			for (int j = 0; j < nc; ++j) {
@@ -263,7 +263,7 @@ void ObjectMatrix::update(int deltaTime)
 
 	if (Game::instance().getSpecialKey(GLUT_KEY_UP) && time < 1)
 	{
-		AudioEngine::PlayS("moviment.mp3");
+		AudioEngine::PlayS("audio/moviment.mp3");
 		time = delay;
 		for (int i = 0; i < nf; ++i) {
 			for (int j = 0; j < nc; ++j) {
@@ -274,7 +274,7 @@ void ObjectMatrix::update(int deltaTime)
 
 	if (Game::instance().getSpecialKey(GLUT_KEY_DOWN) && time < 1)
 	{
-		AudioEngine::PlayS("moviment.mp3");
+		AudioEngine::PlayS("audio/moviment.mp3");
 		time = delay;
 		for (int i = 0; i < nf; ++i) {
 			for (int j = nc-1; j >= 0; --j) {
@@ -282,30 +282,7 @@ void ObjectMatrix::update(int deltaTime)
 			}
 		}
 	}
-	/*
-	if (Game::instance().getKey(32) == true && Game::instance().getutilitzat() == false)
-	{
-		AudioEngine::PlayS("explota.mp3");
-		Game::instance().setutilitzat(true);
-		int right, left, up, down;
-		
-		for (int i = 0; i < nf; ++i) {
-			for (int j = nc - 1; j >= 0; --j) {
-				if (matriu[nc*i + j] != nullptr && matriu[nc*i + j]->getmove()) {
-					right = nc*(i + 1) + j;
-					left = nc*(i - 1) + j;
-					up = nc*i + (j - 1);
-					down = nc*i + (j + 1);
 
-					explota(right);
-					explota(left);
-					explota(up);
-					explota(down);
-				}
-			}
-		}
-	}
-	*/
 
 	for (int i = 0; i < nf*nc; ++i) if (matriu[i] != nullptr) matriu[i]->update(deltaTime, i/nc, i%nc);
 }

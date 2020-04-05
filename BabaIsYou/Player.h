@@ -14,7 +14,7 @@ class Player
 public:
 	Player(Player* P, int x, int y);
 	Player(string nam, bool isnam, float sx, float sy, int mapx, int mapy);
-	void init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram, Texture* ss);
+	void init(ShaderProgram &shaderProgram, Texture* ss);
 	void update(int deltaTime, int i, int j);
 	void update(int deltaTime);
 	void up(int deltaTime);
@@ -38,9 +38,12 @@ public:
 	void setdefeat(bool b);
 	int getPosPlayerx();
 	int getPosPlayery();
+	void static setoffx(int x);
+	void static setoffy(int y);
 	
 private:
-	glm::ivec2 tileMapDispl, posPlayer;
+	static glm::ivec2 tileMapDispl;
+	glm::ivec2 posPlayer;
 	Texture *spritesheet;
 	Sprite *sprite;
 	int count;

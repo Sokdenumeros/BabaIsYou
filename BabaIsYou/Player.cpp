@@ -8,6 +8,8 @@
 
 #define velocitat 1
 
+glm::ivec2 Player::tileMapDispl = glm::ivec2(1230, 1230);
+
 enum PlayerAnims
 {
 	ANIMSTOP,STAND_LEFT, STAND_RIGHT,MOVE_UP1, MOVE_UP2, MOVE_UP3, MOVE_UP4, MOVE_UP5, MOVE_DOWN1, MOVE_DOWN2, MOVE_DOWN3, MOVE_DOWN4, MOVE_DOWN5, MOVE_LEFT1, MOVE_LEFT2, MOVE_LEFT3, MOVE_LEFT4, MOVE_LEFT5, MOVE_RIGHT1, MOVE_RIGHT2, MOVE_RIGHT3, MOVE_RIGHT4, MOVE_RIGHT5, STAND_UP, STAND_DOWN, MOVE_UP, MOVE_DOWN, ANIMATION
@@ -31,12 +33,12 @@ Player::Player(Player* P, int x, int y) {
 	sprx = P->sprx;
 	spry = P->spry;
 	sink = P->sink; win = P->win; push = P->push; defeat = P->defeat; move = P->move;
-	tileMapDispl = P->tileMapDispl; posPlayer.x = x; posPlayer.y = y; spritesheet = P->spritesheet;
-	init(tileMapDispl, *P->sprite->getShaderProgram(),P->spritesheet);
+	posPlayer.x = x; posPlayer.y = y; spritesheet = P->spritesheet;
+	init(*P->sprite->getShaderProgram(),P->spritesheet);
 	setPosition(posPlayer);
 }
 
-void Player::init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram, Texture* ss)
+void Player::init(ShaderProgram &shaderProgram, Texture* ss)
 {
 	spritesheet = ss;
 	sprite = Sprite::createSprite(glm::ivec2(24, 24), glm::vec2(1.f / 32, 1.f / 66), spritesheet, &shaderProgram);
@@ -169,7 +171,6 @@ void Player::init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram, Te
 		
 
 		sprite->changeAnimation(STAND_RIGHT);
-		tileMapDispl = tileMapPos;
 		sprite->setPosition(glm::vec2(float(tileMapDispl.x + posPlayer.x), float(tileMapDispl.y + posPlayer.y)));
 	}
 
@@ -202,7 +203,6 @@ void Player::init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram, Te
 
 
 		sprite->changeAnimation(ANIMSTOP);
-		tileMapDispl = tileMapPos;
 		sprite->setPosition(glm::vec2(float(tileMapDispl.x + posPlayer.x), float(tileMapDispl.y + posPlayer.y)));
 
 	}
@@ -338,3 +338,7 @@ int Player::getPosPlayerx() {
 int Player::getPosPlayery() {
 	return posPlayer.y;
 }
+
+void Player::setoffx(int x) { tileMapDispl.x = x; }
+
+void Player::setoffy(int y) { tileMapDispl.y = y; }

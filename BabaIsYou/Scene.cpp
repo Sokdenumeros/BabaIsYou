@@ -38,6 +38,9 @@ void Scene::init(string level)
 	ifstream inFile;
 	inFile.open(level);
 	inFile >> sizex >> sizey >> tilesize;
+	int height = sizex*tilesize, width = sizey*tilesize;
+	Player::setoffx((SCREEN_WIDTH-width)/2);
+	Player::setoffy((SCREEN_HEIGHT - height) / 2);
 	string TS;
 	inFile >> TS >> tamany;
 	Texture* T = new Texture();
@@ -49,7 +52,7 @@ void Scene::init(string level)
 	for (int i = 0; i < tamany; ++i) {
 		inFile >> name >> isname >> posx >> posy; 
 		Player *P = new Player(name, isname, posx, posy, 0, 0);
-		P->init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram, T);
+		P->init(texProgram, T);
 		P->setPosition(glm::vec2(0,0));
 		players.push_back(P);
 	}
@@ -95,7 +98,7 @@ void Scene::update(int deltaTime)
 	if (Game::instance().getKey(114)) Game::instance().loadLevel(lv);
 	else if (Game::instance().getKey('m')) Game::instance().loadMenu();
 	else if (Game::instance().getKey(' ') && !Game::instance().getutilitzat()) {
-		AudioEngine::PlayS("explota.mp3");
+		AudioEngine::PlayS("audio/explota.mp3");
 		Game::instance().setutilitzat(true);
 		Player* P;
 		searchaux("foc", false);
