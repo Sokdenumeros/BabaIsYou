@@ -6,6 +6,10 @@
 #include <glm/gtc/matrix_transform.hpp>
 
 
+bool different(string s) {
+	return s != "you" && s != "push" && s != "sink" && s != "defeat" && s != "win" && s != "is"&& s != "has";
+}
+
 int ObjectMatrix::getNfil() { return nf; }
 
 int ObjectMatrix::getNcol() { return nc; }
@@ -77,13 +81,13 @@ bool ObjectMatrix::recurs_players(int i, int j, movement m) {
 		if(sc != "ningu") {
 			for (int i = 0; i < players->size() && pc == nullptr; ++i) if (!((*players)[i]->itsname()) && (*players)[i]->getname() == sc) pc = (*players)[i];
 			
-			matriu[current] = new Player(pc, (current / nc) * 24, (current%nc) * 24);
+			matriu[current] = new Player(pc, (current / nc), (current%nc));
 		}
 		else matriu[current] = nullptr;
 
 		if (sn != "ningu") {
 			for (int i = 0; i < players->size() && pn == nullptr; ++i) if (!((*players)[i]->itsname()) && (*players)[i]->getname() == sn) pn = (*players)[i];
-			matriu[next] = new Player(pn, (next / nc) * 24, (next%nc) * 24);
+			matriu[next] = new Player(pn, (next / nc), (next%nc));
 		}
 		else matriu[next] = nullptr;
 
@@ -121,7 +125,7 @@ bool ObjectMatrix::recurs_players(int i, int j, movement m) {
 
 			for (int i = 0; i < players->size() && pd == nullptr; ++i) if (!((*players)[i]->itsname()) && (*players)[i]->getname() == sc) pd = (*players)[i];
 			
-				matriu[current] = new Player(pd, (current / nc) * 24, (current%nc) * 24);
+				matriu[current] = new Player(pd, current / nc, current%nc);
 
 		}
 		else matriu[current] = nullptr;
@@ -137,7 +141,7 @@ void ObjectMatrix::search_is(int varx, int vary, bool vertical)
 	int right = vertical ? nc*varx+vary+1 : nc*(varx + 1) + vary;
 	int left = vertical ? nc*varx+vary-1 : nc*(varx - 1) + vary;
 	if (right >= nc*nf || left < 0) return;
-	if (matriu[left] != nullptr && matriu[right] != nullptr && matriu[left]->itsname() == true && matriu[right]->itsname() == true) {
+	if (matriu[left] != nullptr && matriu[right] != nullptr && matriu[left]->itsname() == true && matriu[right]->itsname() == true && matriu[right]->getname() != "has" && matriu[left]->getname() != "has") {
 		if (matriu[right]->getname() == "you") {
 			for (int i = 0; i < nc*nf; ++i) {
 				if (matriu[i] != nullptr && matriu[i]->getname() == matriu[left]->getname() && matriu[i]->itsname() == false) matriu[i]->setmove(true);
@@ -163,12 +167,12 @@ void ObjectMatrix::search_is(int varx, int vary, bool vertical)
 				if (matriu[i] != nullptr && matriu[i]->getname() == matriu[left]->getname() && matriu[i]->itsname() == false) matriu[i]->setwin(true);
 			}
 		}
-		else if (matriu[left]->getname() != "you" && matriu[left]->getname() != "push" &&matriu[left]->getname() != "sink" &&matriu[left]->getname() != "defeat" &&matriu[left]->getname() != "win" &&matriu[left]->getname() != "is"&&matriu[left]->getname() != "has"){
+		else if (different(matriu[left]->getname())){
 			Player* p = nullptr;
 			for (int i = 0; i < players->size() && p == nullptr; ++i) if (!((*players)[i]->itsname()) && (*players)[i]->getname() == matriu[right]->getname()) p = (*players)[i];
 			for (int i = 0; i < nc*nf; ++i) if (matriu[i] != nullptr && !matriu[i]->itsname() && matriu[i]->getname() == matriu[left]->getname()) {
 				delete matriu[i];
-				matriu[i] = new Player(p,(i/nc)*24,(i%nc)*24);
+				matriu[i] = new Player(p,i/nc,i%nc);
 			}
 		}
 	}
@@ -176,13 +180,12 @@ void ObjectMatrix::search_is(int varx, int vary, bool vertical)
 
 void ObjectMatrix::search_has(bool vertical)
 {
-	
 	for (int i = 0; i < nf; ++i) {
 		for (int j = 0; j < nc; ++j) {
 			if (matriu[nc*i + j] != nullptr && matriu[nc*i + j]->getname() == "has") {
 				int right = (vertical) ? nc*(i + 1) + j : nc*i + (j + 1);
 				int left = (vertical) ? nc*(i - 1) + j : nc*i + (j - 1);
-				if (matriu[right] != nullptr && matriu[left] != nullptr && matriu[left]->itsname() == true && matriu[right]->itsname() == true) {
+				if (matriu[right] != nullptr && matriu[left] != nullptr && matriu[left]->itsname() == true && matriu[right]->itsname() == true && different(matriu[left]->getname()) && different(matriu[right]->getname())) {
 					for (int ii = 0; ii < nf; ++ii) {
 						for (int jj = 0; jj < nc; ++jj) {
 							if (matriu[nc*ii + jj] != nullptr && matriu[nc*ii + jj]->getname() == matriu[left]->getname() && matriu[nc*ii + jj]->itsname() == false) matriu[nc*ii + jj]->sethasname(matriu[right]->getname());
@@ -205,7 +208,7 @@ void ObjectMatrix::explota(int pos)
 		if (s != "ningu") {
 			for (int i = 0; i < players->size() && pd == nullptr; ++i) if (!((*players)[i]->itsname()) && (*players)[i]->getname() == s) pd = (*players)[i];
 
-			matriu[pos] = new Player(pd, (pos / nc) * 24, (pos%nc) * 24);
+			matriu[pos] = new Player(pd, (pos / nc), (pos%nc));
 		}
 		else matriu[pos] = nullptr;
 	}

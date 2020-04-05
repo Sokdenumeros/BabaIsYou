@@ -37,6 +37,7 @@ private:
 	string lv;
 	bool win;
 	int time;
+	int tilesize;
 
 	Text victory;
 	ObjectMatrix* om;

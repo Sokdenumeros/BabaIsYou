@@ -15,8 +15,9 @@ enum PlayerAnims
 	ANIMSTOP,STAND_LEFT, STAND_RIGHT,MOVE_UP1, MOVE_UP2, MOVE_UP3, MOVE_UP4, MOVE_UP5, MOVE_DOWN1, MOVE_DOWN2, MOVE_DOWN3, MOVE_DOWN4, MOVE_DOWN5, MOVE_LEFT1, MOVE_LEFT2, MOVE_LEFT3, MOVE_LEFT4, MOVE_LEFT5, MOVE_RIGHT1, MOVE_RIGHT2, MOVE_RIGHT3, MOVE_RIGHT4, MOVE_RIGHT5, STAND_UP, STAND_DOWN, MOVE_UP, MOVE_DOWN, ANIMATION
 };
 
-Player::Player(string nam, bool isnam, float sx, float sy, int mapx, int mapy)
+Player::Player(string nam, bool isnam, float sx, float sy, int mapx, int mapy, int ts)
 {
+	tilesize = ts;
 	count = 0;
 	move = false;
 	name = nam;
@@ -27,21 +28,22 @@ Player::Player(string nam, bool isnam, float sx, float sy, int mapx, int mapy)
 }
 
 Player::Player(Player* P, int x, int y) {
+	tilesize = P->tilesize;
 	count = 0;
 	name = P->name;
 	isname = P->isname;
 	sprx = P->sprx;
 	spry = P->spry;
 	sink = P->sink; win = P->win; push = P->push; defeat = P->defeat; move = P->move;
-	posPlayer.x = x; posPlayer.y = y; spritesheet = P->spritesheet;
+	posPlayer.x = x*tilesize; posPlayer.y = y*tilesize; spritesheet = P->spritesheet;
 	init(*P->sprite->getShaderProgram(),P->spritesheet);
-	setPosition(posPlayer);
+	setPosition(posPlayer); 
 }
 
 void Player::init(ShaderProgram &shaderProgram, Texture* ss)
 {
 	spritesheet = ss;
-	sprite = Sprite::createSprite(glm::ivec2(24, 24), glm::vec2(1.f / 32, 1.f / 66), spritesheet, &shaderProgram);
+	sprite = Sprite::createSprite(glm::ivec2(tilesize, tilesize), glm::vec2(1.f / 32, 1.f / 66), spritesheet, &shaderProgram);
 
 	if (name == "baba" && isname == false) {
 
@@ -216,19 +218,19 @@ void Player::update(int deltaTime) {
 
 void Player::update(int deltaTime, int i, int j)
 {
-	if (posPlayer.x > i * 24) {
+	if (posPlayer.x > i * tilesize) {
 		posPlayer.x -= 2;
 		if (name == "baba" && isname == false && posPlayer.x % 20 == 18) sprite->changeAnimation(MOVE_LEFT1 + (++count % 5));
 	}
-	if (posPlayer.x < i * 24) {
+	if (posPlayer.x < i * tilesize) {
 		posPlayer.x += 2;
 		if (name == "baba" && isname == false && posPlayer.x % 20 == 2) sprite->changeAnimation(MOVE_RIGHT1 + (++count % 5));
 	}
-	if (posPlayer.y > j * 24) {
+	if (posPlayer.y > j * tilesize) {
 		posPlayer.y -= 2;
 		if (name == "baba" && isname == false && posPlayer.y % 20 == 18) sprite->changeAnimation(MOVE_UP1 + (++count % 5));
 	}
-	if (posPlayer.y < j * 24) {
+	if (posPlayer.y < j * tilesize) {
 		posPlayer.y += 2;
 		if (name == "baba" && isname == false && posPlayer.y%20 == 2) sprite->changeAnimation(MOVE_DOWN1 + (++count%5));
 	}

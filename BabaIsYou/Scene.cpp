@@ -33,7 +33,7 @@ void Scene::init(string level)
 
 	
 	string name; bool isname; float posx, posy;
-	int mapx, mapy, sizex, sizey, tamany,tilesize;
+	int mapx, mapy, sizex, sizey, tamany;
 
 	ifstream inFile;
 	inFile.open(level);
@@ -51,13 +51,13 @@ void Scene::init(string level)
 	T->loadFromFile(TS, TEXTURE_PIXEL_FORMAT_RGBA);
 	for (int i = 0; i < tamany; ++i) {
 		inFile >> name >> isname >> posx >> posy; 
-		Player *P = new Player(name, isname, posx, posy, 0, 0);
+		Player *P = new Player(name, isname, posx, posy, 0, 0, tilesize);
 		P->init(texProgram, T);
 		P->setPosition(glm::vec2(0,0));
 		players.push_back(P);
 	}
 	om = new ObjectMatrix(sizex, sizey, players);
-	while (inFile >> tamany >> mapx >> mapy) om->setPos(mapx,mapy, new Player(players[tamany],mapx*24,mapy*24));
+	while (inFile >> tamany >> mapx >> mapy) om->setPos(mapx,mapy, new Player(players[tamany],mapx,mapy));
 	projection = glm::ortho(0.f, float(SCREEN_WIDTH - 1), float(SCREEN_HEIGHT - 1), 0.f);
 	aux = players[0];
 	
@@ -75,8 +75,8 @@ void Scene::update(int deltaTime)
 			(*Pit)->update(deltaTime);
 			if ((*Tit) < 1) {
 				if ((*Pit)->getname() == "foc") {
-					int x = (*Pit)->getPosPlayerx()/24;
-					int y = (*Pit)->getPosPlayery()/24;
+					int x = (*Pit)->getPosPlayerx()/ tilesize;
+					int y = (*Pit)->getPosPlayery()/ tilesize;
 					if (om->getPos(x + 1, y) != nullptr && om->getPos(x + 1, y)->getname() == "grass" && !om->getPos(x + 1, y)->itsname()) fire(x + 1, y);
 					if (om->getPos(x - 1, y) != nullptr && om->getPos(x - 1, y)->getname() == "grass" && !om->getPos(x - 1, y)->itsname()) fire(x - 1, y);
 					if (om->getPos(x, y + 1) != nullptr && om->getPos(x, y + 1)->getname() == "grass" && !om->getPos(x, y + 1)->itsname()) fire(x, y + 1);
@@ -129,16 +129,16 @@ void Scene::fire(int i, int j) {
 		bool b = om->getPos(i, j) != nullptr && om->getPos(i, j)->getname() == "grass" && !om->getPos(i, j)->itsname();
 		if (om->getPos(i, j) != nullptr && om->getPos(i, j)->gethasname() != "ningu") {
 			searchaux(om->getPos(i, j)->gethasname(), false);
-			p = new Player(aux, i * 24, j * 24);
+			p = new Player(aux, i * tilesize, j * tilesize);
 		}
 		delete om->getPos(i, j); om->setPos(i, j, p);
 		if (b) {
 			searchaux("foc", false);
-			temp.push_back(new Player(aux, i * 24, j * 24)); times.push_back(1000);
+			temp.push_back(new Player(aux, i * tilesize, j * tilesize)); times.push_back(1000);
 		}
 		else {
 			searchaux("explosio", false);
-			temp.push_back(new Player(aux, i * 24, j * 24)); times.push_back(600);
+			temp.push_back(new Player(aux, i * tilesize, j * tilesize)); times.push_back(600);
 		}
 	}
 }
