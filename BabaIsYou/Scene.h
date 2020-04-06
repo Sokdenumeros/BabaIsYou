@@ -9,7 +9,6 @@
 #include <fstream>
 #include "iostream"
 #include "Text.h"
-#include <list>
 using namespace std;
 
 // Scene contains all the entities of our game.

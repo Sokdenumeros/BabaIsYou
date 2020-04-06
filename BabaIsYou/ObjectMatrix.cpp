@@ -168,10 +168,16 @@ void ObjectMatrix::search_is(int f, int c, bool vertical)
 		}
 		else if (different(matriu[left]->getname())){
 			Player* p = nullptr;
-			for (int i = 0; i < players->size() && p == nullptr; ++i) if (!((*players)[i]->itsname()) && (*players)[i]->getname() == matriu[right]->getname()) p = (*players)[i];
+			Player* puf = nullptr;
+			for (int i = 0; i < players->size() && (p == nullptr || puf == nullptr); ++i) {
+				if (!((*players)[i]->itsname()) && (*players)[i]->getname() == matriu[right]->getname()) p = (*players)[i];
+				if (!((*players)[i]->itsname()) && (*players)[i]->getname() == "puf") puf = (*players)[i];
+			}
 			for (int i = 0; i < nc*nf; ++i) if (matriu[i] != nullptr && !matriu[i]->itsname() && matriu[i]->getname() == matriu[left]->getname()) {
 				delete matriu[i];
 				matriu[i] = new Player(p,i/nc,i%nc);
+				temp->push_back(new Player(puf, i / nc, i%nc));
+				times->push_back(600);
 			}
 		}
 	}
@@ -306,3 +312,8 @@ bool ObjectMatrix::getwin() {
 }
 
 //els is que tenen a dreta i esquerra
+
+void ObjectMatrix::linkTempLists(list<Player*>* p, list<int>* t) {
+	temp = p;
+	times = t;
+}

@@ -7,6 +7,7 @@
 #include "Player.h"
 #include "Texture.h"
 #include "ShaderProgram.h"
+#include <list>
 using namespace std;
 
 class ObjectMatrix 
@@ -20,6 +21,8 @@ private:
 	int time, delay;
 	vector<pair<int, int>> is;
 	vector<Player*>* players;
+	list<Player*>* temp;
+	list<int>* times;
 	
 
 public:
@@ -34,5 +37,6 @@ public:
 	void search_is(int varx, int vary, bool vertical);
 	void search_has(bool vertical);
 	void explota(int pos);
+	void linkTempLists(list<Player*>* p, list<int>* t);
 
 };
