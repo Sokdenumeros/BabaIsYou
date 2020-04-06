@@ -54,6 +54,8 @@ public:
 	bool getSpecialKey(int key) const;
 
 private:
+	int channel;
+	string sound;
 	Menu instructions, credits;
 	MainMenu mainMenu;
 	Scene scene;
@@ -65,7 +67,6 @@ private:
 	bool utilitzat = false;// Continue to play game?
 	bool keys[256], specialKeys[256]; // Store key states so that 
 	                                  // we can have access at any time
-
 };
 
 

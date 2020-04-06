@@ -104,14 +104,19 @@ void Scene::update(int deltaTime)
 		Game::instance().setutilitzat(true);
 		Player* P;
 		searchaux("foc", false);
-		for (int i = 0; i < om->getNfil(); ++i) {
-			for (int j = 0; j < om->getNcol(); ++j) {
+		vector<bool> positions (om->getNfil()*om->getNcol(),false);
+		for (int i = 0, nfil = om->getNfil(); i < nfil; ++i) {
+			for (int j = 0, ncol = om->getNcol(); j < ncol; ++j) {
 				P = om->getPos(i, j);
 				if (P != nullptr && P->getmove()) {
-					fire(i + 1, j); fire(i - 1, j); fire(i, j + 1); fire(i, j - 1);
+					if(j < ncol-1) positions[i*ncol + j + 1] = true;
+					if(j > 0) positions[i*ncol + j - 1] = true;
+					if(i < nfil-1) positions[i*ncol + j + ncol] = true;
+					if(i > 0) positions[i*ncol + j - ncol] = true;
 				}
 			}
 		}
+		for (int i = 0, ncol = om->getNcol(); i < positions.size(); ++i) if(positions[i]) fire(i / ncol, i%ncol);
 	}
 }
 
@@ -133,6 +138,7 @@ void Scene::fire(int f, int c) {
 			searchaux(om->getPos(f, c)->gethasname(), false);
 			p = new Player(aux, f, c);
 		}
+		if (om->getPos(f,c) != nullptr && om->getPos(f, c)->getname() == "is") om->deleteis(f, c);
 		delete om->getPos(f, c); om->setPos(f, c, p);
 		if (b) {
 			searchaux("foc", false);

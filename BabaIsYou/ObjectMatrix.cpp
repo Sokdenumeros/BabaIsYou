@@ -67,11 +67,7 @@ bool ObjectMatrix::recurs_players(int f, int c, movement m) {
 		return true;
 	}
 	if (matriu[next]->getsink()) {
-		if (matriu[current]->getname() == "is") {
-			for (auto it = is.begin(); it != is.end(); ++it) {
-				if (it->first == current / nc && it->second == current%nc) is.erase(it);
-			}
-		}
+		if (matriu[current]->getname() == "is") deleteis(current / nc, current%nc);
 		Player* pc = nullptr;
 		Player* pn = nullptr;
 		sc = matriu[current]->gethasname();
@@ -319,4 +315,17 @@ bool ObjectMatrix::getwin() {
 void ObjectMatrix::linkTempLists(list<Player*>* p, list<int>* t) {
 	temp = p;
 	times = t;
+}
+
+void ObjectMatrix::deleteis(int f, int c) {
+	for (auto it = is.begin(); it != is.end();) {
+		if (it->first == f && it->second == c) {
+			is.erase(it);
+			it = is.end();
+		}
+		else
+		{
+			++it;
+		}
+	}
 }

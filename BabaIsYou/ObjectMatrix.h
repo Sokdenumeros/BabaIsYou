@@ -38,5 +38,6 @@ public:
 	void search_has(bool vertical);
 	void explota(int pos);
 	void linkTempLists(list<Player*>* p, list<int>* t);
+	void deleteis(int f, int c);
 
 };

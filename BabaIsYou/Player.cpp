@@ -193,9 +193,6 @@ void Player::init(ShaderProgram &shaderProgram, Texture* ss)
 
 	else {
 
-
-		
-
 		sprite->setNumberAnimations(25);
 
 		sprite->setAnimationSpeed(ANIMSTOP, 5);

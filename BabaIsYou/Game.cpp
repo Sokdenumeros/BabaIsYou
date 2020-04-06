@@ -11,6 +11,8 @@ void Game::init()
 	bPlay = true;
 	glClearColor(0.3f, 0.3f, 0.3f, 1.0f);
 	AudioEngine::Init();
+	sound = "audio/sao.mp3";
+	channel = AudioEngine::PlayS(sound);
 	mouse = false;
 }
 
@@ -20,15 +22,18 @@ bool Game::update(int deltaTime)
 	AudioEngine::Update();
 	switch (estat) {
 	case MAIN_MENU:
+		if (!AudioEngine::IsPlaying(channel)) channel = AudioEngine::PlayS(sound);
 		mainMenu.update(deltaTime);
 		break;
 	case LEVEL:
 		scene.update(deltaTime);
 		break;
 	case CREDITS:
+		if (!AudioEngine::IsPlaying(channel)) channel = AudioEngine::PlayS(sound);
 		credits.update(deltaTime);
 		break;
 	case INSTRUCTIONS:
+		if (!AudioEngine::IsPlaying(channel)) channel = AudioEngine::PlayS(sound);
 		instructions.update(deltaTime);
 		break;
 	}
@@ -120,9 +125,10 @@ int Game::getMouseY() {
 }
 
 void Game::loadLevel(string level) {
+	channel = -1;
 	utilitzat = false;
-	estat = LEVEL;
 	AudioEngine::StopAllChannels();
+	estat = LEVEL;
 	scene.init(level);
 }
 
@@ -136,8 +142,8 @@ void Game::quit() {
 }
 
 void Game::loadMenu() {
+	if(estat == LEVEL) AudioEngine::StopAllChannels();
 	estat = MAIN_MENU;
-	AudioEngine::StopAllChannels();
 	mainMenu.init("levels/MainMenu.txt");
 }
 
