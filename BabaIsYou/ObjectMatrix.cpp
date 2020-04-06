@@ -14,12 +14,12 @@ int ObjectMatrix::getNfil() { return nf; }
 
 int ObjectMatrix::getNcol() { return nc; }
 
-Player* ObjectMatrix::getPos(int i, int j) {
-	if (i >= nf || j >= nc || i < 0 || j < 0) return nullptr;
-	return matriu[i*nc + j];
+Player* ObjectMatrix::getPos(int f, int c) {
+	if (f >= nf || c >= nc || f < 0 || c < 0) return nullptr;
+	return matriu[f*nc + c];
 }
 
-ObjectMatrix::ObjectMatrix(int c, int f, vector<Player*>& v)
+ObjectMatrix::ObjectMatrix(int f, int c, vector<Player*>& v)
 {
 	players = &v;
 	nf = f;
@@ -32,21 +32,21 @@ ObjectMatrix::ObjectMatrix(int c, int f, vector<Player*>& v)
 	
 }
 
-bool ObjectMatrix::recurs_players(int i, int j, movement m) {
-	int current = nc*i + j;
+bool ObjectMatrix::recurs_players(int f, int c, movement m) {
+	int current = nc*f + c;
 	string sc, sn;
 	switch (m) {
 	case UP:
-		j -= 1; break;
+		f -= 1; break;
 	case DOWN:
-		j += 1; break;
+		f += 1; break;
 	case LEFT:
-		i -= 1; break;
+		c -= 1; break;
 	case RIGHT:
-		i += 1; break;
+		c += 1; break;
 	}
-	if (j < 0 || j >= nf || i < 0 || i >= nc) return false;
-	int next = nc*i +j;
+	if (f < 0 || f >= nf || c < 0 || c >= nc) return false;
+	int next = nc*f +c;
 	if (matriu[current]->getsink()) {
 		delete matriu[next];
 		delete matriu[current];
@@ -60,7 +60,7 @@ bool ObjectMatrix::recurs_players(int i, int j, movement m) {
 		if (matriu[next]->getname() == "is") {
 			for (auto it = is.begin(); it != is.end(); ++it) {
 				if (it->first == current / nc && it->second == current%nc) {
-					it->first = i; it->second = j;
+					it->first = f; it->second = c;
 				}
 			}
 		}
@@ -94,13 +94,13 @@ bool ObjectMatrix::recurs_players(int i, int j, movement m) {
 		return true;
 	}
 	if (matriu[next]->getpush()) {
-		if (recurs_players(i, j, m)) {
+		if (recurs_players(f, c, m)) {
 			matriu[next] = matriu[current];
 			matriu[current] = nullptr;
 			if (matriu[next]->getname() == "is") {
 				for (auto it = is.begin(); it != is.end(); ++it) {
 					if (it->first == current / nc && it->second == current%nc) {
-						it->first = i; it->second = j;
+						it->first = f; it->second = c;
 					}
 				}
 			}
@@ -135,11 +135,10 @@ bool ObjectMatrix::recurs_players(int i, int j, movement m) {
 	else return false;
 }
 
-void ObjectMatrix::search_is(int varx, int vary, bool vertical)
+void ObjectMatrix::search_is(int f, int c, bool vertical)
 {
-
-	int right = vertical ? nc*varx+vary+1 : nc*(varx + 1) + vary;
-	int left = vertical ? nc*varx+vary-1 : nc*(varx - 1) + vary;
+	int right = !vertical ? nc*f+c+1 : nc*(f + 1) + c;
+	int left = !vertical ? nc*f+c-1 : nc*(f - 1) + c;
 	if (right >= nc*nf || left < 0) return;
 	if (matriu[left] != nullptr && matriu[right] != nullptr && matriu[left]->itsname() == true && matriu[right]->itsname() == true && matriu[right]->getname() != "has" && matriu[left]->getname() != "has") {
 		if (matriu[right]->getname() == "you") {
@@ -217,8 +216,6 @@ void ObjectMatrix::explota(int pos)
 void ObjectMatrix::update(int deltaTime)
 {
 
-	
-	
 	string name;
 	if (time > 0) time -= deltaTime;
 	for (int i = 0; i < nf; ++i) {
@@ -257,8 +254,8 @@ void ObjectMatrix::update(int deltaTime)
 	{
 		AudioEngine::PlayS("audio/moviment.mp3");
 		time = delay;
-		for (int i = nf-1; i >= 0; --i) {
-			for (int j = 0; j < nc; ++j) {
+		for (int i = 0; i < nf; ++i) {
+			for (int j = nc-1; j >= 0; --j) {
 				if (matriu[nc*i + j] != nullptr && matriu[nc*i + j]->getmove()) recurs_players(i, j, RIGHT);
 			}
 		}
@@ -279,8 +276,8 @@ void ObjectMatrix::update(int deltaTime)
 	{
 		AudioEngine::PlayS("audio/moviment.mp3");
 		time = delay;
-		for (int i = 0; i < nf; ++i) {
-			for (int j = nc-1; j >= 0; --j) {
+		for (int i = nf-1; i >= 0; --i) {
+			for (int j = 0; j < nc; ++j) {
 				if (matriu[nc*i + j] != nullptr && matriu[nc*i + j]->getmove()) recurs_players(i, j, DOWN);
 			}
 		}
@@ -290,11 +287,12 @@ void ObjectMatrix::update(int deltaTime)
 	for (int i = 0; i < nf*nc; ++i) if (matriu[i] != nullptr) matriu[i]->update(deltaTime, i/nc, i%nc);
 }
 
-void ObjectMatrix::setPos(int i, int j, Player* p)
+void ObjectMatrix::setPos(int f, int c, Player* p)
 {
-	if (i < nf && j < nc) {
-		matriu[nc*i + j] = p;
-		if (p!= nullptr && p->getname() == "is") is.push_back(pair<int, int>(i, j));
+	if (f < nf && c < nc) {
+		matriu[nc*f + c] = p;
+		if (p!= nullptr && p->getname() == "is") 
+			is.push_back(pair<int, int>(f, c));
 	}
 }
 

@@ -32,13 +32,13 @@ void Scene::init(string level)
 	initShaders();
 	
 	string name; bool isname; float posx, posy;
-	int mapx, mapy, sizex, sizey, tamany;
+	int col, fil, maxfil, maxcol, tamany;
 
 	ifstream inFile;
 	inFile.open(level);
 	inFile >> sound;
-	inFile >> sizex >> sizey >> tilesize;
-	int height = sizex*tilesize, width = sizey*tilesize;
+	inFile >> maxfil >> maxcol >> tilesize;
+	int height = maxfil*tilesize, width = maxcol*tilesize;
 	Player::setoffx((SCREEN_WIDTH-width)/2);
 	Player::setoffy((SCREEN_HEIGHT - height) / 2);
 	string TS;
@@ -56,8 +56,8 @@ void Scene::init(string level)
 		P->setPosition(glm::vec2(0,0));
 		players.push_back(P);
 	}
-	om = new ObjectMatrix(sizex, sizey, players);
-	while (inFile >> tamany >> mapx >> mapy) om->setPos(mapx,mapy, new Player(players[tamany],mapx,mapy));
+	om = new ObjectMatrix(maxfil, maxcol, players);
+	while (inFile >> tamany >> col >> fil) om->setPos(fil,col, new Player(players[tamany],fil,col));
 	projection = glm::ortho(0.f, float(SCREEN_WIDTH - 1), float(SCREEN_HEIGHT - 1), 0.f);
 	aux = players[0];
 	channel = AudioEngine::PlayS(sound);
@@ -76,12 +76,12 @@ void Scene::update(int deltaTime)
 			(*Pit)->update(deltaTime);
 			if ((*Tit) < 1) {
 				if ((*Pit)->getname() == "foc") {
-					int x = (*Pit)->getPosPlayerx()/ tilesize;
-					int y = (*Pit)->getPosPlayery()/ tilesize;
-					if (om->getPos(x + 1, y) != nullptr && om->getPos(x + 1, y)->getname() == "grass" && !om->getPos(x + 1, y)->itsname()) fire(x + 1, y);
-					if (om->getPos(x - 1, y) != nullptr && om->getPos(x - 1, y)->getname() == "grass" && !om->getPos(x - 1, y)->itsname()) fire(x - 1, y);
-					if (om->getPos(x, y + 1) != nullptr && om->getPos(x, y + 1)->getname() == "grass" && !om->getPos(x, y + 1)->itsname()) fire(x, y + 1);
-					if (om->getPos(x, y - 1) != nullptr && om->getPos(x, y - 1)->getname() == "grass" && !om->getPos(x, y - 1)->itsname()) fire(x, y - 1);
+					int c = (*Pit)->getPosPlayerx()/ tilesize;
+					int f = (*Pit)->getPosPlayery()/ tilesize;
+					if (om->getPos(f + 1, c) != nullptr && om->getPos(f + 1, c)->getname() == "grass" && !om->getPos(f + 1, c)->itsname()) fire(f + 1, c);
+					if (om->getPos(f - 1, c) != nullptr && om->getPos(f - 1, c)->getname() == "grass" && !om->getPos(f - 1, c)->itsname()) fire(f - 1, c);
+					if (om->getPos(f, c + 1) != nullptr && om->getPos(f, c + 1)->getname() == "grass" && !om->getPos(f, c + 1)->itsname()) fire(f, c + 1);
+					if (om->getPos(f, c - 1) != nullptr && om->getPos(f, c - 1)->getname() == "grass" && !om->getPos(f, c - 1)->itsname()) fire(f, c - 1);
 				}
 				temp.erase(Pit++);
 				times.erase(Tit++);
@@ -122,23 +122,23 @@ void Scene::searchaux(string name, bool isname) {
 	}
 }
 
-void Scene::fire(int i, int j) {
-	if (i > -1 && i < om->getNfil() && j > -1 && j < om->getNcol()) {
+void Scene::fire(int f, int c) {
+	if (f > -1 && f < om->getNfil() && c > -1 && c < om->getNcol()) {
 
 		Player *p = nullptr;
-		bool b = om->getPos(i, j) != nullptr && om->getPos(i, j)->getname() == "grass" && !om->getPos(i, j)->itsname();
-		if (om->getPos(i, j) != nullptr && om->getPos(i, j)->gethasname() != "ningu") {
-			searchaux(om->getPos(i, j)->gethasname(), false);
-			p = new Player(aux, i, j);
+		bool b = om->getPos(f, c) != nullptr && om->getPos(f, c)->getname() == "grass" && !om->getPos(f, c)->itsname();
+		if (om->getPos(f, c) != nullptr && om->getPos(f, c)->gethasname() != "ningu") {
+			searchaux(om->getPos(f, c)->gethasname(), false);
+			p = new Player(aux, f, c);
 		}
-		delete om->getPos(i, j); om->setPos(i, j, p);
+		delete om->getPos(f, c); om->setPos(f, c, p);
 		if (b) {
 			searchaux("foc", false);
-			temp.push_back(new Player(aux, i, j)); times.push_back(1000);
+			temp.push_back(new Player(aux, f, c)); times.push_back(1000);
 		}
 		else {
 			searchaux("explosio", false);
-			temp.push_back(new Player(aux, i, j)); times.push_back(600);
+			temp.push_back(new Player(aux, f, c)); times.push_back(600);
 		}
 	}
 }

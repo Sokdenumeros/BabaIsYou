@@ -27,7 +27,7 @@ Player::Player(string nam, bool isnam, float sx, float sy, int mapx, int mapy, i
 	sink = false; win = false; push = false; defeat = false;
 }
 
-Player::Player(Player* P, int x, int y) {
+Player::Player(Player* P, int f, int c) {
 	tilesize = P->tilesize;
 	count = 0;
 	name = P->name;
@@ -35,7 +35,7 @@ Player::Player(Player* P, int x, int y) {
 	sprx = P->sprx;
 	spry = P->spry;
 	sink = P->sink; win = P->win; push = P->push; defeat = P->defeat; move = P->move;
-	posPlayer.x = x*tilesize; posPlayer.y = y*tilesize; spritesheet = P->spritesheet;
+	posPlayer.x = c*tilesize; posPlayer.y = f*tilesize; spritesheet = P->spritesheet;
 	init(*P->sprite->getShaderProgram(),P->spritesheet);
 	setPosition(posPlayer); 
 }
@@ -216,21 +216,21 @@ void Player::update(int deltaTime) {
 	sprite->update(deltaTime);
 }
 
-void Player::update(int deltaTime, int i, int j)
+void Player::update(int deltaTime, int f, int c)
 {
-	if (posPlayer.x > i * tilesize) {
+	if (posPlayer.x > c * tilesize) {
 		posPlayer.x -= 2;
 		if (name == "baba" && isname == false && posPlayer.x % 20 == 18) sprite->changeAnimation(MOVE_LEFT1 + (++count % 5));
 	}
-	if (posPlayer.x < i * tilesize) {
+	if (posPlayer.x < c * tilesize) {
 		posPlayer.x += 2;
 		if (name == "baba" && isname == false && posPlayer.x % 20 == 2) sprite->changeAnimation(MOVE_RIGHT1 + (++count % 5));
 	}
-	if (posPlayer.y > j * tilesize) {
+	if (posPlayer.y > f * tilesize) {
 		posPlayer.y -= 2;
 		if (name == "baba" && isname == false && posPlayer.y % 20 == 18) sprite->changeAnimation(MOVE_UP1 + (++count % 5));
 	}
-	if (posPlayer.y < j * tilesize) {
+	if (posPlayer.y < f * tilesize) {
 		posPlayer.y += 2;
 		if (name == "baba" && isname == false && posPlayer.y%20 == 2) sprite->changeAnimation(MOVE_DOWN1 + (++count%5));
 	}
