@@ -1,7 +1,7 @@
 audio/sao.mp3
 24 24 24
 images/text32.png
-14
+15
 foc 0 5 24
 you 1 20 42
 rock 1 11 33
@@ -16,6 +16,7 @@ flag 0 6 21
 has 1 12 30
 baba 1 6 27
 explosio 0 22 42
+puf 0 25 22
 
 0 0 0 
 1 6 6

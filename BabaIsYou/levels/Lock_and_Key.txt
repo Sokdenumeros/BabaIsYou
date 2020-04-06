@@ -1,7 +1,7 @@
 audio/sao.mp3
 24 24 24
 images/text32.png
-24
+25
 baba 1 6 27
 you 1 20 42
 is 1 18 30
@@ -26,6 +26,7 @@ door 0 3 21
 door 1 24 27
 key 0 10 21
 key 1 21 30
+puf 0 25 22
 
 0 0 1 
 1 2 1 

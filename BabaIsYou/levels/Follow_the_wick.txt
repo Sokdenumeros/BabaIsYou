@@ -1,7 +1,7 @@
 audio/sao.mp3
 24 24 24
 images/text32.png
-19
+20
 baba 1 6 27
 you 1 20 42
 is 1 18 30
@@ -21,6 +21,7 @@ foc 0 5 24
 explosio 0 22 42
 grass 0 0 51
 foc 1 0 30
+puf 0 25 22
 
 9 4 6
 0 11 4
