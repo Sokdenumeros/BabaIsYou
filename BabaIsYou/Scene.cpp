@@ -57,6 +57,7 @@ void Scene::init(string level)
 		players.push_back(P);
 	}
 	om = new ObjectMatrix(maxfil, maxcol, players);
+	om->linkTempLists(&temp, &times);
 	while (inFile >> tamany >> col >> fil) om->setPos(fil,col, new Player(players[tamany],fil,col));
 	projection = glm::ortho(0.f, float(SCREEN_WIDTH - 1), float(SCREEN_HEIGHT - 1), 0.f);
 	aux = players[0];
@@ -83,6 +84,7 @@ void Scene::update(int deltaTime)
 					if (om->getPos(f, c + 1) != nullptr && om->getPos(f, c + 1)->getname() == "grass" && !om->getPos(f, c + 1)->itsname()) fire(f, c + 1);
 					if (om->getPos(f, c - 1) != nullptr && om->getPos(f, c - 1)->getname() == "grass" && !om->getPos(f, c - 1)->itsname()) fire(f, c - 1);
 				}
+				delete (*Pit);
 				temp.erase(Pit++);
 				times.erase(Tit++);
 			}

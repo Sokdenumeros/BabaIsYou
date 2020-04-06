@@ -1,7 +1,7 @@
 audio/sao.mp3
 31 48 22
 images/text32.png
-45
+46
 baba 1 6 27
 you 1 20 42
 is 1 18 30
@@ -47,6 +47,7 @@ hand 1 11 30
 cake 0 21 21 
 cake 1 16 27 
 soldrier 0 12 15
+puf 0 25 22
 
 19 0 0
 19 0 1

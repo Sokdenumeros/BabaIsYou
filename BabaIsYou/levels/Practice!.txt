@@ -1,7 +1,7 @@
 audio/practice.mp3
 24 24 24
 images/text32.png
-17
+18
 baba 1 6 27
 you 1 20 42
 is 1 18 30
@@ -19,6 +19,7 @@ has 1 12 30
 grass 0 0 51
 foc 0 5 24
 explosio 0 22 42
+puf 0 25 22
 
 0 6 7
 1 8 7
