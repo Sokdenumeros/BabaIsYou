@@ -1,4 +1,4 @@
-audio/sao.mp3
+audio/suicide.mp3
 31 31 20
 images/text32.png
 36
