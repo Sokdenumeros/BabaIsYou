@@ -167,6 +167,7 @@ void ObjectMatrix::search_is(int f, int c, bool vertical)
 			}
 		}
 		else if (different(matriu[left]->getname())){
+			bool b = false;
 			Player* p = nullptr;
 			Player* puf = nullptr;
 			for (int i = 0; i < players->size() && (p == nullptr || puf == nullptr); ++i) {
@@ -178,7 +179,9 @@ void ObjectMatrix::search_is(int f, int c, bool vertical)
 				matriu[i] = new Player(p,i/nc,i%nc);
 				temp->push_back(new Player(puf, i / nc, i%nc));
 				times->push_back(600);
+				b = true;
 			}
+			if (b) AudioEngine::PlayS("audio/WXP.mp3");
 		}
 	}
 }
