@@ -1,6 +1,6 @@
 audio/sao.mp3
 31 48 22
-images/text32.png
+images/T.png
 46
 baba 1 6 27
 you 1 20 42

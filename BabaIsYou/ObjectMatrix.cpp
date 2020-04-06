@@ -181,7 +181,7 @@ void ObjectMatrix::search_is(int f, int c, bool vertical)
 				times->push_back(600);
 				b = true;
 			}
-			if (b) AudioEngine::PlayS("audio/WXP.mp3");
+			if (b) AudioEngine::PlayS("audio/poof.mp3");
 		}
 	}
 }

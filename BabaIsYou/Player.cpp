@@ -43,7 +43,7 @@ Player::Player(Player* P, int f, int c) {
 void Player::init(ShaderProgram &shaderProgram, Texture* ss)
 {
 	spritesheet = ss;
-	sprite = Sprite::createSprite(glm::ivec2(tilesize, tilesize), glm::vec2(1.f / 32, 1.f / 66), spritesheet, &shaderProgram);
+	sprite = Sprite::createSprite(glm::ivec2(tilesize, tilesize), glm::vec2(1.f / 32, 1.f / 64), spritesheet, &shaderProgram);
 
 	if (name == "baba" && isname == false) {
 
@@ -51,125 +51,125 @@ void Player::init(ShaderProgram &shaderProgram, Texture* ss)
 
 
 		sprite->setAnimationSpeed(STAND_LEFT, 5);
-		sprite->addKeyframe(STAND_LEFT, glm::vec2(11.f / 32, 0.f / 66));
-		sprite->addKeyframe(STAND_LEFT, glm::vec2(11.f / 32, 1.f / 66));
-		sprite->addKeyframe(STAND_LEFT, glm::vec2(11.f / 32, 2.f / 66));
+		sprite->addKeyframe(STAND_LEFT, glm::vec2(11.f / 32, 0.f / 64));
+		sprite->addKeyframe(STAND_LEFT, glm::vec2(11.f / 32, 1.f / 64));
+		sprite->addKeyframe(STAND_LEFT, glm::vec2(11.f / 32, 2.f / 64));
 
 		sprite->setAnimationSpeed(STAND_RIGHT, 5);
-		sprite->addKeyframe(STAND_RIGHT, glm::vec2(1.f/32, 0.f/66));
-		sprite->addKeyframe(STAND_RIGHT, glm::vec2(1.f / 32, 1.f / 66));
-		sprite->addKeyframe(STAND_RIGHT, glm::vec2(1.f / 32, 2.f / 66));
+		sprite->addKeyframe(STAND_RIGHT, glm::vec2(1.f/32, 0.f/64));
+		sprite->addKeyframe(STAND_RIGHT, glm::vec2(1.f / 32, 1.f / 64));
+		sprite->addKeyframe(STAND_RIGHT, glm::vec2(1.f / 32, 2.f / 64));
 
 		sprite->setAnimationSpeed(STAND_UP, 5);
-		sprite->addKeyframe(STAND_UP, glm::vec2(6.f/32, 0.f/66));
-		sprite->addKeyframe(STAND_UP, glm::vec2(6.f / 32, 1.f / 66));
-		sprite->addKeyframe(STAND_UP, glm::vec2(6.f / 32, 2.f / 66));
+		sprite->addKeyframe(STAND_UP, glm::vec2(6.f/32, 0.f/64));
+		sprite->addKeyframe(STAND_UP, glm::vec2(6.f / 32, 1.f / 64));
+		sprite->addKeyframe(STAND_UP, glm::vec2(6.f / 32, 2.f / 64));
 
 		sprite->setAnimationSpeed(STAND_DOWN, 5);
-		sprite->addKeyframe(STAND_DOWN, glm::vec2(16.f/32, 0.f/66));
-		sprite->addKeyframe(STAND_DOWN, glm::vec2(16.f / 32, 1.f / 66));
-		sprite->addKeyframe(STAND_DOWN, glm::vec2(16.f / 32, 2.f / 66));
+		sprite->addKeyframe(STAND_DOWN, glm::vec2(16.f/32, 0.f/64));
+		sprite->addKeyframe(STAND_DOWN, glm::vec2(16.f / 32, 1.f / 64));
+		sprite->addKeyframe(STAND_DOWN, glm::vec2(16.f / 32, 2.f / 64));
 
 		sprite->setAnimationSpeed(MOVE_LEFT1, 5);
-		sprite->addKeyframe(MOVE_LEFT1, glm::vec2(10.f / 32, 0.f / 66));
-		sprite->addKeyframe(MOVE_LEFT1, glm::vec2(10.f / 32, 1.f / 66));
-		sprite->addKeyframe(MOVE_LEFT1, glm::vec2(10.f / 32, 2.f / 66));
+		sprite->addKeyframe(MOVE_LEFT1, glm::vec2(10.f / 32, 0.f / 64));
+		sprite->addKeyframe(MOVE_LEFT1, glm::vec2(10.f / 32, 1.f / 64));
+		sprite->addKeyframe(MOVE_LEFT1, glm::vec2(10.f / 32, 2.f / 64));
 
 		sprite->setAnimationSpeed(MOVE_LEFT2, 5);
-		sprite->addKeyframe(MOVE_LEFT2, glm::vec2(11.f / 32, 0.f / 66));
-		sprite->addKeyframe(MOVE_LEFT2, glm::vec2(11.f / 32, 1.f / 66));
-		sprite->addKeyframe(MOVE_LEFT2, glm::vec2(11.f / 32, 2.f / 66));
+		sprite->addKeyframe(MOVE_LEFT2, glm::vec2(11.f / 32, 0.f / 64));
+		sprite->addKeyframe(MOVE_LEFT2, glm::vec2(11.f / 32, 1.f / 64));
+		sprite->addKeyframe(MOVE_LEFT2, glm::vec2(11.f / 32, 2.f / 64));
 
 		sprite->setAnimationSpeed(MOVE_LEFT3, 5);
-		sprite->addKeyframe(MOVE_LEFT3, glm::vec2(12.f / 32, 0.f / 66));
-		sprite->addKeyframe(MOVE_LEFT3, glm::vec2(12.f / 32, 1.f / 66));
-		sprite->addKeyframe(MOVE_LEFT3, glm::vec2(12.f / 32, 2.f / 66));
+		sprite->addKeyframe(MOVE_LEFT3, glm::vec2(12.f / 32, 0.f / 64));
+		sprite->addKeyframe(MOVE_LEFT3, glm::vec2(12.f / 32, 1.f / 64));
+		sprite->addKeyframe(MOVE_LEFT3, glm::vec2(12.f / 32, 2.f / 64));
 
 		sprite->setAnimationSpeed(MOVE_LEFT4, 5);
-		sprite->addKeyframe(MOVE_LEFT4, glm::vec2(13.f / 32, 0.f / 66));
-		sprite->addKeyframe(MOVE_LEFT4, glm::vec2(13.f / 32, 1.f / 66));
-		sprite->addKeyframe(MOVE_LEFT4, glm::vec2(13.f / 32, 2.f / 66));
+		sprite->addKeyframe(MOVE_LEFT4, glm::vec2(13.f / 32, 0.f / 64));
+		sprite->addKeyframe(MOVE_LEFT4, glm::vec2(13.f / 32, 1.f / 64));
+		sprite->addKeyframe(MOVE_LEFT4, glm::vec2(13.f / 32, 2.f / 64));
 
 		sprite->setAnimationSpeed(MOVE_LEFT5, 5);
-		sprite->addKeyframe(MOVE_LEFT5, glm::vec2(14.f / 32, 0.f / 66));
-		sprite->addKeyframe(MOVE_LEFT5, glm::vec2(14.f / 32, 1.f / 66));
-		sprite->addKeyframe(MOVE_LEFT5, glm::vec2(14.f / 32, 2.f / 66));
+		sprite->addKeyframe(MOVE_LEFT5, glm::vec2(14.f / 32, 0.f / 64));
+		sprite->addKeyframe(MOVE_LEFT5, glm::vec2(14.f / 32, 1.f / 64));
+		sprite->addKeyframe(MOVE_LEFT5, glm::vec2(14.f / 32, 2.f / 64));
 
 		sprite->setAnimationSpeed(MOVE_RIGHT1, 5);
-		sprite->addKeyframe(MOVE_RIGHT1, glm::vec2(0.f / 32, 0.f / 66));
-		sprite->addKeyframe(MOVE_RIGHT1, glm::vec2(0.f / 32, 1.f / 66));
-		sprite->addKeyframe(MOVE_RIGHT1, glm::vec2(0.f / 32, 2.f / 66));
+		sprite->addKeyframe(MOVE_RIGHT1, glm::vec2(0.f / 32, 0.f / 64));
+		sprite->addKeyframe(MOVE_RIGHT1, glm::vec2(0.f / 32, 1.f / 64));
+		sprite->addKeyframe(MOVE_RIGHT1, glm::vec2(0.f / 32, 2.f / 64));
 
 		sprite->setAnimationSpeed(MOVE_RIGHT2, 5);
-		sprite->addKeyframe(MOVE_RIGHT2, glm::vec2(1.f / 32, 0.f / 66));
-		sprite->addKeyframe(MOVE_RIGHT2, glm::vec2(1.f / 32, 1.f / 66));
-		sprite->addKeyframe(MOVE_RIGHT2, glm::vec2(1.f / 32, 2.f / 66));
+		sprite->addKeyframe(MOVE_RIGHT2, glm::vec2(1.f / 32, 0.f / 64));
+		sprite->addKeyframe(MOVE_RIGHT2, glm::vec2(1.f / 32, 1.f / 64));
+		sprite->addKeyframe(MOVE_RIGHT2, glm::vec2(1.f / 32, 2.f / 64));
 
 		sprite->setAnimationSpeed(MOVE_RIGHT3, 5);
-		sprite->addKeyframe(MOVE_RIGHT3, glm::vec2(2.f / 32, 0.f / 66));
-		sprite->addKeyframe(MOVE_RIGHT3, glm::vec2(2.f / 32, 1.f / 66));
-		sprite->addKeyframe(MOVE_RIGHT3, glm::vec2(2.f / 32, 2.f / 66));
+		sprite->addKeyframe(MOVE_RIGHT3, glm::vec2(2.f / 32, 0.f / 64));
+		sprite->addKeyframe(MOVE_RIGHT3, glm::vec2(2.f / 32, 1.f / 64));
+		sprite->addKeyframe(MOVE_RIGHT3, glm::vec2(2.f / 32, 2.f / 64));
 
 		sprite->setAnimationSpeed(MOVE_RIGHT4, 5);
-		sprite->addKeyframe(MOVE_RIGHT4, glm::vec2(3.f / 32, 0.f / 66));
-		sprite->addKeyframe(MOVE_RIGHT4, glm::vec2(3.f / 32, 1.f / 66));
-		sprite->addKeyframe(MOVE_RIGHT4, glm::vec2(3.f / 32, 2.f / 66));
+		sprite->addKeyframe(MOVE_RIGHT4, glm::vec2(3.f / 32, 0.f / 64));
+		sprite->addKeyframe(MOVE_RIGHT4, glm::vec2(3.f / 32, 1.f / 64));
+		sprite->addKeyframe(MOVE_RIGHT4, glm::vec2(3.f / 32, 2.f / 64));
 
 		sprite->setAnimationSpeed(MOVE_RIGHT5, 5);
-		sprite->addKeyframe(MOVE_RIGHT5, glm::vec2(4.f / 32, 0.f / 66));
-		sprite->addKeyframe(MOVE_RIGHT5, glm::vec2(4.f / 32, 1.f / 66));
-		sprite->addKeyframe(MOVE_RIGHT5, glm::vec2(4.f / 32, 2.f / 66));
+		sprite->addKeyframe(MOVE_RIGHT5, glm::vec2(4.f / 32, 0.f / 64));
+		sprite->addKeyframe(MOVE_RIGHT5, glm::vec2(4.f / 32, 1.f / 64));
+		sprite->addKeyframe(MOVE_RIGHT5, glm::vec2(4.f / 32, 2.f / 64));
 
 
 		sprite->setAnimationSpeed(MOVE_UP1, 5);
-		sprite->addKeyframe(MOVE_UP1, glm::vec2(5.f / 32, 0.f / 66));
-		sprite->addKeyframe(MOVE_UP1, glm::vec2(5.f / 32, 1.f / 66));
-		sprite->addKeyframe(MOVE_UP1, glm::vec2(5.f / 32, 2.f / 66));
+		sprite->addKeyframe(MOVE_UP1, glm::vec2(5.f / 32, 0.f / 64));
+		sprite->addKeyframe(MOVE_UP1, glm::vec2(5.f / 32, 1.f / 64));
+		sprite->addKeyframe(MOVE_UP1, glm::vec2(5.f / 32, 2.f / 64));
 
 		sprite->setAnimationSpeed(MOVE_UP2, 5);
-		sprite->addKeyframe(MOVE_UP2, glm::vec2(6.f / 32, 0.f / 66));
-		sprite->addKeyframe(MOVE_UP2, glm::vec2(6.f / 32, 1.f / 66));
-		sprite->addKeyframe(MOVE_UP2, glm::vec2(6.f / 32, 2.f / 66));
+		sprite->addKeyframe(MOVE_UP2, glm::vec2(6.f / 32, 0.f / 64));
+		sprite->addKeyframe(MOVE_UP2, glm::vec2(6.f / 32, 1.f / 64));
+		sprite->addKeyframe(MOVE_UP2, glm::vec2(6.f / 32, 2.f / 64));
 
 		sprite->setAnimationSpeed(MOVE_UP3, 5);
-		sprite->addKeyframe(MOVE_UP3, glm::vec2(7.f / 32, 0.f / 66));
-		sprite->addKeyframe(MOVE_UP3, glm::vec2(7.f / 32, 1.f / 66));
-		sprite->addKeyframe(MOVE_UP3, glm::vec2(7.f / 32, 2.f / 66));
+		sprite->addKeyframe(MOVE_UP3, glm::vec2(7.f / 32, 0.f / 64));
+		sprite->addKeyframe(MOVE_UP3, glm::vec2(7.f / 32, 1.f / 64));
+		sprite->addKeyframe(MOVE_UP3, glm::vec2(7.f / 32, 2.f / 64));
 
 		sprite->setAnimationSpeed(MOVE_UP4, 5);
-		sprite->addKeyframe(MOVE_UP4, glm::vec2(8.f / 32, 0.f / 66));
-		sprite->addKeyframe(MOVE_UP4, glm::vec2(8.f / 32, 1.f / 66));
-		sprite->addKeyframe(MOVE_UP4, glm::vec2(8.f / 32, 2.f / 66));
+		sprite->addKeyframe(MOVE_UP4, glm::vec2(8.f / 32, 0.f / 64));
+		sprite->addKeyframe(MOVE_UP4, glm::vec2(8.f / 32, 1.f / 64));
+		sprite->addKeyframe(MOVE_UP4, glm::vec2(8.f / 32, 2.f / 64));
 
 		sprite->setAnimationSpeed(MOVE_UP5, 5);
-		sprite->addKeyframe(MOVE_UP5, glm::vec2(9.f / 32, 0.f / 66));
-		sprite->addKeyframe(MOVE_UP5, glm::vec2(9.f / 32, 1.f / 66));
-		sprite->addKeyframe(MOVE_UP5, glm::vec2(9.f / 32, 2.f / 66));
+		sprite->addKeyframe(MOVE_UP5, glm::vec2(9.f / 32, 0.f / 64));
+		sprite->addKeyframe(MOVE_UP5, glm::vec2(9.f / 32, 1.f / 64));
+		sprite->addKeyframe(MOVE_UP5, glm::vec2(9.f / 32, 2.f / 64));
 
 		sprite->setAnimationSpeed(MOVE_DOWN1, 5);
-		sprite->addKeyframe(MOVE_DOWN1, glm::vec2(15.f / 32, 0.f / 66));
-		sprite->addKeyframe(MOVE_DOWN1, glm::vec2(15.f / 32, 1.f / 66));
-		sprite->addKeyframe(MOVE_DOWN1, glm::vec2(15.f / 32, 2.f / 66));
+		sprite->addKeyframe(MOVE_DOWN1, glm::vec2(15.f / 32, 0.f / 64));
+		sprite->addKeyframe(MOVE_DOWN1, glm::vec2(15.f / 32, 1.f / 64));
+		sprite->addKeyframe(MOVE_DOWN1, glm::vec2(15.f / 32, 2.f / 64));
 
 		sprite->setAnimationSpeed(MOVE_DOWN2, 5);
-		sprite->addKeyframe(MOVE_DOWN2, glm::vec2(16.f / 32, 0.f / 66));
-		sprite->addKeyframe(MOVE_DOWN2, glm::vec2(16.f / 32, 1.f / 66));
-		sprite->addKeyframe(MOVE_DOWN2, glm::vec2(16.f / 32, 2.f / 66));
+		sprite->addKeyframe(MOVE_DOWN2, glm::vec2(16.f / 32, 0.f / 64));
+		sprite->addKeyframe(MOVE_DOWN2, glm::vec2(16.f / 32, 1.f / 64));
+		sprite->addKeyframe(MOVE_DOWN2, glm::vec2(16.f / 32, 2.f / 64));
 
 		sprite->setAnimationSpeed(MOVE_DOWN3, 5);
-		sprite->addKeyframe(MOVE_DOWN3, glm::vec2(17.f / 32, 0.f / 66));
-		sprite->addKeyframe(MOVE_DOWN3, glm::vec2(17.f / 32, 1.f / 66));
-		sprite->addKeyframe(MOVE_DOWN3, glm::vec2(17.f / 32, 2.f / 66));
+		sprite->addKeyframe(MOVE_DOWN3, glm::vec2(17.f / 32, 0.f / 64));
+		sprite->addKeyframe(MOVE_DOWN3, glm::vec2(17.f / 32, 1.f / 64));
+		sprite->addKeyframe(MOVE_DOWN3, glm::vec2(17.f / 32, 2.f / 64));
 
 		sprite->setAnimationSpeed(MOVE_DOWN4, 5);
-		sprite->addKeyframe(MOVE_DOWN4, glm::vec2(18.f / 32, 0.f / 66));
-		sprite->addKeyframe(MOVE_DOWN4, glm::vec2(18.f / 32, 1.f / 66));
-		sprite->addKeyframe(MOVE_DOWN4, glm::vec2(18.f / 32, 2.f / 66));
+		sprite->addKeyframe(MOVE_DOWN4, glm::vec2(18.f / 32, 0.f / 64));
+		sprite->addKeyframe(MOVE_DOWN4, glm::vec2(18.f / 32, 1.f / 64));
+		sprite->addKeyframe(MOVE_DOWN4, glm::vec2(18.f / 32, 2.f / 64));
 
 		sprite->setAnimationSpeed(MOVE_DOWN5, 5);
-		sprite->addKeyframe(MOVE_DOWN5, glm::vec2(19.f / 32, 0.f / 66));
-		sprite->addKeyframe(MOVE_DOWN5, glm::vec2(19.f / 32, 1.f / 66));
-		sprite->addKeyframe(MOVE_DOWN5, glm::vec2(19.f / 32, 2.f / 66));
+		sprite->addKeyframe(MOVE_DOWN5, glm::vec2(19.f / 32, 0.f / 64));
+		sprite->addKeyframe(MOVE_DOWN5, glm::vec2(19.f / 32, 1.f / 64));
+		sprite->addKeyframe(MOVE_DOWN5, glm::vec2(19.f / 32, 2.f / 64));
 		
 
 		sprite->changeAnimation(STAND_RIGHT);
@@ -199,9 +199,9 @@ void Player::init(ShaderProgram &shaderProgram, Texture* ss)
 		sprite->setNumberAnimations(25);
 
 		sprite->setAnimationSpeed(ANIMSTOP, 5);
-		sprite->addKeyframe(ANIMSTOP, glm::vec2(sprx / 32, spry / 66));
-		sprite->addKeyframe(ANIMSTOP, glm::vec2(sprx / 32, (spry + 1) / 66));
-		sprite->addKeyframe(ANIMSTOP, glm::vec2(sprx / 32, (spry + 2) / 66));
+		sprite->addKeyframe(ANIMSTOP, glm::vec2(sprx / 32, spry / 64));
+		sprite->addKeyframe(ANIMSTOP, glm::vec2(sprx / 32, (spry + 1) / 64));
+		sprite->addKeyframe(ANIMSTOP, glm::vec2(sprx / 32, (spry + 2) / 64));
 
 
 		sprite->changeAnimation(ANIMSTOP);
