@@ -6,4 +6,4 @@ Play 		images/Play.png 590 550 690 650
 -		images/BabaIsYou.png 430 50 849 197
 Credits		images/Credits.png 1000 650 1250 700
 Quit		images/Quit.png 50 600 150 700
-Instructions	images/Quit.png 0 00 100 100
+Instructions	images/Help.png 1100 50 1200 150
