@@ -72,6 +72,7 @@ void Scene::update(int deltaTime)
 		auto Tit = times.begin();
 		auto Pit = temp.begin();
 		searchaux("foc", false);
+		bool playfire = false;
 		while (Pit != temp.end()) {
 			(*Tit) -= deltaTime;
 			(*Pit)->update(deltaTime);
@@ -79,10 +80,10 @@ void Scene::update(int deltaTime)
 				if ((*Pit)->getname() == "foc") {
 					int c = (*Pit)->getPosPlayerx()/ tilesize;
 					int f = (*Pit)->getPosPlayery()/ tilesize;
-					if (om->getPos(f + 1, c) != nullptr && om->getPos(f + 1, c)->getname() == "grass" && !om->getPos(f + 1, c)->itsname()) fire(f + 1, c);
-					if (om->getPos(f - 1, c) != nullptr && om->getPos(f - 1, c)->getname() == "grass" && !om->getPos(f - 1, c)->itsname()) fire(f - 1, c);
-					if (om->getPos(f, c + 1) != nullptr && om->getPos(f, c + 1)->getname() == "grass" && !om->getPos(f, c + 1)->itsname()) fire(f, c + 1);
-					if (om->getPos(f, c - 1) != nullptr && om->getPos(f, c - 1)->getname() == "grass" && !om->getPos(f, c - 1)->itsname()) fire(f, c - 1);
+					if (om->getPos(f + 1, c) != nullptr && om->getPos(f + 1, c)->getname() == "grass" && !om->getPos(f + 1, c)->itsname()) {fire(f + 1, c);playfire = true;}
+					if (om->getPos(f - 1, c) != nullptr && om->getPos(f - 1, c)->getname() == "grass" && !om->getPos(f - 1, c)->itsname()) {fire(f - 1, c);playfire = true;}
+					if (om->getPos(f, c + 1) != nullptr && om->getPos(f, c + 1)->getname() == "grass" && !om->getPos(f, c + 1)->itsname()) {fire(f, c + 1);playfire = true;}
+					if (om->getPos(f, c - 1) != nullptr && om->getPos(f, c - 1)->getname() == "grass" && !om->getPos(f, c - 1)->itsname()) {fire(f, c - 1);playfire = true;}
 				}
 				delete (*Pit);
 				temp.erase(Pit++);
@@ -93,6 +94,7 @@ void Scene::update(int deltaTime)
 				++Tit;
 			}
 		}
+		if (playfire) AudioEngine::PlayS("audio/foc.mp3");
 		om->update(deltaTime); //object matrix update
 		win = om->getwin();
 		if (win) time = currentTime;

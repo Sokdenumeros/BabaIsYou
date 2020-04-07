@@ -246,46 +246,62 @@ void ObjectMatrix::update(int deltaTime)
 	
 	if (Game::instance().getSpecialKey(GLUT_KEY_LEFT) && time < 1)
 	{
-		AudioEngine::PlayS("audio/moviment.mp3");
+		bool so = false;
 		time = delay;
 		for (int i = 0; i < nf; ++i) {
 			for (int j = 0; j < nc; ++j) {
-				if (matriu[nc*i + j] != nullptr && matriu[nc*i + j]->getmove()) recurs_players(i, j, LEFT);
+				if (matriu[nc*i + j] != nullptr && matriu[nc*i + j]->getmove()) {
+					recurs_players(i, j, LEFT);
+					so = true;
+				}
 			}
 		}
+		if(so) AudioEngine::PlayS("audio/moviment.mp3");
 	}
 
 	if (Game::instance().getSpecialKey(GLUT_KEY_RIGHT) && time < 1)
 	{
-		AudioEngine::PlayS("audio/moviment.mp3");
+		bool so = false;
 		time = delay;
 		for (int i = 0; i < nf; ++i) {
 			for (int j = nc-1; j >= 0; --j) {
-				if (matriu[nc*i + j] != nullptr && matriu[nc*i + j]->getmove()) recurs_players(i, j, RIGHT);
+				if (matriu[nc*i + j] != nullptr && matriu[nc*i + j]->getmove()) {
+					recurs_players(i, j, RIGHT);
+					so = true;
+				}
 			}
 		}
+		if (so) AudioEngine::PlayS("audio/moviment.mp3");
 	}
 
 	if (Game::instance().getSpecialKey(GLUT_KEY_UP) && time < 1)
 	{
-		AudioEngine::PlayS("audio/moviment.mp3");
+		bool so = false;
 		time = delay;
 		for (int i = 0; i < nf; ++i) {
 			for (int j = 0; j < nc; ++j) {
-				if (matriu[nc*i + j] != nullptr && matriu[nc*i + j]->getmove()) recurs_players(i, j, UP);
+				if (matriu[nc*i + j] != nullptr && matriu[nc*i + j]->getmove()) {
+					recurs_players(i, j, UP);
+					so = true;
+				}
 			}
 		}
+		if (so) AudioEngine::PlayS("audio/moviment.mp3");
 	}
 
 	if (Game::instance().getSpecialKey(GLUT_KEY_DOWN) && time < 1)
 	{
-		AudioEngine::PlayS("audio/moviment.mp3");
+		bool so = false;
 		time = delay;
 		for (int i = nf-1; i >= 0; --i) {
 			for (int j = 0; j < nc; ++j) {
-				if (matriu[nc*i + j] != nullptr && matriu[nc*i + j]->getmove()) recurs_players(i, j, DOWN);
+				if (matriu[nc*i + j] != nullptr && matriu[nc*i + j]->getmove()) {
+					recurs_players(i, j, DOWN);
+					so = true;
+				}
 			}
 		}
+		if (so) AudioEngine::PlayS("audio/moviment.mp3");
 	}
 
 
